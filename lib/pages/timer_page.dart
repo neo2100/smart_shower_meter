@@ -196,10 +196,10 @@ class _TimerPageState extends State<TimerPage> {
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: _isRunning
-                    ? Colors.green.withOpacity(0.2)
+                    ? Colors.green.withValues(alpha: 0.2 * 255)
                     : _elapsed.inSeconds > 0
-                    ? Colors.orange.withOpacity(0.2)
-                    : Colors.grey.withOpacity(0.2),
+                    ? Colors.orange.withValues(alpha: 0.2 * 255)
+                    : Colors.grey.withValues(alpha: 0.2 * 255),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
