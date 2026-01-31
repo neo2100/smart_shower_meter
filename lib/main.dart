@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'models/shower_record.dart';
-import 'pages/timer_page.dart';
+import 'pages/combined_page.dart';
 import 'pages/history_page.dart';
 import 'pages/analytics_page.dart';
-import 'pages/smart_meter_page.dart';
 import 'services/database_service.dart';
 
 void main() {
@@ -88,8 +87,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   late final List<Widget> _pages = [
-    TimerPage(records: _showerRecords, onRecordAdded: _addRecord),
-    SmartMeterPage(records: _showerRecords, onRecordAdded: _addRecord),
+    CombinedPage(records: _showerRecords, onRecordAdded: _addRecord),
     HistoryPage(records: _showerRecords),
     AnalyticsPage(records: _showerRecords),
   ];
@@ -128,8 +126,7 @@ class _HomePageState extends State<HomePage> {
         selectedItemColor: Theme.of(context).colorScheme.primary,
         unselectedItemColor: Colors.grey[600],
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.timer), label: 'Timer'),
-          BottomNavigationBarItem(icon: Icon(Icons.mic), label: 'Smart Meter'),
+          BottomNavigationBarItem(icon: Icon(Icons.shower), label: 'Shower'),
           BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
           BottomNavigationBarItem(
             icon: Icon(Icons.bar_chart),
