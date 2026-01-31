@@ -40,6 +40,9 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   path: ^1.9.1
+  # Audio and microphone access
+  permission_handler: ^12.0.1
+  flutter_sound: ^9.2.13
 
 dev_dependencies:
   flutter_test:
