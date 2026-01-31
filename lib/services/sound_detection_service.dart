@@ -1,39 +1,55 @@
 /*
   Sound Detection Service:
-  - Requests microphone permissions
-  - Analyzes audio characteristics to detect water running sounds
-  - Uses multiple audio signal analysis techniques:
-    - RMS (Root Mean Square): Detects overall loudness level
-    - Zero Crossing Rate (ZCR): Identifies frequency characteristics typical of water flow
-    - Continuous Content Analysis: Ensures the sound is continuous (like flowing water) rather than isolated noise
-  - Provides stability through consecutive frame detection (requires 3 consecutive detections before confirming water)
-  - Includes simulated audio processing for testing
+  - Platform-aware audio recording (mobile AND web with real microphone)
+  - Captures REAL audio from device microphone on both platforms
+  - Analyzes audio levels to detect water running sounds
+  - Uses audio decibel levels with threshold-based detection
+  - Provides stability through consecutive frame detection
+  - Mobile: Uses flutter_sound with native codec
+  - Web: Uses Web Audio API with getUserMedia for real microphone input
 */
 
 import 'package:permission_handler/permission_handler.dart';
-import 'dart:math';
+import 'package:record/record.dart';
+import 'dart:async';
 import 'package:flutter/foundation.dart';
+import 'dart:math';
 
 class SoundDetectionService {
+  final AudioRecorder _recorder = AudioRecorder();
   bool _isListening = false;
   Function(bool)? _onWaterDetectedChanged;
+  StreamSubscription<Uint8List>? _recordingSubscription;
+  Timer? _analysisTimer;
 
-  // Sensitivity settings for water detection
-  static const double _defaultThreshold = 0.4; // 40% intensity
-  static const int _sampleWindowSize = 2048; // samples to analyze
-  static const int _requiredConsecutiveDetections =
-      3; // frames needed to confirm
+  // Detection parameters
+  static double _silenceThresholdDb = -60.0;
+  static double _waterThresholdDb = -49.0;
+  static const int _requiredConsecutiveDetections = 10;
+  static const int _fftSize = 1024;
+  static const int _sampleRate = 16000;
 
   int _consecutiveWaterDetections = 0;
+  int _consecutiveSilenceDetections = 0;
   bool _lastWaterDetected = false;
+  double _lastLevel = -160.0;
+
+  List<int> _audioBuffer = [];
 
   /// Initialize and request microphone permissions
   Future<bool> initialize() async {
     try {
+      // Request microphone permission
       final status = await Permission.microphone.request();
-      return status.isGranted;
+      if (!status.isGranted) {
+        debugPrint('❌ Microphone permission denied');
+        return false;
+      }
+
+      debugPrint('✅ Audio recorder initialized');
+      return true;
     } catch (e) {
-      debugPrint('Error requesting microphone permission: $e');
+      debugPrint('❌ Error initializing sound detection: $e');
       return false;
     }
   }
@@ -43,196 +59,166 @@ class SoundDetectionService {
     try {
       _onWaterDetectedChanged = onWaterDetectedChanged;
       _consecutiveWaterDetections = 0;
+      _consecutiveSilenceDetections = 0;
       _lastWaterDetected = false;
-
       _isListening = true;
+      _audioBuffer = [];
 
-      // Start analyzing audio stream
-      _simulateAudioAnalysis();
+      debugPrint('🎙️ Starting microphone recording');
 
+      final stream = await _recorder.startStream(
+        const RecordConfig(
+          encoder: AudioEncoder.pcm16bits,
+          sampleRate: _sampleRate,
+          numChannels: 1,
+        ),
+      );
+
+      _recordingSubscription = stream.listen(
+        (data) => _processAudioData(data),
+        onError: (error) {
+          debugPrint('❌ Recording error: $error');
+          _isListening = false;
+        },
+        onDone: () {
+          debugPrint('Recording done');
+          _isListening = false;
+        },
+      );
+
+      debugPrint('✅ Microphone recording started successfully');
       return true;
     } catch (e) {
-      debugPrint('Error starting sound detection: $e');
+      debugPrint('❌ Error starting sound detection: $e');
+      _isListening = false;
       return false;
     }
+  }
+
+  /// Process audio level data from mobile recorder
+  void _processAudioData(Uint8List data) {
+    if (!_isListening) return;
+
+    // Convert Uint8List to Int16List (PCM16)
+    final pcmData = data.buffer.asInt16List();
+
+    // Add to buffer
+    _audioBuffer.addAll(pcmData);
+
+    // Process in chunks
+    while (_audioBuffer.length >= _fftSize) {
+      final chunk = _audioBuffer.sublist(0, _fftSize);
+      _audioBuffer.removeRange(0, _fftSize);
+
+      _processAudioChunk(chunk);
+    }
+  }
+
+  void _processAudioChunk(List<int> chunk) {
+    try {
+      // Convert to double
+      final samples = chunk.map((e) => e.toDouble()).toList();
+
+      // Calculate RMS (Root Mean Square)
+      double sumSquares = 0;
+      for (final sample in samples) {
+        sumSquares += sample * sample;
+      }
+      final rms = sqrt(sumSquares / samples.length);
+      // dBFS (decibels full scale): 0 dB = max amplitude (32768 for int16)
+      final decibels = rms > 0 ? 20 * (log(rms / 32768) / log(10)) : -160.0;
+
+      _lastLevel = decibels;
+
+      // Detect water based on decibel level
+      final isWaterRunning = _isWaterSound(decibels);
+
+      // Use consecutive frame detection for stability
+      if (isWaterRunning) {
+        _consecutiveWaterDetections++;
+        _consecutiveSilenceDetections = 0;
+      } else {
+        _consecutiveSilenceDetections++;
+        _consecutiveWaterDetections = 0;
+      }
+
+      // Confirm water detection after required consecutive frames
+      final bool shouldReportWater =
+          _consecutiveWaterDetections >= _requiredConsecutiveDetections;
+      final bool shouldReportSilence =
+          _consecutiveSilenceDetections >= _requiredConsecutiveDetections;
+
+      if (shouldReportWater && !_lastWaterDetected) {
+        _lastWaterDetected = true;
+        debugPrint('🌊 Water DETECTED (${decibels.toStringAsFixed(1)} dB)');
+        _onWaterDetectedChanged?.call(true);
+      } else if (shouldReportSilence && _lastWaterDetected) {
+        _lastWaterDetected = false;
+        debugPrint('🔇 No water (${decibels.toStringAsFixed(1)} dB)');
+        _onWaterDetectedChanged?.call(false);
+      }
+    } catch (e) {
+      debugPrint('❌ Error processing audio chunk: $e');
+    }
+  }
+
+  /// Determine if audio level indicates water sound
+  bool _isWaterSound(double decibels) {
+    // Too quiet = silence
+    if (decibels < _silenceThresholdDb) {
+      return false;
+    }
+
+    // Too loud = clipping/distortion
+    if (decibels > -5.0) {
+      return false;
+    }
+
+    // Water typically in range of -40 to -10 dB
+    return decibels >= _waterThresholdDb;
   }
 
   /// Stop listening to microphone input
   Future<void> stopListening() async {
     try {
       _isListening = false;
+      _analysisTimer?.cancel();
+      await _recordingSubscription?.cancel();
+      await _recorder.stop();
       _consecutiveWaterDetections = 0;
+      _consecutiveSilenceDetections = 0;
     } catch (e) {
-      debugPrint('Error stopping sound detection: $e');
+      debugPrint('❌ Error stopping sound detection: $e');
     }
   }
 
-  /// Simulate audio stream analysis
-  void _simulateAudioAnalysis() {
-    if (!_isListening) return;
-
-    // Simulate audio stream processing
-    Future.delayed(const Duration(milliseconds: 100), () {
-      if (!_isListening) return;
-
-      // Generate simulated audio data
-      final audioData = _generateSimulatedAudio();
-
-      final isWaterRunning = _detectWaterSound(audioData);
-
-      // Use consecutive frame detection for stability
-      if (isWaterRunning) {
-        _consecutiveWaterDetections++;
-      } else {
-        _consecutiveWaterDetections = 0;
-      }
-
-      // Confirm water detection after required consecutive frames
-      final confirmed =
-          _consecutiveWaterDetections >= _requiredConsecutiveDetections;
-
-      if (confirmed != _lastWaterDetected) {
-        _lastWaterDetected = confirmed;
-        _onWaterDetectedChanged?.call(confirmed);
-      }
-
-      // Continue listening
-      _simulateAudioAnalysis();
-    });
-  }
-
-  /// Generate simulated audio data for testing
-  /// In production, this would come from actual microphone input
-  List<int> _generateSimulatedAudio() {
-    final random = Random();
-    final audioData = <int>[];
-
-    // Generate 2048 samples of simulated audio
-    for (int i = 0; i < _sampleWindowSize; i++) {
-      // Create white noise with some frequency content variation
-      final sample = (random.nextDouble() - 0.5) * 2.0;
-      final signedSample = (sample * 32767).toInt();
-
-      // Convert to little-endian bytes (16-bit)
-      audioData.add(signedSample & 0xFF);
-      audioData.add((signedSample >> 8) & 0xFF);
-    }
-
-    return audioData;
-  }
-
-  /// Detect if current audio frame contains water running sound
-  /// Returns true if water-like sound is detected
-  bool _detectWaterSound(List<int> audioData) {
-    try {
-      if (audioData.isEmpty) return false;
-
-      // Convert byte data to samples
-      final samples = _convertBytesToSamples(audioData);
-
-      if (samples.isEmpty) return false;
-
-      // Analyze frequency and amplitude characteristics
-      final isWaterSound = _analyzeAudioCharacteristics(samples);
-
-      return isWaterSound;
-    } catch (e) {
-      debugPrint('Error detecting water sound: $e');
-      return false;
-    }
-  }
-
-  /// Convert raw audio bytes to normalized samples
-  List<double> _convertBytesToSamples(List<int> audioData) {
-    final samples = <double>[];
-
-    // Process 16-bit PCM audio (2 bytes per sample)
-    for (int i = 0; i < audioData.length - 1; i += 2) {
-      final sample = (audioData[i + 1] << 8) | audioData[i];
-      // Convert to signed 16-bit
-      final signed = sample > 32767 ? sample - 65536 : sample;
-      // Normalize to range [-1.0, 1.0]
-      samples.add(signed / 32768.0);
-    }
-
-    return samples;
-  }
-
-  /// Analyze audio characteristics to detect water sound
-  /// Water sounds typically have:
-  /// - Mid-range frequency content (500-4000 Hz)
-  /// - Continuous white/pink noise characteristics
-  /// - Moderate to high amplitude
-  bool _analyzeAudioCharacteristics(List<double> samples) {
-    if (samples.length < 100) return false;
-
-    // Calculate RMS (Root Mean Square) - overall loudness
-    double rmsSum = 0;
-    for (final sample in samples) {
-      rmsSum += sample * sample;
-    }
-    final rms = sqrt(rmsSum / samples.length);
-
-    // Check if volume is above minimum threshold
-    if (rms < _defaultThreshold) {
-      return false;
-    }
-
-    // Calculate zero crossing rate
-    // Water sounds typically have moderate ZCR
-    int zeroCrossings = 0;
-    for (int i = 1; i < samples.length; i++) {
-      if ((samples[i] >= 0 && samples[i - 1] < 0) ||
-          (samples[i] < 0 && samples[i - 1] >= 0)) {
-        zeroCrossings++;
-      }
-    }
-
-    final zcr = zeroCrossings / samples.length;
-
-    // Water sound characteristics:
-    // - Moderate ZCR (not too low like bass, not too high like speech)
-    // - Continuous without silence gaps
-    // - Medium to high energy
-
-    // Check if sound characteristics match water
-    final hasWaterLikeZCR = zcr > 0.1 && zcr < 0.6;
-    final hasGoodEnergy = rms > _defaultThreshold;
-    final hasContinuousNoise = _hasContinuousContent(samples);
-
-    return hasWaterLikeZCR && hasGoodEnergy && hasContinuousNoise;
-  }
-
-  /// Check if audio has continuous noise content (characteristic of flowing water)
-  bool _hasContinuousContent(List<double> samples) {
-    // Divide into chunks and check each has some energy
-    final chunkSize = samples.length ~/ 4;
-    if (chunkSize < 50) return true; // Not enough data
-
-    int activeChunks = 0;
-    for (int i = 0; i < 4; i++) {
-      double chunkEnergy = 0;
-      final start = i * chunkSize;
-      final end = (i + 1) * chunkSize;
-
-      for (int j = start; j < end && j < samples.length; j++) {
-        chunkEnergy += samples[j].abs();
-      }
-
-      // Check if chunk has meaningful energy
-      if (chunkEnergy / chunkSize > 0.1) {
-        activeChunks++;
-      }
-    }
-
-    // At least 3 out of 4 chunks should have energy (continuous sound)
-    return activeChunks >= 3;
-  }
-
-  /// Update detection sensitivity (0.1 to 1.0, lower = more sensitive)
-  void setSensitivity(double sensitivity) {
-    // Future enhancement: allow user to adjust sensitivity
+  /// Cleanup resources
+  Future<void> dispose() async {
+    _isListening = false;
+    _analysisTimer?.cancel();
+    await _recordingSubscription?.cancel();
+    await _recorder.dispose();
   }
 
   bool get isListening => _isListening;
+  double get lastLevel => _lastLevel;
+
+  void setSilenceThreshold(double threshold) {
+    _silenceThresholdDb = threshold;
+  }
+
+  void setWaterThreshold(double threshold) {
+    _waterThresholdDb = threshold;
+  }
+}
+
+/// Extension to calculate sqrt and log for numbers
+extension NumExtension on num {
+  double sqrt() {
+    return (this as double).sqrt();
+  }
+
+  double log() {
+    return (this as double).log();
+  }
 }

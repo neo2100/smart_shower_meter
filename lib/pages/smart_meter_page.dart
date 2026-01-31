@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:flutter/foundation.dart';
 import '../models/shower_record.dart';
 import '../services/database_service.dart';
 import '../services/sound_detection_service.dart';
@@ -27,7 +29,11 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
   int _recordIdCounter = 1;
   final DatabaseService _databaseService = DatabaseService();
   String _statusMessage = 'Initializing...';
-  int _pauseCount = 0;
+
+  double _currentSoundLevel = -160.0;
+  Timer? _uiUpdateTimer;
+  double _silenceThreshold = -60.0;
+  double _waterThreshold = -49.0;
 
   @override
   void initState() {
@@ -59,6 +65,10 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
         return;
       }
 
+      // Set initial thresholds
+      _soundDetectionService.setSilenceThreshold(_silenceThreshold);
+      _soundDetectionService.setWaterThreshold(_waterThreshold);
+
       // Initialize ID counter
       final maxId = await _databaseService.getHighestId();
 
@@ -73,6 +83,16 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
       await _soundDetectionService.startListening(
         onWaterDetectedChanged: _onWaterDetectionChanged,
       );
+
+      // Start UI update timer to show current sound level
+      _uiUpdateTimer = Timer.periodic(const Duration(milliseconds: 100), (_) {
+        if (mounted) {
+          setState(() {
+            _currentSoundLevel = _soundDetectionService.lastLevel;
+            _elapsed = Duration(milliseconds: _stopwatch.elapsedMilliseconds);
+          });
+        }
+      });
     } catch (e) {
       if (mounted) {
         setState(() {
@@ -90,19 +110,12 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
     if (detected && !_isRunning) {
       // Water detected - start timer
       _startTimer();
-    } else if (!detected && _isRunning && !_isPaused) {
-      // Water stopped - pause timer
-      _pauseCount++;
-
-      // Only pause if water has been off for a short duration
-      if (_pauseCount >= 2) {
-        _pauseTimer();
-        _pauseCount = 0;
-      }
     } else if (detected && _isRunning && _isPaused) {
       // Water detected again - resume timer
-      _pauseCount = 0;
       _resumeTimer();
+    } else if (!detected && _isRunning && !_isPaused) {
+      // Water stopped - pause timer immediately
+      _pauseTimer();
     }
   }
 
@@ -151,7 +164,6 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
     widget.onRecordAdded(record);
 
     _stopwatch.reset();
-    _pauseCount = 0;
 
     setState(() {
       _isRunning = false;
@@ -253,6 +265,106 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
                           : Colors.grey[600],
                     ),
                   ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            // Sound Level Indicator
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.grey.withValues(alpha: 0.1 * 255),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.grey.shade300),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    'Sound Level: ${_currentSoundLevel.toStringAsFixed(1)} dB',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  LinearProgressIndicator(
+                    value:
+                        ((_currentSoundLevel + 80).clamp(0, 80)) /
+                        80, // Scale from -80 to 0 dB
+                    backgroundColor: Colors.grey.shade300,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      _currentSoundLevel >= _waterThreshold
+                          ? Colors.green
+                          : Colors.red,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Silence: ${_silenceThreshold.toStringAsFixed(1)} dB',
+                        style: TextStyle(fontSize: 10, color: Colors.grey[600]),
+                      ),
+                      Text(
+                        'Water: ${_waterThreshold.toStringAsFixed(1)} dB',
+                        style: TextStyle(fontSize: 10, color: Colors.grey[600]),
+                      ),
+                    ],
+                  ),
+                  if (kDebugMode) ...[
+                    const SizedBox(height: 16),
+                    Text(
+                      'Adjust Thresholds:',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        const Text('Silence: ', style: TextStyle(fontSize: 12)),
+                        Expanded(
+                          child: Slider(
+                            value: _silenceThreshold,
+                            min: -100,
+                            max: -20,
+                            divisions: 80,
+                            label: _silenceThreshold.toStringAsFixed(1),
+                            onChanged: (value) {
+                              setState(() {
+                                _silenceThreshold = value;
+                                _soundDetectionService.setSilenceThreshold(
+                                  value,
+                                );
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Text('Water: ', style: TextStyle(fontSize: 12)),
+                        Expanded(
+                          child: Slider(
+                            value: _waterThreshold,
+                            min: -80,
+                            max: 0,
+                            divisions: 80,
+                            label: _waterThreshold.toStringAsFixed(1),
+                            onChanged: (value) {
+                              setState(() {
+                                _waterThreshold = value;
+                                _soundDetectionService.setWaterThreshold(value);
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -366,7 +478,9 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
   @override
   void dispose() {
     _stopwatch.stop();
+    _uiUpdateTimer?.cancel();
     _soundDetectionService.stopListening();
+    _soundDetectionService.dispose();
     super.dispose();
   }
 }
