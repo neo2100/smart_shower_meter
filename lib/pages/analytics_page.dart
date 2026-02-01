@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../models/shower_record.dart';
 
+enum AnalyticsMetric { waterUsage, duration }
+
 class AnalyticsPage extends StatefulWidget {
   final List<ShowerRecord> records;
 
@@ -12,65 +14,73 @@ class AnalyticsPage extends StatefulWidget {
 
 class _AnalyticsPageState extends State<AnalyticsPage> {
   int _selectedDays = 7;
+  AnalyticsMetric _selectedMetric = AnalyticsMetric.waterUsage;
 
-  Map<String, Duration> _getShowersByDay() {
+  Map<String, double> _getMetricByDay() {
     final now = DateTime.now();
     final cutoffDate = now.subtract(Duration(days: _selectedDays));
-    final dayMap = <String, Duration>{};
+    final dayMap = <String, double>{};
 
-    // Initialize all days with zero duration
     for (int i = 0; i < _selectedDays; i++) {
       final date = cutoffDate.add(Duration(days: i));
-      final dateKey = '${date.month}/${date.day}/${date.year}';
-      dayMap[dateKey] = Duration.zero;
+      final key = '${date.month}/${date.day}/${date.year}';
+      dayMap[key] = 0.0;
     }
 
-    // Add shower durations
     for (final record in widget.records) {
       if (record.startTime.isAfter(cutoffDate)) {
-        final dateKey =
+        final key =
             '${record.startTime.month}/${record.startTime.day}/${record.startTime.year}';
-        dayMap[dateKey] = (dayMap[dateKey] ?? Duration.zero) + record.duration;
+
+        dayMap[key] =
+            (dayMap[key] ?? 0) +
+            (_selectedMetric == AnalyticsMetric.waterUsage
+                ? record.totalWaterUsage
+                : record.duration.inMinutes.toDouble());
       }
     }
 
     return dayMap;
   }
 
-  Duration _getTotalDuration() {
-    return widget.records.isEmpty
-        ? Duration.zero
-        : widget.records.fold<Duration>(
-            Duration.zero,
-            (sum, record) => sum + record.duration,
-          );
-  }
+  double _getTotalMetric() {
+    if (widget.records.isEmpty) return 0.0;
 
-  Duration _getAverageDuration() {
-    if (widget.records.isEmpty) return Duration.zero;
-    final total = _getTotalDuration();
-    return Duration(
-      milliseconds: total.inMilliseconds ~/ widget.records.length,
+    return widget.records.fold<double>(
+      0.0,
+      (sum, record) =>
+          sum +
+          (_selectedMetric == AnalyticsMetric.waterUsage
+              ? record.totalWaterUsage
+              : record.duration.inMinutes.toDouble()),
     );
   }
 
-  String _formatDuration(Duration duration) {
-    final hours = duration.inHours;
-    final minutes = duration.inMinutes.remainder(60);
-    final seconds = duration.inSeconds.remainder(60);
-    return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+  double _getAverageMetric() {
+    if (widget.records.isEmpty) return 0.0;
+    return _getTotalMetric() / widget.records.length;
+  }
+
+  String _formatMetric(double value) {
+    return _selectedMetric == AnalyticsMetric.waterUsage
+        ? '${value.toStringAsFixed(2)} L'
+        : '${value.toStringAsFixed(0)} min';
+  }
+
+  String get _chartTitle {
+    return _selectedMetric == AnalyticsMetric.waterUsage
+        ? 'Water Usage Per Day'
+        : 'Shower Duration Per Day';
   }
 
   @override
   Widget build(BuildContext context) {
-    final showersByDay = _getShowersByDay();
-    final totalDuration = _getTotalDuration();
-    final averageDuration = _getAverageDuration();
-    final maxDuration = showersByDay.values.isEmpty
-        ? Duration.zero
-        : showersByDay.values.reduce(
-            (a, b) => a.inSeconds > b.inSeconds ? a : b,
-          );
+    final metricByDay = _getMetricByDay();
+    final totalMetric = _getTotalMetric();
+    final averageMetric = _getAverageMetric();
+    final maxMetric = metricByDay.values.isEmpty
+        ? 0.0
+        : metricByDay.values.reduce((a, b) => a > b ? a : b);
 
     return Scaffold(
       appBar: AppBar(
@@ -80,43 +90,56 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Time Period Selector
+            // Top Selectors
             Padding(
               padding: const EdgeInsets.all(16),
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Column(
-                  children: [
-                    const Text(
-                      'Select Time Period',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Wrap(
-                      spacing: 8,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: _AnalyticsSelectorCard(
+                      title: 'Time Period',
                       children: [7, 14, 30, 90].map((days) {
                         return FilterChip(
                           label: Text('${days}d'),
                           selected: _selectedDays == days,
-                          onSelected: (selected) {
-                            setState(() {
-                              _selectedDays = days;
-                            });
+                          onSelected: (_) {
+                            setState(() => _selectedDays = days);
                           },
                         );
                       }).toList(),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _AnalyticsSelectorCard(
+                      title: 'Metric',
+                      children: [
+                        ChoiceChip(
+                          label: const Text('Water'),
+                          selected:
+                              _selectedMetric == AnalyticsMetric.waterUsage,
+                          onSelected: (_) {
+                            setState(() {
+                              _selectedMetric = AnalyticsMetric.waterUsage;
+                            });
+                          },
+                        ),
+                        ChoiceChip(
+                          label: const Text('Duration'),
+                          selected: _selectedMetric == AnalyticsMetric.duration,
+                          onSelected: (_) {
+                            setState(() {
+                              _selectedMetric = AnalyticsMetric.duration;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
+
             // Summary Stats
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -124,10 +147,14 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                 children: [
                   Expanded(
                     child: _StatCard(
-                      title: 'Total Time',
-                      value: _formatDuration(totalDuration),
-                      icon: Icons.timer,
-                      color: Colors.blue,
+                      title: 'Total',
+                      value: _formatMetric(totalMetric),
+                      icon: _selectedMetric == AnalyticsMetric.waterUsage
+                          ? Icons.water_drop
+                          : Icons.timer,
+                      color: _selectedMetric == AnalyticsMetric.waterUsage
+                          ? Colors.blue
+                          : Colors.green,
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -136,36 +163,43 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                       title: 'Showers',
                       value: widget.records.length.toString(),
                       icon: Icons.shower,
-                      color: Colors.green,
+                      color: Colors.orange,
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: _StatCard(
                       title: 'Average',
-                      value: _formatDuration(averageDuration),
+                      value: _formatMetric(averageMetric),
                       icon: Icons.show_chart,
-                      color: Colors.orange,
+                      color: Colors.purple,
                     ),
                   ),
                 ],
               ),
             ),
+
             const SizedBox(height: 24),
+
             // Chart Title
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Shower Time Per Day',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  _chartTitle,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
+
             const SizedBox(height: 16),
-            // Bar Chart
-            if (showersByDay.isEmpty)
+
+            // Chart
+            if (metricByDay.isEmpty)
               Padding(
                 padding: const EdgeInsets.all(32),
                 child: Text(
@@ -179,14 +213,46 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                 child: SizedBox(
                   height: 250,
                   child: _ScrollableBarChart(
-                    data: showersByDay,
-                    maxValue: maxDuration,
+                    data: metricByDay,
+                    maxValue: maxMetric,
+                    barColor: _selectedMetric == AnalyticsMetric.waterUsage
+                        ? Theme.of(context).colorScheme.primary
+                        : Colors.green,
                   ),
                 ),
               ),
+
             const SizedBox(height: 24),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _AnalyticsSelectorCard extends StatelessWidget {
+  final String title;
+  final List<Widget> children;
+
+  const _AnalyticsSelectorCard({required this.title, required this.children});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        children: [
+          Text(
+            title,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 12),
+          Wrap(spacing: 8, children: children),
+        ],
       ),
     );
   }
@@ -211,10 +277,6 @@ class _StatCard extends StatelessWidget {
       elevation: 2,
       child: Container(
         padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: Colors.white,
-        ),
         child: Column(
           children: [
             Icon(icon, color: color, size: 24),
@@ -228,7 +290,6 @@ class _StatCard extends StatelessWidget {
             Text(
               title,
               style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-              textAlign: TextAlign.center,
             ),
           ],
         ),
@@ -238,86 +299,79 @@ class _StatCard extends StatelessWidget {
 }
 
 class _ScrollableBarChart extends StatefulWidget {
-  final Map<String, Duration> data;
-  final Duration maxValue;
+  final Map<String, double> data;
+  final double maxValue;
+  final Color barColor;
 
-  const _ScrollableBarChart({required this.data, required this.maxValue});
+  const _ScrollableBarChart({
+    required this.data,
+    required this.maxValue,
+    required this.barColor,
+  });
 
   @override
   State<_ScrollableBarChart> createState() => _ScrollableBarChartState();
 }
 
 class _ScrollableBarChartState extends State<_ScrollableBarChart> {
-  late ScrollController _scrollController;
+  late ScrollController _controller;
 
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController();
-    // Scroll to the end (right) after the widget is built
+    _controller = ScrollController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_scrollController.hasClients) {
-        _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+      if (_controller.hasClients) {
+        _controller.jumpTo(_controller.position.maxScrollExtent);
       }
     });
-  }
-
-  @override
-  void didUpdateWidget(covariant _ScrollableBarChart oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // Scroll to the end when data changes
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_scrollController.hasClients) {
-        _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      controller: _scrollController,
+      controller: _controller,
       scrollDirection: Axis.horizontal,
-      child: _BarChart(data: widget.data, maxValue: widget.maxValue),
+      child: _BarChart(
+        data: widget.data,
+        maxValue: widget.maxValue,
+        barColor: widget.barColor,
+      ),
     );
   }
 }
 
 class _BarChart extends StatelessWidget {
-  final Map<String, Duration> data;
-  final Duration maxValue;
+  final Map<String, double> data;
+  final double maxValue;
+  final Color barColor;
 
-  const _BarChart({required this.data, required this.maxValue});
+  const _BarChart({
+    required this.data,
+    required this.maxValue,
+    required this.barColor,
+  });
 
   String _getDayOfWeek(String dateKey) {
     final parts = dateKey.split('/');
-    final month = int.parse(parts[0]);
-    final day = int.parse(parts[1]);
-    final year = int.parse(parts[2]);
-    final date = DateTime(year, month, day);
-
-    final weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    return weekDays[date.weekday - 1];
+    final date = DateTime(
+      int.parse(parts[2]),
+      int.parse(parts[0]),
+      int.parse(parts[1]),
+    );
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    return days[date.weekday - 1];
   }
 
   @override
   Widget build(BuildContext context) {
     final entries = data.entries.toList();
-    final maxSeconds = maxValue.inSeconds > 0 ? maxValue.inSeconds : 1;
+    final maxVal = maxValue > 0 ? maxValue : 1.0;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
-      mainAxisAlignment: MainAxisAlignment.start,
       children: entries.map((entry) {
-        final heightRatio = entry.value.inSeconds / maxSeconds;
-        final displayDay = entry.key.split('/')[1]; // Show day only
-        final dayOfWeek = _getDayOfWeek(entry.key);
+        final heightRatio = entry.value / maxVal;
 
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -328,16 +382,15 @@ class _BarChart extends StatelessWidget {
                 width: 40,
                 height: 180 * heightRatio,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(4),
-                    topRight: Radius.circular(4),
+                  color: barColor,
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(4),
                   ),
                 ),
               ),
               const SizedBox(height: 8),
               Text(
-                displayDay,
+                entry.key.split('/')[1],
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
@@ -345,7 +398,7 @@ class _BarChart extends StatelessWidget {
               ),
               const SizedBox(height: 2),
               Text(
-                dayOfWeek,
+                _getDayOfWeek(entry.key),
                 style: TextStyle(fontSize: 10, color: Colors.grey[600]),
               ),
             ],

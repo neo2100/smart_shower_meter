@@ -162,6 +162,18 @@ class DatabaseService {
     return _cachedRecords.map((r) => r.id).reduce((a, b) => a > b ? a : b);
   }
 
+  // Get water flow setting
+  Future<double> getWaterFlow() async {
+    await _ensureInitialized();
+    return _prefs.getDouble('water_flow') ?? 0.1; // default 0.1 L/s
+  }
+
+  // Set water flow setting
+  Future<void> setWaterFlow(double flow) async {
+    await _ensureInitialized();
+    await _prefs.setDouble('water_flow', flow);
+  }
+
   // Helper method to log records
   void _logRecords(String action) {
     if (kDebugMode) {

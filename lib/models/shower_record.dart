@@ -3,12 +3,14 @@ class ShowerRecord {
   final DateTime startTime;
   final DateTime? endTime;
   final Duration duration;
+  final double waterFlow; // liters per second
 
   ShowerRecord({
     required this.id,
     required this.startTime,
     this.endTime,
     required this.duration,
+    required this.waterFlow,
   });
 
   // Convert to JSON
@@ -18,6 +20,7 @@ class ShowerRecord {
       'startTime': startTime.toIso8601String(),
       'endTime': endTime?.toIso8601String(),
       'duration': duration.inSeconds,
+      'waterFlow': waterFlow,
     };
   }
 
@@ -30,6 +33,9 @@ class ShowerRecord {
           ? DateTime.parse(json['endTime'] as String)
           : null,
       duration: Duration(seconds: json['duration'] as int),
+      waterFlow:
+          (json['waterFlow'] as num?)?.toDouble() ??
+          0.1, // default 0.1 L/s if not set
     );
   }
 
@@ -50,4 +56,10 @@ class ShowerRecord {
   String get formattedTime {
     return '${startTime.hour % 12 == 0 ? 12 : startTime.hour % 12}:${startTime.minute.toString().padLeft(2, '0')} ${startTime.hour >= 12 ? 'PM' : 'AM'}';
   }
+
+  // Get total water usage in liters
+  double get totalWaterUsage => duration.inSeconds * waterFlow;
+
+  // Get formatted water usage (X.XX L)
+  String get formattedWaterUsage => '${totalWaterUsage.toStringAsFixed(2)} L';
 }

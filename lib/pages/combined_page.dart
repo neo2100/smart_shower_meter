@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/shower_record.dart';
 import 'timer_page.dart';
 import 'smart_meter_page.dart';
+import 'water_flow_config_page.dart';
 
 class CombinedPage extends StatefulWidget {
   final List<ShowerRecord> records;
@@ -23,6 +24,24 @@ class _CombinedPageState extends State<CombinedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Shower Meter'),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const WaterFlowConfigPage(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.settings),
+            tooltip: 'Water Flow Settings',
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Expanded(

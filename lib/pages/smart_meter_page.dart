@@ -28,6 +28,7 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
   late Stopwatch _stopwatch;
   int _recordIdCounter = 1;
   final DatabaseService _databaseService = DatabaseService();
+  double _waterFlow = 0.1; // L/s
   String _statusMessage = 'Initializing...';
 
   double _currentSoundLevel = -160.0;
@@ -71,10 +72,12 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
 
       // Initialize ID counter
       final maxId = await _databaseService.getHighestId();
+      final waterFlow = await _databaseService.getWaterFlow();
 
       if (mounted) {
         setState(() {
           _recordIdCounter = maxId + 1;
+          _waterFlow = waterFlow;
           _statusMessage = 'Ready to start. Place near water source.';
         });
       }
@@ -159,6 +162,7 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
       startTime: DateTime.now().subtract(_stopwatch.elapsed),
       endTime: DateTime.now(),
       duration: _stopwatch.elapsed,
+      waterFlow: _waterFlow,
     );
 
     widget.onRecordAdded(record);
@@ -207,10 +211,6 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Smart Shower Meter'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(top: 40),
         child: Center(
