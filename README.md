@@ -108,7 +108,7 @@ lib/
 
 5. **Analyze code before pushing**
    ```bash
-   dart analyze
+   flutter analyze
    ```
 
 ## Building for Production 📦

@@ -1,12 +1,23 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+import 'package:mockito/annotations.dart';
+import 'package:record/record.dart';
 import 'package:smart_shower_meter/services/sound_detection_service.dart';
 
+// Generate mocks
+@GenerateMocks([AudioRecorder])
+import 'sound_detection_service_test.mocks.dart';
+
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group('SoundDetectionService Tests', () {
+    late MockAudioRecorder mockRecorder;
     late SoundDetectionService service;
 
     setUp(() {
-      service = SoundDetectionService();
+      mockRecorder = MockAudioRecorder();
+      service = SoundDetectionService(recorder: mockRecorder);
     });
 
     tearDown(() async {
