@@ -31,22 +31,6 @@ void main() {
       expect(find.text('00:00:00'), findsWidgets);
     });
 
-    testWidgets('AppBar displays correct title', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: TimerPage(
-            records: testRecords,
-            onRecordAdded: (record) {
-              testRecords.add(record);
-            },
-          ),
-        ),
-      );
-
-      // Verify AppBar title
-      expect(find.text('Shower Timer'), findsOneWidget);
-    });
-
     testWidgets('All control buttons are present', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(

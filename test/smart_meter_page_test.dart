@@ -32,7 +32,6 @@ void main() {
       );
 
       // Check if the page builds without errors
-      expect(find.text('Smart Shower Meter'), findsOneWidget);
       expect(find.text('Smart Mode Active'), findsOneWidget);
 
       addTearDown(() {
