@@ -16,7 +16,7 @@ import 'package:flutter/foundation.dart';
 import 'dart:math';
 
 class SoundDetectionService {
-  final AudioRecorder _recorder = AudioRecorder();
+  final AudioRecorder _recorder;
   bool _isListening = false;
   Function(bool)? _onWaterDetectedChanged;
   StreamSubscription<Uint8List>? _recordingSubscription;
@@ -35,6 +35,9 @@ class SoundDetectionService {
   double _lastLevel = -160.0;
 
   List<int> _audioBuffer = [];
+
+  SoundDetectionService({AudioRecorder? recorder})
+    : _recorder = recorder ?? AudioRecorder();
 
   /// Initialize and request microphone permissions
   Future<bool> initialize() async {

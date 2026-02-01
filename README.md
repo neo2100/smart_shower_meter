@@ -83,7 +83,10 @@ lib/
    flutter run -d chrome
    
    # For Android
-   flutter run -d android
+   # First run the emulator either by vscode or
+   emulator -avd pixel_api_34
+   # then when using emulator run the following based on the emulator name
+   flutter run -d emulator-5554
    
    # For iOS
    flutter run -d ios
@@ -105,7 +108,7 @@ lib/
 
 5. **Analyze code before pushing**
    ```bash
-   dart analyze
+   flutter analyze
    ```
 
 ## Building for Production 📦

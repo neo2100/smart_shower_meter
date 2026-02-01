@@ -118,108 +118,111 @@ class _TimerPageState extends State<TimerPage> {
         title: const Text('Shower Timer'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Timer Display
-            Container(
-              padding: const EdgeInsets.all(40),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Theme.of(context).colorScheme.primaryContainer,
-              ),
-              child: Text(
-                _formatDuration(_elapsed),
-                style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.only(top: 40),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Timer Display
+              Container(
+                padding: const EdgeInsets.all(40),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Theme.of(context).colorScheme.primaryContainer,
                 ),
-              ),
-            ),
-            const SizedBox(height: 60),
-            // Control Buttons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Start Button
-                ElevatedButton.icon(
-                  onPressed: !_isRunning || _isPaused ? _startTimer : null,
-                  icon: const Icon(Icons.play_arrow),
-                  label: const Text('Start'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 20,
-                    ),
+                child: Text(
+                  _formatDuration(_elapsed),
+                  style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(width: 20),
-                // Pause Button
-                ElevatedButton.icon(
-                  onPressed: _isRunning && !_isPaused ? _pauseTimer : null,
-                  icon: const Icon(Icons.pause),
-                  label: const Text('Pause'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 20,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 20),
-                // Stop Button
-                ElevatedButton.icon(
-                  onPressed: _isRunning || _elapsed.inSeconds > 0
-                      ? _stopTimer
-                      : null,
-                  icon: const Icon(Icons.stop),
-                  label: const Text('Stop'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 20,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 40),
-            // Status Indicator
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: _isRunning
-                    ? Colors.green.withValues(alpha: 0.2 * 255)
-                    : _elapsed.inSeconds > 0
-                    ? Colors.orange.withValues(alpha: 0.2 * 255)
-                    : Colors.grey.withValues(alpha: 0.2 * 255),
-                borderRadius: BorderRadius.circular(8),
               ),
-              child: Text(
-                _isRunning
-                    ? (_isPaused ? 'Paused' : 'Shower Running...')
-                    : _elapsed.inSeconds > 0
-                    ? 'Ready to Save'
-                    : 'Tap Start to Begin',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+              const SizedBox(height: 60),
+              // Control Buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Start Button
+                  ElevatedButton.icon(
+                    onPressed: !_isRunning || _isPaused ? _startTimer : null,
+                    icon: const Icon(Icons.play_arrow),
+                    label: const Text('Start'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 20,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  // Pause Button
+                  ElevatedButton.icon(
+                    onPressed: _isRunning && !_isPaused ? _pauseTimer : null,
+                    icon: const Icon(Icons.pause),
+                    label: const Text('Pause'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 20,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  // Stop Button
+                  ElevatedButton.icon(
+                    onPressed: _isRunning || _elapsed.inSeconds > 0
+                        ? _stopTimer
+                        : null,
+                    icon: const Icon(Icons.stop),
+                    label: const Text('Stop'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 20,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 40),
+              // Status Indicator
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
                   color: _isRunning
-                      ? Colors.green[700]
+                      ? Colors.green.withValues(alpha: 0.2 * 255)
                       : _elapsed.inSeconds > 0
-                      ? Colors.orange[700]
-                      : Colors.grey[700],
+                      ? Colors.orange.withValues(alpha: 0.2 * 255)
+                      : Colors.grey.withValues(alpha: 0.2 * 255),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  _isRunning
+                      ? (_isPaused ? 'Paused' : 'Shower Running...')
+                      : _elapsed.inSeconds > 0
+                      ? 'Ready to Save'
+                      : 'Tap Start to Begin',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: _isRunning
+                        ? Colors.green[700]
+                        : _elapsed.inSeconds > 0
+                        ? Colors.orange[700]
+                        : Colors.grey[700],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
