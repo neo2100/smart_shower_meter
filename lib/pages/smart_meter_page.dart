@@ -33,8 +33,8 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
 
   double _currentSoundLevel = -160.0;
   Timer? _uiUpdateTimer;
-  double _silenceThreshold = -60.0;
-  double _waterThreshold = -49.0;
+  double _silenceThreshold = -50.0;
+  double _waterThreshold = -5.2;
 
   @override
   void initState() {

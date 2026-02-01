@@ -83,10 +83,13 @@ lib/
    flutter run -d chrome
    
    # For Android
-   # First run the emulator either by vscode or
+   # First run the emulator either by vscode or `flutter emulators` or
    emulator -avd pixel_api_34
    # then when using emulator run the following based on the emulator name
    flutter run -d emulator-5554
+
+   # To run on mobile device
+   flutter run
    
    # For iOS
    flutter run -d ios
@@ -112,6 +115,15 @@ lib/
    ```
 
 ## Building for Production 📦
+
+### On Personal Mobile (Android)
+
+Connect the mobile in developer mode by USB then run these two commands:
+
+```bash
+flutter build apk --release
+adb install build/app/outputs/flutter-apk/app-release.apk
+```
 
 ### Android
 ```bash
