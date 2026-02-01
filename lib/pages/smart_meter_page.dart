@@ -212,7 +212,7 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.only(top: 40),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
