@@ -83,10 +83,13 @@ lib/
    flutter run -d chrome
    
    # For Android
-   # First run the emulator either by vscode or
+   # First run the emulator either by vscode or `flutter emulators` or
    emulator -avd pixel_api_34
    # then when using emulator run the following based on the emulator name
    flutter run -d emulator-5554
+
+   # To run on mobile device
+   flutter run
    
    # For iOS
    flutter run -d ios
@@ -112,6 +115,15 @@ lib/
    ```
 
 ## Building for Production 📦
+
+### On Personal Mobile (Android)
+
+Connect the mobile in developer mode by USB then run these two commands:
+
+```bash
+flutter build apk --release
+adb install build/app/outputs/flutter-apk/app-release.apk
+```
 
 ### Android
 ```bash
@@ -181,10 +193,18 @@ flutter build linux
 ## Future Enhancements 🔮
 
 Potential features for future versions:
-- Water usage estimation (based on shower flow rate)
-- Add smart meter to use mic and automatically start and pause the timer
-- Multi-language support
-- Widget for quick timer access
+- [x] Water usage estimation (based on shower flow rate)
+- [x] Add smart meter to use mic and automatically start and pause the timer
+- [ ] Be able to delete history records
+- [ ] Better UX: after stop go to history(analytic), one button for pause and start, simplified smart meter UI 
+- [ ] Improve water meter algorithm
+- [ ] Auto adjust thresholds based on first test
+- [ ] Better UX for flow config to add a timer and first ask what is the container capacity
+- [ ] Test iOS
+- [ ] Multi-language support
+- [ ] Widget for quick timer access
+- [ ] Export and import feature (no need to access network)
+- [ ] Publish to google play
 
 ## Contributing 🤝
 

@@ -33,8 +33,8 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
 
   double _currentSoundLevel = -160.0;
   Timer? _uiUpdateTimer;
-  double _silenceThreshold = -60.0;
-  double _waterThreshold = -49.0;
+  double _silenceThreshold = -50.0;
+  double _waterThreshold = -5.2;
 
   @override
   void initState() {
@@ -397,7 +397,7 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 60),
+              const SizedBox(height: 20),
               // Mode Information
               Container(
                 padding: const EdgeInsets.symmetric(
@@ -405,7 +405,6 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
                   vertical: 12,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.amber.withValues(alpha: 0.15 * 255),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Column(
@@ -415,13 +414,13 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: Colors.amber,
+                        color: Colors.blue,
                       ),
                     ),
                     SizedBox(height: 4),
                     Text(
                       'Timer starts/pauses automatically with water flow',
-                      style: TextStyle(fontSize: 12, color: Colors.amber),
+                      style: TextStyle(fontSize: 12, color: Colors.blue),
                     ),
                   ],
                 ),

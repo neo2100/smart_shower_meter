@@ -23,8 +23,8 @@ class SoundDetectionService {
   Timer? _analysisTimer;
 
   // Detection parameters
-  static double _silenceThresholdDb = -60.0;
-  static double _waterThresholdDb = -49.0;
+  static double _silenceThresholdDb = -50.0;
+  static double _waterThresholdDb = -5.2;
   static const int _requiredConsecutiveDetections = 10;
   static const int _fftSize = 1024;
   static const int _sampleRate = 16000;
@@ -173,7 +173,7 @@ class SoundDetectionService {
     }
 
     // Too loud = clipping/distortion
-    if (decibels > -5.0) {
+    if (decibels > -2.0) {
       return false;
     }
 
