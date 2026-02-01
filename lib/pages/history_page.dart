@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/shower_record.dart';
+import '../services/database_service.dart';
 
 class HistoryPage extends StatefulWidget {
   final List<ShowerRecord> records;
@@ -11,6 +12,105 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
+  final DatabaseService _databaseService = DatabaseService();
+
+  Future<void> _editRecord(ShowerRecord record) async {
+    double editedFlow = record.waterFlow;
+
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          title: const Text('Edit Water Flow'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Shower ${record.id} - ${record.formattedDate}'),
+              const SizedBox(height: 16),
+              const Text('Water Flow Rate (L/s)'),
+              Slider(
+                value: editedFlow,
+                min: 0.01,
+                max: 1.0,
+                divisions: 99,
+                label: editedFlow.toStringAsFixed(2),
+                onChanged: (value) {
+                  setState(() {
+                    editedFlow = value;
+                  });
+                },
+              ),
+              Text(
+                '${editedFlow.toStringAsFixed(2)} L/s',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Water Usage: ${(record.duration.inSeconds * editedFlow).toStringAsFixed(2)} L',
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    if (result == true) {
+      final updatedRecord = ShowerRecord(
+        id: record.id,
+        startTime: record.startTime,
+        endTime: record.endTime,
+        duration: record.duration,
+        waterFlow: editedFlow,
+      );
+
+      try {
+        await _databaseService.updateRecord(updatedRecord);
+        // Update the local list
+        setState(() {
+          final index = widget.records.indexWhere((r) => r.id == record.id);
+          if (index != -1) {
+            widget.records[index] = updatedRecord;
+          }
+        });
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Record updated successfully'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error updating record: $e'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final sortedRecords = List<ShowerRecord>.from(widget.records)
@@ -97,25 +197,46 @@ class _HistoryPageState extends State<HistoryPage> {
                         ),
                       ],
                     ),
-                    trailing: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          record.formattedDuration,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              record.formattedDuration,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              record.formattedWaterUsage,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.blue[700],
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'Duration / Water',
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'Duration',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey[600],
-                          ),
+                        const SizedBox(width: 8),
+                        IconButton(
+                          onPressed: () => _editRecord(record),
+                          icon: const Icon(Icons.edit, size: 20),
+                          tooltip: 'Edit water flow',
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ],
                     ),

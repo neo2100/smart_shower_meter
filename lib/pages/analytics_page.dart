@@ -13,64 +13,57 @@ class AnalyticsPage extends StatefulWidget {
 class _AnalyticsPageState extends State<AnalyticsPage> {
   int _selectedDays = 7;
 
-  Map<String, Duration> _getShowersByDay() {
+  Map<String, double> _getWaterUsageByDay() {
     final now = DateTime.now();
     final cutoffDate = now.subtract(Duration(days: _selectedDays));
-    final dayMap = <String, Duration>{};
+    final dayMap = <String, double>{};
 
-    // Initialize all days with zero duration
+    // Initialize all days with zero usage
     for (int i = 0; i < _selectedDays; i++) {
       final date = cutoffDate.add(Duration(days: i));
       final dateKey = '${date.month}/${date.day}/${date.year}';
-      dayMap[dateKey] = Duration.zero;
+      dayMap[dateKey] = 0.0;
     }
 
-    // Add shower durations
+    // Add water usage
     for (final record in widget.records) {
       if (record.startTime.isAfter(cutoffDate)) {
         final dateKey =
             '${record.startTime.month}/${record.startTime.day}/${record.startTime.year}';
-        dayMap[dateKey] = (dayMap[dateKey] ?? Duration.zero) + record.duration;
+        dayMap[dateKey] = (dayMap[dateKey] ?? 0.0) + record.totalWaterUsage;
       }
     }
 
     return dayMap;
   }
 
-  Duration _getTotalDuration() {
+  double _getTotalWaterUsage() {
     return widget.records.isEmpty
-        ? Duration.zero
-        : widget.records.fold<Duration>(
-            Duration.zero,
-            (sum, record) => sum + record.duration,
+        ? 0.0
+        : widget.records.fold<double>(
+            0.0,
+            (sum, record) => sum + record.totalWaterUsage,
           );
   }
 
-  Duration _getAverageDuration() {
-    if (widget.records.isEmpty) return Duration.zero;
-    final total = _getTotalDuration();
-    return Duration(
-      milliseconds: total.inMilliseconds ~/ widget.records.length,
-    );
+  double _getAverageWaterUsage() {
+    if (widget.records.isEmpty) return 0.0;
+    final total = _getTotalWaterUsage();
+    return total / widget.records.length;
   }
 
-  String _formatDuration(Duration duration) {
-    final hours = duration.inHours;
-    final minutes = duration.inMinutes.remainder(60);
-    final seconds = duration.inSeconds.remainder(60);
-    return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+  String _formatWaterUsage(double liters) {
+    return '${liters.toStringAsFixed(2)} L';
   }
 
   @override
   Widget build(BuildContext context) {
-    final showersByDay = _getShowersByDay();
-    final totalDuration = _getTotalDuration();
-    final averageDuration = _getAverageDuration();
-    final maxDuration = showersByDay.values.isEmpty
-        ? Duration.zero
-        : showersByDay.values.reduce(
-            (a, b) => a.inSeconds > b.inSeconds ? a : b,
-          );
+    final waterUsageByDay = _getWaterUsageByDay();
+    final totalWaterUsage = _getTotalWaterUsage();
+    final averageWaterUsage = _getAverageWaterUsage();
+    final maxWaterUsage = waterUsageByDay.values.isEmpty
+        ? 0.0
+        : waterUsageByDay.values.reduce((a, b) => a > b ? a : b);
 
     return Scaffold(
       appBar: AppBar(
@@ -124,9 +117,9 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                 children: [
                   Expanded(
                     child: _StatCard(
-                      title: 'Total Time',
-                      value: _formatDuration(totalDuration),
-                      icon: Icons.timer,
+                      title: 'Total Water',
+                      value: _formatWaterUsage(totalWaterUsage),
+                      icon: Icons.water_drop,
                       color: Colors.blue,
                     ),
                   ),
@@ -143,7 +136,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                   Expanded(
                     child: _StatCard(
                       title: 'Average',
-                      value: _formatDuration(averageDuration),
+                      value: _formatWaterUsage(averageWaterUsage),
                       icon: Icons.show_chart,
                       color: Colors.orange,
                     ),
@@ -158,14 +151,14 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Shower Time Per Day',
+                  'Water Usage Per Day',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
             const SizedBox(height: 16),
             // Bar Chart
-            if (showersByDay.isEmpty)
+            if (waterUsageByDay.isEmpty)
               Padding(
                 padding: const EdgeInsets.all(32),
                 child: Text(
@@ -179,8 +172,8 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                 child: SizedBox(
                   height: 250,
                   child: _ScrollableBarChart(
-                    data: showersByDay,
-                    maxValue: maxDuration,
+                    data: waterUsageByDay,
+                    maxValue: maxWaterUsage,
                   ),
                 ),
               ),
@@ -238,8 +231,8 @@ class _StatCard extends StatelessWidget {
 }
 
 class _ScrollableBarChart extends StatefulWidget {
-  final Map<String, Duration> data;
-  final Duration maxValue;
+  final Map<String, double> data;
+  final double maxValue;
 
   const _ScrollableBarChart({required this.data, required this.maxValue});
 
@@ -290,8 +283,8 @@ class _ScrollableBarChartState extends State<_ScrollableBarChart> {
 }
 
 class _BarChart extends StatelessWidget {
-  final Map<String, Duration> data;
-  final Duration maxValue;
+  final Map<String, double> data;
+  final double maxValue;
 
   const _BarChart({required this.data, required this.maxValue});
 
@@ -309,13 +302,13 @@ class _BarChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final entries = data.entries.toList();
-    final maxSeconds = maxValue.inSeconds > 0 ? maxValue.inSeconds : 1;
+    final maxLiters = maxValue > 0 ? maxValue : 1.0;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.start,
       children: entries.map((entry) {
-        final heightRatio = entry.value.inSeconds / maxSeconds;
+        final heightRatio = entry.value / maxLiters;
         final displayDay = entry.key.split('/')[1]; // Show day only
         final dayOfWeek = _getDayOfWeek(entry.key);
 

@@ -13,6 +13,7 @@ void main() {
           id: 1,
           startTime: DateTime.now(),
           duration: const Duration(minutes: 5),
+          waterFlow: 0.1,
         ),
       ];
     });

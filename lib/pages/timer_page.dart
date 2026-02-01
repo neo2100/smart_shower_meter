@@ -23,6 +23,7 @@ class _TimerPageState extends State<TimerPage> {
   late Stopwatch _stopwatch;
   int _recordIdCounter = 1;
   final DatabaseService _databaseService = DatabaseService();
+  double _waterFlow = 0.1; // L/s
 
   @override
   void initState() {
@@ -33,8 +34,10 @@ class _TimerPageState extends State<TimerPage> {
 
   Future<void> _initializeIdCounter() async {
     final maxId = await _databaseService.getHighestId();
+    final waterFlow = await _databaseService.getWaterFlow();
     setState(() {
       _recordIdCounter = maxId + 1;
+      _waterFlow = waterFlow;
     });
   }
 
@@ -68,6 +71,7 @@ class _TimerPageState extends State<TimerPage> {
       startTime: DateTime.now().subtract(_stopwatch.elapsed),
       endTime: DateTime.now(),
       duration: _stopwatch.elapsed,
+      waterFlow: _waterFlow,
     );
 
     widget.onRecordAdded(record);
