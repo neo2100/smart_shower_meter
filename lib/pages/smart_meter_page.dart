@@ -211,10 +211,6 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Smart Shower Meter'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(top: 40),
         child: Center(

@@ -25,7 +25,7 @@ class _CombinedPageState extends State<CombinedPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Smart Shower Meter'),
+        title: const Text('Shower Meter'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           IconButton(

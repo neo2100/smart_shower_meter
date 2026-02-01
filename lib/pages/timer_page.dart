@@ -118,10 +118,6 @@ class _TimerPageState extends State<TimerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Shower Timer'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(top: 40),
         child: Center(
