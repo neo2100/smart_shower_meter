@@ -211,265 +211,282 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
         title: const Text('Smart Shower Meter'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Smart Meter Status Indicator
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: _waterDetected
-                    ? Colors.blue.withValues(alpha: 0.3 * 255)
-                    : Colors.grey.withValues(alpha: 0.2 * 255),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: _waterDetected ? Colors.blue : Colors.grey,
-                  width: 2,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.only(top: 20),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Smart Meter Status Indicator
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: _waterDetected
+                      ? Colors.blue.withValues(alpha: 0.3 * 255)
+                      : Colors.grey.withValues(alpha: 0.2 * 255),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: _waterDetected ? Colors.blue : Colors.grey,
+                    width: 2,
+                  ),
                 ),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Water detection indicator
-                      Container(
-                        width: 16,
-                        height: 16,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: _waterDetected ? Colors.blue : Colors.grey,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Water detection indicator
+                        Container(
+                          width: 16,
+                          height: 16,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: _waterDetected ? Colors.blue : Colors.grey,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                      Text(
-                        _waterDetected ? 'Water Detected' : 'Listening...',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: _waterDetected
-                              ? Colors.blue[900]
-                              : Colors.grey[700],
+                        const SizedBox(width: 12),
+                        Text(
+                          _waterDetected ? 'Water Detected' : 'Listening...',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: _waterDetected
+                                ? Colors.blue[900]
+                                : Colors.grey[700],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    _statusMessage,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: _waterDetected
-                          ? Colors.blue[700]
-                          : Colors.grey[600],
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            // Sound Level Indicator
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.grey.withValues(alpha: 0.1 * 255),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade300),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    'Sound Level: ${_currentSoundLevel.toStringAsFixed(1)} dB',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  LinearProgressIndicator(
-                    value:
-                        ((_currentSoundLevel + 80).clamp(0, 80)) /
-                        80, // Scale from -80 to 0 dB
-                    backgroundColor: Colors.grey.shade300,
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      _currentSoundLevel >= _waterThreshold
-                          ? Colors.green
-                          : Colors.red,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Silence: ${_silenceThreshold.toStringAsFixed(1)} dB',
-                        style: TextStyle(fontSize: 10, color: Colors.grey[600]),
-                      ),
-                      Text(
-                        'Water: ${_waterThreshold.toStringAsFixed(1)} dB',
-                        style: TextStyle(fontSize: 10, color: Colors.grey[600]),
-                      ),
-                    ],
-                  ),
-                  if (kDebugMode) ...[
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 8),
                     Text(
-                      'Adjust Thresholds:',
+                      _statusMessage,
                       style: TextStyle(
                         fontSize: 12,
+                        color: _waterDetected
+                            ? Colors.blue[700]
+                            : Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              // Sound Level Indicator
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.grey.withValues(alpha: 0.1 * 255),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.grey.shade300),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      'Sound Level: ${_currentSoundLevel.toStringAsFixed(1)} dB',
+                      style: const TextStyle(
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 8),
+                    LinearProgressIndicator(
+                      value:
+                          ((_currentSoundLevel + 80).clamp(0, 80)) /
+                          80, // Scale from -80 to 0 dB
+                      backgroundColor: Colors.grey.shade300,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        _currentSoundLevel >= _waterThreshold
+                            ? Colors.green
+                            : Colors.red,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Silence: ', style: TextStyle(fontSize: 12)),
-                        Expanded(
-                          child: Slider(
-                            value: _silenceThreshold,
-                            min: -100,
-                            max: -20,
-                            divisions: 80,
-                            label: _silenceThreshold.toStringAsFixed(1),
-                            onChanged: (value) {
-                              setState(() {
-                                _silenceThreshold = value;
-                                _soundDetectionService.setSilenceThreshold(
-                                  value,
-                                );
-                              });
-                            },
+                        Text(
+                          'Silence: ${_silenceThreshold.toStringAsFixed(1)} dB',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        Text(
+                          'Water: ${_waterThreshold.toStringAsFixed(1)} dB',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.grey[600],
                           ),
                         ),
                       ],
                     ),
-                    Row(
-                      children: [
-                        const Text('Water: ', style: TextStyle(fontSize: 12)),
-                        Expanded(
-                          child: Slider(
-                            value: _waterThreshold,
-                            min: -80,
-                            max: 0,
-                            divisions: 80,
-                            label: _waterThreshold.toStringAsFixed(1),
-                            onChanged: (value) {
-                              setState(() {
-                                _waterThreshold = value;
-                                _soundDetectionService.setWaterThreshold(value);
-                              });
-                            },
-                          ),
+                    if (kDebugMode) ...[
+                      const SizedBox(height: 16),
+                      Text(
+                        'Adjust Thresholds:',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          const Text(
+                            'Silence: ',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          Expanded(
+                            child: Slider(
+                              value: _silenceThreshold,
+                              min: -100,
+                              max: -20,
+                              divisions: 80,
+                              label: _silenceThreshold.toStringAsFixed(1),
+                              onChanged: (value) {
+                                setState(() {
+                                  _silenceThreshold = value;
+                                  _soundDetectionService.setSilenceThreshold(
+                                    value,
+                                  );
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text('Water: ', style: TextStyle(fontSize: 12)),
+                          Expanded(
+                            child: Slider(
+                              value: _waterThreshold,
+                              min: -80,
+                              max: 0,
+                              divisions: 80,
+                              label: _waterThreshold.toStringAsFixed(1),
+                              onChanged: (value) {
+                                setState(() {
+                                  _waterThreshold = value;
+                                  _soundDetectionService.setWaterThreshold(
+                                    value,
+                                  );
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              const SizedBox(height: 40),
+              // Timer Display
+              Container(
+                padding: const EdgeInsets.all(40),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                ),
+                child: Text(
+                  _formatDuration(_elapsed),
+                  style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 60),
+              // Mode Information
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 12,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.amber.withValues(alpha: 0.15 * 255),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Column(
+                  children: [
+                    Text(
+                      'Smart Mode Active',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.amber,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      'Timer starts/pauses automatically with water flow',
+                      style: TextStyle(fontSize: 12, color: Colors.amber),
                     ),
                   ],
-                ],
-              ),
-            ),
-            const SizedBox(height: 40),
-            // Timer Display
-            Container(
-              padding: const EdgeInsets.all(40),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Theme.of(context).colorScheme.primaryContainer,
-              ),
-              child: Text(
-                _formatDuration(_elapsed),
-                style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            const SizedBox(height: 60),
-            // Mode Information
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              decoration: BoxDecoration(
-                color: Colors.amber.withValues(alpha: 0.15 * 255),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Column(
+              const SizedBox(height: 40),
+              // Control Buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'Smart Mode Active',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.amber,
+                  // Manual Start Button
+                  ElevatedButton.icon(
+                    onPressed: !_isRunning || _isPaused ? _startTimer : null,
+                    icon: const Icon(Icons.play_arrow),
+                    label: const Text('Start'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 20,
+                      ),
                     ),
                   ),
-                  SizedBox(height: 4),
-                  Text(
-                    'Timer starts/pauses automatically with water flow',
-                    style: TextStyle(fontSize: 12, color: Colors.amber),
+                  const SizedBox(width: 20),
+                  // Stop Button (for manual completion)
+                  ElevatedButton.icon(
+                    onPressed: _isRunning || _elapsed.inSeconds > 0
+                        ? _stopTimer
+                        : null,
+                    icon: const Icon(Icons.stop),
+                    label: const Text('Stop & Save'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 20,
+                      ),
+                    ),
                   ),
                 ],
               ),
-            ),
-            const SizedBox(height: 40),
-            // Control Buttons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Manual Start Button
-                ElevatedButton.icon(
-                  onPressed: !_isRunning || _isPaused ? _startTimer : null,
-                  icon: const Icon(Icons.play_arrow),
-                  label: const Text('Start'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 20,
-                    ),
+              const SizedBox(height: 20),
+              // Information
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  '${_isRunning ? 'Timer: ' : ''}${_isPaused
+                      ? 'Paused'
+                      : _isRunning
+                      ? 'Running'
+                      : 'Ready'}',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: _isRunning
+                        ? Colors.green[700]
+                        : _elapsed.inSeconds > 0
+                        ? Colors.orange[700]
+                        : Colors.grey[700],
                   ),
-                ),
-                const SizedBox(width: 20),
-                // Stop Button (for manual completion)
-                ElevatedButton.icon(
-                  onPressed: _isRunning || _elapsed.inSeconds > 0
-                      ? _stopTimer
-                      : null,
-                  icon: const Icon(Icons.stop),
-                  label: const Text('Stop & Save'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 20,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            // Information
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                '${_isRunning ? 'Timer: ' : ''}${_isPaused
-                    ? 'Paused'
-                    : _isRunning
-                    ? 'Running'
-                    : 'Ready'}',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: _isRunning
-                      ? Colors.green[700]
-                      : _elapsed.inSeconds > 0
-                      ? Colors.orange[700]
-                      : Colors.grey[700],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
