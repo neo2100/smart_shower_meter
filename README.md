@@ -198,6 +198,8 @@ Potential features for future versions:
 - [ ] Be able to delete history records
 - [ ] Better UX: after stop go to history(analytic), one button for pause and start, simplified smart meter UI 
 - [ ] Improve water meter algorithm
+- [ ] Auto adjust thresholds based on first test
+- [ ] Better UX for flow config to add a timer and first ask what is the container capacity
 - [ ] Test iOS
 - [ ] Multi-language support
 - [ ] Widget for quick timer access
