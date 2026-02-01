@@ -193,10 +193,16 @@ flutter build linux
 ## Future Enhancements 🔮
 
 Potential features for future versions:
-- Water usage estimation (based on shower flow rate)
-- Add smart meter to use mic and automatically start and pause the timer
-- Multi-language support
-- Widget for quick timer access
+- [x] Water usage estimation (based on shower flow rate)
+- [x] Add smart meter to use mic and automatically start and pause the timer
+- [ ] Be able to delete history records
+- [ ] Better UX: after stop go to history(analytic), one button for pause and start, simplified smart meter UI 
+- [ ] Improve water meter algorithm
+- [ ] Test iOS
+- [ ] Multi-language support
+- [ ] Widget for quick timer access
+- [ ] Export and import feature (no need to access network)
+- [ ] Publish to google play
 
 ## Contributing 🤝
 
