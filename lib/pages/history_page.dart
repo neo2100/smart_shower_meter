@@ -213,21 +213,29 @@ class _HistoryPageState extends State<HistoryPage> {
                               ),
                             ),
                             const SizedBox(height: 2),
-                            Text(
-                              record.formattedWaterUsage,
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.blue[700],
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'Duration / Water',
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Colors.grey[600],
-                              ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  '(${record.waterFlow.toStringAsFixed(2)} L/s)',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  record.formattedWaterUsage,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.blue[700],
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
