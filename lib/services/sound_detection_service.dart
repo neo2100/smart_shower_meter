@@ -25,7 +25,8 @@ class SoundDetectionService {
   // Detection parameters
   static double _silenceThresholdDb = -50.0;
   static double _waterThresholdDb = -5.2;
-  static const int _requiredConsecutiveDetections = 10;
+  static const int _requiredConsecutiveWaterDetections = 10;
+  static const int _requiredConsecutiveSilenceDetections = 1;
   static const int _fftSize = 1024;
   static const int _sampleRate = 16000;
 
@@ -147,9 +148,10 @@ class SoundDetectionService {
 
       // Confirm water detection after required consecutive frames
       final bool shouldReportWater =
-          _consecutiveWaterDetections >= _requiredConsecutiveDetections;
+          _consecutiveWaterDetections >= _requiredConsecutiveWaterDetections;
       final bool shouldReportSilence =
-          _consecutiveSilenceDetections >= _requiredConsecutiveDetections;
+          _consecutiveSilenceDetections >=
+          _requiredConsecutiveSilenceDetections;
 
       if (shouldReportWater && !_lastWaterDetected) {
         _lastWaterDetected = true;
