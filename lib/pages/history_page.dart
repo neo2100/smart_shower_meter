@@ -111,6 +111,56 @@ class _HistoryPageState extends State<HistoryPage> {
     }
   }
 
+  Future<void> _deleteRecord(ShowerRecord record) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Record'),
+        content: Text(
+          'Are you sure you want to permanently delete Shower ${record.id} from ${record.formattedDate}? This action cannot be undone.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      try {
+        await _databaseService.deleteRecord(record.id);
+        // Update the local list
+        setState(() {
+          widget.records.removeWhere((r) => r.id == record.id);
+        });
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Record deleted successfully'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error deleting record: $e'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final sortedRecords = List<ShowerRecord>.from(widget.records)
@@ -245,6 +295,12 @@ class _HistoryPageState extends State<HistoryPage> {
                           icon: const Icon(Icons.edit, size: 20),
                           tooltip: 'Edit water flow',
                           color: Theme.of(context).colorScheme.primary,
+                        ),
+                        IconButton(
+                          onPressed: () => _deleteRecord(record),
+                          icon: const Icon(Icons.delete, size: 20),
+                          tooltip: 'Delete record',
+                          color: Colors.red[600],
                         ),
                       ],
                     ),
