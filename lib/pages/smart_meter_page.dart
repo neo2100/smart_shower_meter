@@ -438,42 +438,23 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
                 ),
               ),
               const SizedBox(height: 40),
-              // Control Buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Manual Start Button
-                  ElevatedButton.icon(
-                    onPressed: !_isRunning || _isPaused ? _startTimer : null,
-                    icon: const Icon(Icons.play_arrow),
-                    label: const Text('Start'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 20,
-                      ),
-                    ),
+              // Control Button - Toggle Start/Stop
+              ElevatedButton.icon(
+                onPressed: _isRunning
+                    ? _stopTimer
+                    : (!_isRunning && _elapsed.inSeconds > 0)
+                    ? _stopTimer
+                    : _startTimer,
+                icon: Icon(_isRunning ? Icons.stop : Icons.play_arrow),
+                label: Text(_isRunning ? 'Stop & Save' : 'Start'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _isRunning ? Colors.red : Colors.green,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 20,
                   ),
-                  const SizedBox(width: 20),
-                  // Stop Button (for manual completion)
-                  ElevatedButton.icon(
-                    onPressed: _isRunning || _elapsed.inSeconds > 0
-                        ? _stopTimer
-                        : null,
-                    icon: const Icon(Icons.stop),
-                    label: const Text('Stop & Save'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 20,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
               const SizedBox(height: 20),
               // Information
