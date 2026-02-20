@@ -11,19 +11,22 @@ class WaterFlowConfigPage extends StatefulWidget {
 class _WaterFlowConfigPageState extends State<WaterFlowConfigPage> {
   final DatabaseService _databaseService = DatabaseService();
   double _waterFlow = 0.1; // L/s
+  double _waterUsageCostFactor = 0.002; // euros per liter
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _loadWaterFlow();
+    _loadSettings();
   }
 
-  Future<void> _loadWaterFlow() async {
+  Future<void> _loadSettings() async {
     try {
       final flow = await _databaseService.getWaterFlow();
+      final costFactor = await _databaseService.getWaterUsageCostFactor();
       setState(() {
         _waterFlow = flow;
+        _waterUsageCostFactor = costFactor;
         _isLoading = false;
       });
     } catch (e) {
@@ -33,7 +36,7 @@ class _WaterFlowConfigPageState extends State<WaterFlowConfigPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error loading water flow: $e'),
+            content: Text('Error loading settings: $e'),
             backgroundColor: Colors.red,
           ),
         );
@@ -41,13 +44,14 @@ class _WaterFlowConfigPageState extends State<WaterFlowConfigPage> {
     }
   }
 
-  Future<void> _saveWaterFlow() async {
+  Future<void> _saveSettings() async {
     try {
       await _databaseService.setWaterFlow(_waterFlow);
+      await _databaseService.setWaterUsageCostFactor(_waterUsageCostFactor);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Water flow saved successfully'),
+            content: Text('Settings saved successfully'),
             backgroundColor: Colors.green,
           ),
         );
@@ -56,7 +60,7 @@ class _WaterFlowConfigPageState extends State<WaterFlowConfigPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error saving water flow: $e'),
+            content: Text('Error saving settings: $e'),
             backgroundColor: Colors.red,
           ),
         );
@@ -82,7 +86,7 @@ class _WaterFlowConfigPageState extends State<WaterFlowConfigPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           IconButton(
-            onPressed: _saveWaterFlow,
+            onPressed: _saveSettings,
             icon: const Icon(Icons.save),
             tooltip: 'Save',
           ),
@@ -218,9 +222,138 @@ class _WaterFlowConfigPageState extends State<WaterFlowConfigPage> {
             const SizedBox(height: 24),
             Center(
               child: ElevatedButton.icon(
-                onPressed: _saveWaterFlow,
+                onPressed: _saveSettings,
                 icon: const Icon(Icons.save),
                 label: const Text('Save Configuration'),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 32),
+            const Text(
+              'Water Usage Cost Factor',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            Card(
+              elevation: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Cost per Liter',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '${_waterUsageCostFactor.toStringAsFixed(4)} €/L',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Adjust Cost Factor (€/L)',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Slider(
+                      value: _waterUsageCostFactor,
+                      min: 0.0001,
+                      max: 0.01,
+                      divisions: 99,
+                      label: _waterUsageCostFactor.toStringAsFixed(4),
+                      onChanged: (value) {
+                        setState(() {
+                          _waterUsageCostFactor = value;
+                        });
+                      },
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '0.0001 €/L',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        Text(
+                          '0.01 €/L',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Card(
+              elevation: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'How to Calculate Your Water Cost',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      '1. Check your water bill to find the cost per cubic meter (m³) or liter.',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      '2. Convert to euros per liter if needed (1 m³ = 1000 liters).',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      '3. Enter the cost per liter above.',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Example: If water costs 2€ per m³, then 2 € ÷ 1000 L = 0.002 €/L',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Center(
+              child: ElevatedButton.icon(
+                onPressed: _saveSettings,
+                icon: const Icon(Icons.save),
+                label: const Text('Save All Settings'),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,

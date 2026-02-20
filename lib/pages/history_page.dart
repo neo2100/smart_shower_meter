@@ -16,47 +16,90 @@ class _HistoryPageState extends State<HistoryPage> {
 
   Future<void> _editRecord(ShowerRecord record) async {
     double editedFlow = record.waterFlow;
+    double editedCostFactor = record.waterUsageCostFactor;
 
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: const Text('Edit Water Flow'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Shower ${record.id} - ${record.formattedDate}'),
-              const SizedBox(height: 16),
-              const Text('Water Flow Rate (L/s)'),
-              Slider(
-                value: editedFlow,
-                min: 0.01,
-                max: 1.0,
-                divisions: 99,
-                label: editedFlow.toStringAsFixed(2),
-                onChanged: (value) {
-                  setState(() {
-                    editedFlow = value;
-                  });
-                },
-              ),
-              Text(
-                '${editedFlow.toStringAsFixed(2)} L/s',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Theme.of(context).colorScheme.primary,
+          title: const Text('Edit Record Details'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Shower ${record.id} - ${record.formattedDate}'),
+                const SizedBox(height: 24),
+                // Water Flow Section
+                const Text(
+                  'Water Flow Rate (L/s)',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Water Usage: ${(record.duration.inSeconds * editedFlow).toStringAsFixed(2)} L',
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontStyle: FontStyle.italic,
+                Slider(
+                  value: editedFlow,
+                  min: 0.01,
+                  max: 1.0,
+                  divisions: 99,
+                  label: editedFlow.toStringAsFixed(2),
+                  onChanged: (value) {
+                    setState(() {
+                      editedFlow = value;
+                    });
+                  },
                 ),
-              ),
-            ],
+                Text(
+                  '${editedFlow.toStringAsFixed(2)} L/s',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Water Usage: ${(record.duration.inSeconds * editedFlow).toStringAsFixed(2)} L',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                const Divider(),
+                const SizedBox(height: 24),
+                // Cost Factor Section
+                const Text(
+                  'Cost per Liter (€/L)',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                ),
+                Slider(
+                  value: editedCostFactor,
+                  min: 0.0001,
+                  max: 0.01,
+                  divisions: 99,
+                  label: editedCostFactor.toStringAsFixed(4),
+                  onChanged: (value) {
+                    setState(() {
+                      editedCostFactor = value;
+                    });
+                  },
+                ),
+                Text(
+                  '${editedCostFactor.toStringAsFixed(4)} €/L',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Shower Cost: ${((record.duration.inSeconds * editedFlow) * editedCostFactor).toStringAsFixed(2)} €',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(
@@ -79,6 +122,7 @@ class _HistoryPageState extends State<HistoryPage> {
         endTime: record.endTime,
         duration: record.duration,
         waterFlow: editedFlow,
+        waterUsageCostFactor: editedCostFactor,
       );
 
       try {

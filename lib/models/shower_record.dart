@@ -4,6 +4,7 @@ class ShowerRecord {
   final DateTime? endTime;
   final Duration duration;
   final double waterFlow; // liters per second
+  final double waterUsageCostFactor; // euros per liter
 
   ShowerRecord({
     required this.id,
@@ -11,6 +12,7 @@ class ShowerRecord {
     this.endTime,
     required this.duration,
     required this.waterFlow,
+    this.waterUsageCostFactor = 0.002, // default 0.002 euros per liter
   });
 
   // Convert to JSON
@@ -21,6 +23,7 @@ class ShowerRecord {
       'endTime': endTime?.toIso8601String(),
       'duration': duration.inSeconds,
       'waterFlow': waterFlow,
+      'waterUsageCostFactor': waterUsageCostFactor,
     };
   }
 
@@ -36,6 +39,9 @@ class ShowerRecord {
       waterFlow:
           (json['waterFlow'] as num?)?.toDouble() ??
           0.1, // default 0.1 L/s if not set
+      waterUsageCostFactor:
+          (json['waterUsageCostFactor'] as num?)?.toDouble() ??
+          0.002, // default 0.002 euros per liter if not set
     );
   }
 
@@ -62,4 +68,10 @@ class ShowerRecord {
 
   // Get formatted water usage (X.XX L)
   String get formattedWaterUsage => '${totalWaterUsage.toStringAsFixed(2)} L';
+
+  // Get total cost in euros
+  double get totalCost => totalWaterUsage * waterUsageCostFactor;
+
+  // Get formatted cost (X.XX €)
+  String get formattedCost => '${totalCost.toStringAsFixed(2)} €';
 }

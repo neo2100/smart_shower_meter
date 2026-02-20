@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/shower_record.dart';
 
-enum AnalyticsMetric { waterUsage, duration }
+enum AnalyticsMetric { waterUsage, duration, cost }
 
 class AnalyticsPage extends StatefulWidget {
   final List<ShowerRecord> records;
@@ -36,7 +36,9 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
             (dayMap[key] ?? 0) +
             (_selectedMetric == AnalyticsMetric.waterUsage
                 ? record.totalWaterUsage
-                : record.duration.inMinutes.toDouble());
+                : _selectedMetric == AnalyticsMetric.duration
+                ? record.duration.inMinutes.toDouble()
+                : record.totalCost);
       }
     }
 
@@ -52,7 +54,9 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
           sum +
           (_selectedMetric == AnalyticsMetric.waterUsage
               ? record.totalWaterUsage
-              : record.duration.inMinutes.toDouble()),
+              : _selectedMetric == AnalyticsMetric.duration
+              ? record.duration.inMinutes.toDouble()
+              : record.totalCost),
     );
   }
 
@@ -64,13 +68,17 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
   String _formatMetric(double value) {
     return _selectedMetric == AnalyticsMetric.waterUsage
         ? '${value.toStringAsFixed(2)} L'
-        : '${value.toStringAsFixed(0)} min';
+        : _selectedMetric == AnalyticsMetric.duration
+        ? '${value.toStringAsFixed(0)} min'
+        : '${value.toStringAsFixed(2)} €';
   }
 
   String get _chartTitle {
     return _selectedMetric == AnalyticsMetric.waterUsage
         ? 'Water Usage Per Day'
-        : 'Shower Duration Per Day';
+        : _selectedMetric == AnalyticsMetric.duration
+        ? 'Shower Duration Per Day'
+        : 'Cost Per Day';
   }
 
   @override
@@ -133,6 +141,15 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                             });
                           },
                         ),
+                        ChoiceChip(
+                          label: const Text('Cost'),
+                          selected: _selectedMetric == AnalyticsMetric.cost,
+                          onSelected: (_) {
+                            setState(() {
+                              _selectedMetric = AnalyticsMetric.cost;
+                            });
+                          },
+                        ),
                       ],
                     ),
                   ),
@@ -151,10 +168,14 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                       value: _formatMetric(totalMetric),
                       icon: _selectedMetric == AnalyticsMetric.waterUsage
                           ? Icons.water_drop
-                          : Icons.timer,
+                          : _selectedMetric == AnalyticsMetric.duration
+                          ? Icons.timer
+                          : Icons.euro,
                       color: _selectedMetric == AnalyticsMetric.waterUsage
                           ? Colors.blue
-                          : Colors.green,
+                          : _selectedMetric == AnalyticsMetric.duration
+                          ? Colors.green
+                          : Colors.amber,
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -217,7 +238,9 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                     maxValue: maxMetric,
                     barColor: _selectedMetric == AnalyticsMetric.waterUsage
                         ? Theme.of(context).colorScheme.primary
-                        : Colors.green,
+                        : _selectedMetric == AnalyticsMetric.duration
+                        ? Colors.green
+                        : Colors.amber,
                   ),
                 ),
               ),

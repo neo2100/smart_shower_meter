@@ -24,6 +24,7 @@ class _TimerPageState extends State<TimerPage> {
   int _recordIdCounter = 1;
   final DatabaseService _databaseService = DatabaseService();
   double _waterFlow = 0.1; // L/s
+  double _waterUsageCostFactor = 0.002; // euros per liter
 
   @override
   void initState() {
@@ -35,9 +36,11 @@ class _TimerPageState extends State<TimerPage> {
   Future<void> _initializeIdCounter() async {
     final maxId = await _databaseService.getHighestId();
     final waterFlow = await _databaseService.getWaterFlow();
+    final costFactor = await _databaseService.getWaterUsageCostFactor();
     setState(() {
       _recordIdCounter = maxId + 1;
       _waterFlow = waterFlow;
+      _waterUsageCostFactor = costFactor;
     });
   }
 
@@ -84,6 +87,7 @@ class _TimerPageState extends State<TimerPage> {
       endTime: DateTime.now(),
       duration: _stopwatch.elapsed,
       waterFlow: _waterFlow,
+      waterUsageCostFactor: _waterUsageCostFactor,
     );
 
     widget.onRecordAdded(record);
