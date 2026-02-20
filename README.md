@@ -202,7 +202,6 @@ Potential features for future versions:
 - [ ] Better UX for flow config to add a timer and first ask what is the container capacity
 - [ ] Test iOS
 - [ ] Multi-language support
-- [ ] Widget for quick timer access
 - [ ] Export and import feature (no need to access network)
 - [ ] Publish to google play
 

@@ -174,6 +174,19 @@ class DatabaseService {
     await _prefs.setDouble('water_flow', flow);
   }
 
+  // Get water usage cost factor setting (euros per liter)
+  Future<double> getWaterUsageCostFactor() async {
+    await _ensureInitialized();
+    return _prefs.getDouble('water_usage_cost_factor') ??
+        0.002; // default 0.002 euros per liter
+  }
+
+  // Set water usage cost factor setting (euros per liter)
+  Future<void> setWaterUsageCostFactor(double factor) async {
+    await _ensureInitialized();
+    await _prefs.setDouble('water_usage_cost_factor', factor);
+  }
+
   // Helper method to log records
   void _logRecords(String action) {
     if (kDebugMode) {
