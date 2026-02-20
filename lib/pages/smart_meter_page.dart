@@ -282,7 +282,70 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
                   ],
                 ),
               ),
+              const SizedBox(height: 40),
+              // Timer Display
+              Container(
+                padding: const EdgeInsets.all(40),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                ),
+                child: Text(
+                  _formatDuration(_elapsed),
+                  style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
               const SizedBox(height: 20),
+              // Mode Information
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 12,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Column(
+                  children: [
+                    Text(
+                      'Smart Mode Active',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      'Timer starts/pauses automatically with water flow',
+                      style: TextStyle(fontSize: 12, color: Colors.blue),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 40),
+              // Control Button - Toggle Start/Stop
+              ElevatedButton.icon(
+                onPressed: _isRunning
+                    ? _stopTimer
+                    : (!_isRunning && _elapsed.inSeconds > 0)
+                    ? _stopTimer
+                    : _startTimer,
+                icon: Icon(_isRunning ? Icons.stop : Icons.play_arrow),
+                label: Text(_isRunning ? 'Stop & Save' : 'Start'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _isRunning ? Colors.red : Colors.green,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 20,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 40),
               // Sound Level Indicator
               Container(
                 padding: const EdgeInsets.all(16),
@@ -391,90 +454,6 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
                       ),
                     ],
                   ],
-                ),
-              ),
-              const SizedBox(height: 40),
-              // Timer Display
-              Container(
-                padding: const EdgeInsets.all(40),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                ),
-                child: Text(
-                  _formatDuration(_elapsed),
-                  style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              // Mode Information
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 12,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Column(
-                  children: [
-                    Text(
-                      'Smart Mode Active',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
-                      ),
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      'Timer starts/pauses automatically with water flow',
-                      style: TextStyle(fontSize: 12, color: Colors.blue),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 40),
-              // Control Button - Toggle Start/Stop
-              ElevatedButton.icon(
-                onPressed: _isRunning
-                    ? _stopTimer
-                    : (!_isRunning && _elapsed.inSeconds > 0)
-                    ? _stopTimer
-                    : _startTimer,
-                icon: Icon(_isRunning ? Icons.stop : Icons.play_arrow),
-                label: Text(_isRunning ? 'Stop & Save' : 'Start'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: _isRunning ? Colors.red : Colors.green,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 40,
-                    vertical: 20,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              // Information
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  '${_isRunning ? 'Timer: ' : ''}${_isPaused
-                      ? 'Paused'
-                      : _isRunning
-                      ? 'Running'
-                      : 'Ready'}',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: _isRunning
-                        ? Colors.green[700]
-                        : _elapsed.inSeconds > 0
-                        ? Colors.orange[700]
-                        : Colors.grey[700],
-                  ),
                 ),
               ),
             ],
