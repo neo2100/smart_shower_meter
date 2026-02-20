@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import '../models/shower_record.dart';
 import 'timer_page.dart';
 import 'smart_meter_page.dart';
@@ -20,6 +22,38 @@ class CombinedPage extends StatefulWidget {
 
 class _CombinedPageState extends State<CombinedPage> {
   bool _isSmartMode = false; // false for timer, true for smart meter
+
+  @override
+  void initState() {
+    super.initState();
+    _enableWakelock();
+  }
+
+  @override
+  void dispose() {
+    _disableWakelock();
+    super.dispose();
+  }
+
+  Future<void> _enableWakelock() async {
+    try {
+      await WakelockPlus.enable();
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error enabling wakelock: $e');
+      }
+    }
+  }
+
+  Future<void> _disableWakelock() async {
+    try {
+      await WakelockPlus.disable();
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error disabling wakelock: $e');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
