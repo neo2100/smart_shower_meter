@@ -289,7 +289,6 @@ class _HistoryPageState extends State<HistoryPage> {
                             ),
                           ],
                         ),
-                        const SizedBox(width: 8),
                         IconButton(
                           onPressed: () => _editRecord(record),
                           icon: const Icon(Icons.edit, size: 20),
