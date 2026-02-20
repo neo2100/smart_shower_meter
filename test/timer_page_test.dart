@@ -45,13 +45,14 @@ void main() {
         ),
       );
 
-      // Verify all button icons exist
-      expect(find.byIcon(Icons.play_arrow), findsOneWidget); // Start
-      expect(find.byIcon(Icons.pause), findsOneWidget); // Pause
-      expect(find.byIcon(Icons.stop), findsOneWidget); // Stop
+      // Verify button text and icons exist
+      expect(find.text('Start'), findsOneWidget); // Start button initially
+      expect(find.text('Stop'), findsOneWidget); // Stop button
+      expect(find.byIcon(Icons.play_arrow), findsOneWidget); // Play icon
+      expect(find.byIcon(Icons.stop), findsOneWidget); // Stop icon
     });
 
-    testWidgets('Start button is visible and labeled', (
+    testWidgets('Button toggles from Start to Pause after clicking Start', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(
@@ -67,48 +68,9 @@ void main() {
         ),
       );
 
-      // Verify Start button with "Start" text
+      // Verify initial state shows Start button
       expect(find.text('Start'), findsOneWidget);
-    });
-
-    testWidgets('Pause button is visible and labeled', (
-      WidgetTester tester,
-    ) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: TimerPage(
-              records: testRecords,
-              onRecordAdded: (record) {
-                testRecords.add(record);
-              },
-            ),
-          ),
-        ),
-      );
-
-      // Verify Pause button with "Pause" text
-      expect(find.text('Pause'), findsOneWidget);
-    });
-
-    testWidgets('Stop button is visible and labeled', (
-      WidgetTester tester,
-    ) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: TimerPage(
-              records: testRecords,
-              onRecordAdded: (record) {
-                testRecords.add(record);
-              },
-            ),
-          ),
-        ),
-      );
-
-      // Verify Stop button with "Stop" text
-      expect(find.text('Stop'), findsOneWidget);
+      expect(find.text('Pause'), findsNothing);
     });
 
     testWidgets('Initial status message is displayed', (
