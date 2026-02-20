@@ -73,6 +73,7 @@ class _HomePageState extends State<HomePage> {
       await _databaseService.insertRecord(record);
       setState(() {
         _showerRecords.add(record);
+        _selectedIndex = 2; // Navigate to analytics page
       });
     } catch (e) {
       if (mounted) {
