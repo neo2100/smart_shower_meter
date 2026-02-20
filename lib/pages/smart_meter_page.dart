@@ -188,6 +188,18 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
     );
   }
 
+  /// Public method to save current record if timer is running
+  void saveCurrentRecord() {
+    if (_isRunning || _elapsed.inSeconds > 0) {
+      _stopTimer();
+    }
+  }
+
+  /// Check if a record is currently being recorded
+  bool isRecording() {
+    return _isRunning || _elapsed.inSeconds > 0;
+  }
+
   void _updateTimer() {
     if (_isRunning && !_isPaused) {
       Future.delayed(const Duration(milliseconds: 100), () {

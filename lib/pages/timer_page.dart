@@ -41,6 +41,18 @@ class _TimerPageState extends State<TimerPage> {
     });
   }
 
+  /// Public method to save current record if timer is running
+  void saveCurrentRecord() {
+    if (_isRunning || _elapsed.inSeconds > 0) {
+      _stopTimer();
+    }
+  }
+
+  /// Check if a record is currently being recorded
+  bool isRecording() {
+    return _isRunning || _elapsed.inSeconds > 0;
+  }
+
   void _startTimer() {
     if (!_isPaused) {
       _stopwatch.start();

@@ -23,10 +23,21 @@ class CombinedPage extends StatefulWidget {
 class _CombinedPageState extends State<CombinedPage> {
   bool _isSmartMode = false; // false for timer, true for smart meter
 
+  // Global keys to access child page states
+  final GlobalKey<State<TimerPage>> _timerPageKey = GlobalKey();
+  final GlobalKey<State<SmartMeterPage>> _smartMeterPageKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
     _enableWakelock();
+  }
+
+  @override
+  void deactivate() {
+    // Save current record before leaving the page
+    _saveRunningRecord();
+    super.deactivate();
   }
 
   @override
@@ -55,6 +66,30 @@ class _CombinedPageState extends State<CombinedPage> {
     }
   }
 
+  /// Save the current running record from the active page
+  void _saveRunningRecord() {
+    if (_isSmartMode) {
+      final state = _smartMeterPageKey.currentState;
+      if (state != null && state is State<SmartMeterPage>) {
+        (state as dynamic).saveCurrentRecord();
+      }
+    } else {
+      final state = _timerPageKey.currentState;
+      if (state != null && state is State<TimerPage>) {
+        (state as dynamic).saveCurrentRecord();
+      }
+    }
+  }
+
+  void _handleModeSwitch(bool value) {
+    // Save current record before switching if one is running
+    _saveRunningRecord();
+
+    setState(() {
+      _isSmartMode = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,10 +116,12 @@ class _CombinedPageState extends State<CombinedPage> {
           Expanded(
             child: _isSmartMode
                 ? SmartMeterPage(
+                    key: _smartMeterPageKey,
                     records: widget.records,
                     onRecordAdded: widget.onRecordAdded,
                   )
                 : TimerPage(
+                    key: _timerPageKey,
                     records: widget.records,
                     onRecordAdded: widget.onRecordAdded,
                   ),
@@ -99,11 +136,7 @@ class _CombinedPageState extends State<CombinedPage> {
                   const SizedBox(width: 8),
                   Switch(
                     value: _isSmartMode,
-                    onChanged: (value) {
-                      setState(() {
-                        _isSmartMode = value;
-                      });
-                    },
+                    onChanged: _handleModeSwitch,
                     activeThumbColor: Theme.of(context).colorScheme.primary,
                   ),
                 ],
