@@ -70,12 +70,12 @@ class _CombinedPageState extends State<CombinedPage> {
   void _saveRunningRecord() {
     if (_isSmartMode) {
       final state = _smartMeterPageKey.currentState;
-      if (state != null && state is State<SmartMeterPage>) {
+      if (state != null) {
         (state as dynamic).saveCurrentRecord();
       }
     } else {
       final state = _timerPageKey.currentState;
-      if (state != null && state is State<TimerPage>) {
+      if (state != null) {
         (state as dynamic).saveCurrentRecord();
       }
     }
