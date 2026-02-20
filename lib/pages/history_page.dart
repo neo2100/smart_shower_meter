@@ -289,17 +289,46 @@ class _HistoryPageState extends State<HistoryPage> {
                             ),
                           ],
                         ),
-                        IconButton(
-                          onPressed: () => _editRecord(record),
-                          icon: const Icon(Icons.edit, size: 20),
-                          tooltip: 'Edit water flow',
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        IconButton(
-                          onPressed: () => _deleteRecord(record),
-                          icon: const Icon(Icons.delete, size: 20),
-                          tooltip: 'Delete record',
-                          color: Colors.red[600],
+                        PopupMenuButton(
+                          onSelected: (value) {
+                            if (value == 'edit') {
+                              _editRecord(record);
+                            } else if (value == 'delete') {
+                              _deleteRecord(record);
+                            }
+                          },
+                          itemBuilder: (BuildContext context) => [
+                            PopupMenuItem(
+                              value: 'edit',
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.edit,
+                                    size: 18,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  const Text('Edit'),
+                                ],
+                              ),
+                            ),
+                            PopupMenuItem(
+                              value: 'delete',
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.delete,
+                                    size: 18,
+                                    color: Colors.red[600],
+                                  ),
+                                  const SizedBox(width: 8),
+                                  const Text('Delete'),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
