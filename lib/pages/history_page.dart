@@ -111,6 +111,56 @@ class _HistoryPageState extends State<HistoryPage> {
     }
   }
 
+  Future<void> _deleteRecord(ShowerRecord record) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Record'),
+        content: Text(
+          'Are you sure you want to permanently delete Shower ${record.id} from ${record.formattedDate}? This action cannot be undone.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      try {
+        await _databaseService.deleteRecord(record.id);
+        // Update the local list
+        setState(() {
+          widget.records.removeWhere((r) => r.id == record.id);
+        });
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Record deleted successfully'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error deleting record: $e'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final sortedRecords = List<ShowerRecord>.from(widget.records)
@@ -239,12 +289,46 @@ class _HistoryPageState extends State<HistoryPage> {
                             ),
                           ],
                         ),
-                        const SizedBox(width: 8),
-                        IconButton(
-                          onPressed: () => _editRecord(record),
-                          icon: const Icon(Icons.edit, size: 20),
-                          tooltip: 'Edit water flow',
-                          color: Theme.of(context).colorScheme.primary,
+                        PopupMenuButton(
+                          onSelected: (value) {
+                            if (value == 'edit') {
+                              _editRecord(record);
+                            } else if (value == 'delete') {
+                              _deleteRecord(record);
+                            }
+                          },
+                          itemBuilder: (BuildContext context) => [
+                            PopupMenuItem(
+                              value: 'edit',
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.edit,
+                                    size: 18,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  const Text('Edit'),
+                                ],
+                              ),
+                            ),
+                            PopupMenuItem(
+                              value: 'delete',
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.delete,
+                                    size: 18,
+                                    color: Colors.red[600],
+                                  ),
+                                  const SizedBox(width: 8),
+                                  const Text('Delete'),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

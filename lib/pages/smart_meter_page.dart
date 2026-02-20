@@ -188,6 +188,18 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
     );
   }
 
+  /// Public method to save current record if timer is running
+  void saveCurrentRecord() {
+    if (_isRunning || _elapsed.inSeconds > 0) {
+      _stopTimer();
+    }
+  }
+
+  /// Check if a record is currently being recorded
+  bool isRecording() {
+    return _isRunning || _elapsed.inSeconds > 0;
+  }
+
   void _updateTimer() {
     if (_isRunning && !_isPaused) {
       Future.delayed(const Duration(milliseconds: 100), () {
@@ -270,7 +282,70 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
                   ],
                 ),
               ),
+              const SizedBox(height: 40),
+              // Timer Display
+              Container(
+                padding: const EdgeInsets.all(40),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                ),
+                child: Text(
+                  _formatDuration(_elapsed),
+                  style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
               const SizedBox(height: 20),
+              // Mode Information
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 12,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Column(
+                  children: [
+                    Text(
+                      'Smart Mode Active',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      'Timer starts/pauses automatically with water flow',
+                      style: TextStyle(fontSize: 12, color: Colors.blue),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 40),
+              // Control Button - Toggle Start/Stop
+              ElevatedButton.icon(
+                onPressed: _isRunning
+                    ? _stopTimer
+                    : (!_isRunning && _elapsed.inSeconds > 0)
+                    ? _stopTimer
+                    : _startTimer,
+                icon: Icon(_isRunning ? Icons.stop : Icons.play_arrow),
+                label: Text(_isRunning ? 'Stop & Save' : 'Start'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _isRunning ? Colors.red : Colors.green,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 20,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 40),
               // Sound Level Indicator
               Container(
                 padding: const EdgeInsets.all(16),
@@ -379,109 +454,6 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
                       ),
                     ],
                   ],
-                ),
-              ),
-              const SizedBox(height: 40),
-              // Timer Display
-              Container(
-                padding: const EdgeInsets.all(40),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                ),
-                child: Text(
-                  _formatDuration(_elapsed),
-                  style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              // Mode Information
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 12,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Column(
-                  children: [
-                    Text(
-                      'Smart Mode Active',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
-                      ),
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      'Timer starts/pauses automatically with water flow',
-                      style: TextStyle(fontSize: 12, color: Colors.blue),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 40),
-              // Control Buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Manual Start Button
-                  ElevatedButton.icon(
-                    onPressed: !_isRunning || _isPaused ? _startTimer : null,
-                    icon: const Icon(Icons.play_arrow),
-                    label: const Text('Start'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 20,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  // Stop Button (for manual completion)
-                  ElevatedButton.icon(
-                    onPressed: _isRunning || _elapsed.inSeconds > 0
-                        ? _stopTimer
-                        : null,
-                    icon: const Icon(Icons.stop),
-                    label: const Text('Stop & Save'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 20,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              // Information
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  '${_isRunning ? 'Timer: ' : ''}${_isPaused
-                      ? 'Paused'
-                      : _isRunning
-                      ? 'Running'
-                      : 'Ready'}',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: _isRunning
-                        ? Colors.green[700]
-                        : _elapsed.inSeconds > 0
-                        ? Colors.orange[700]
-                        : Colors.grey[700],
-                  ),
                 ),
               ),
             ],

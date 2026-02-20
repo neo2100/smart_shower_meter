@@ -41,6 +41,18 @@ class _TimerPageState extends State<TimerPage> {
     });
   }
 
+  /// Public method to save current record if timer is running
+  void saveCurrentRecord() {
+    if (_isRunning || _elapsed.inSeconds > 0) {
+      _stopTimer();
+    }
+  }
+
+  /// Check if a record is currently being recorded
+  bool isRecording() {
+    return _isRunning || _elapsed.inSeconds > 0;
+  }
+
   void _startTimer() {
     if (!_isPaused) {
       _stopwatch.start();
@@ -144,28 +156,19 @@ class _TimerPageState extends State<TimerPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Start Button
+                  // Start/Pause Toggle Button
                   ElevatedButton.icon(
-                    onPressed: !_isRunning || _isPaused ? _startTimer : null,
-                    icon: const Icon(Icons.play_arrow),
-                    label: const Text('Start'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 20,
-                      ),
+                    onPressed: _elapsed.inSeconds > 0 || _isRunning
+                        ? (_isRunning && !_isPaused ? _pauseTimer : _startTimer)
+                        : _startTimer,
+                    icon: Icon(
+                      _isRunning && !_isPaused ? Icons.pause : Icons.play_arrow,
                     ),
-                  ),
-                  const SizedBox(width: 20),
-                  // Pause Button
-                  ElevatedButton.icon(
-                    onPressed: _isRunning && !_isPaused ? _pauseTimer : null,
-                    icon: const Icon(Icons.pause),
-                    label: const Text('Pause'),
+                    label: Text(_isRunning && !_isPaused ? 'Pause' : 'Start'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange,
+                      backgroundColor: _isRunning && !_isPaused
+                          ? Colors.orange
+                          : Colors.green,
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 30,

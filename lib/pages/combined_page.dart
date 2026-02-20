@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import '../models/shower_record.dart';
 import 'timer_page.dart';
 import 'smart_meter_page.dart';
@@ -20,6 +22,73 @@ class CombinedPage extends StatefulWidget {
 
 class _CombinedPageState extends State<CombinedPage> {
   bool _isSmartMode = false; // false for timer, true for smart meter
+
+  // Global keys to access child page states
+  final GlobalKey<State<TimerPage>> _timerPageKey = GlobalKey();
+  final GlobalKey<State<SmartMeterPage>> _smartMeterPageKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    _enableWakelock();
+  }
+
+  @override
+  void deactivate() {
+    // Save current record before leaving the page
+    _saveRunningRecord();
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    _disableWakelock();
+    super.dispose();
+  }
+
+  Future<void> _enableWakelock() async {
+    try {
+      await WakelockPlus.enable();
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error enabling wakelock: $e');
+      }
+    }
+  }
+
+  Future<void> _disableWakelock() async {
+    try {
+      await WakelockPlus.disable();
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error disabling wakelock: $e');
+      }
+    }
+  }
+
+  /// Save the current running record from the active page
+  void _saveRunningRecord() {
+    if (_isSmartMode) {
+      final state = _smartMeterPageKey.currentState;
+      if (state != null) {
+        (state as dynamic).saveCurrentRecord();
+      }
+    } else {
+      final state = _timerPageKey.currentState;
+      if (state != null) {
+        (state as dynamic).saveCurrentRecord();
+      }
+    }
+  }
+
+  void _handleModeSwitch(bool value) {
+    // Save current record before switching if one is running
+    _saveRunningRecord();
+
+    setState(() {
+      _isSmartMode = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +116,12 @@ class _CombinedPageState extends State<CombinedPage> {
           Expanded(
             child: _isSmartMode
                 ? SmartMeterPage(
+                    key: _smartMeterPageKey,
                     records: widget.records,
                     onRecordAdded: widget.onRecordAdded,
                   )
                 : TimerPage(
+                    key: _timerPageKey,
                     records: widget.records,
                     onRecordAdded: widget.onRecordAdded,
                   ),
@@ -65,11 +136,7 @@ class _CombinedPageState extends State<CombinedPage> {
                   const SizedBox(width: 8),
                   Switch(
                     value: _isSmartMode,
-                    onChanged: (value) {
-                      setState(() {
-                        _isSmartMode = value;
-                      });
-                    },
+                    onChanged: _handleModeSwitch,
                     activeThumbColor: Theme.of(context).colorScheme.primary,
                   ),
                 ],
