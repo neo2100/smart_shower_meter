@@ -33,6 +33,7 @@ A beautiful and feature-rich Flutter application for tracking and analyzing your
 ## Project Structure 📁
 
 ```
+docs/                            # Further development guides
 lib/
 ├── main.dart                    # App entry point & home page
 ├── models/
@@ -168,7 +169,7 @@ flutter build linux
    - Tap "Start" to begin timing or switch to smart meter
    - The timer will display your shower duration
 
-2. **Control Your Shower**
+2. **Control Your Shower (in the manual mode)**
    - Tap "Pause" to temporarily stop the timer
    - Tap "Start" again to resume
    - Tap "Stop" to end and save the shower
@@ -177,15 +178,15 @@ flutter build linux
    - Switch to the History page (second tab)
    - See all your past shower sessions with dates and times
    - Most recent showers appear at the top
+   - You can delete or edit the water flow and cost factor per record
 
 4. **Analyze Your Patterns**
    - Go to the Analytics page (third tab)
    - Choose a time period (7, 14, 30, or 90 days)
    - View:
      - Total shower time
-     - Number of showers taken
-     - Average shower duration
-     - Daily shower times in a chart
+     - Total water usage
+     - Total shower cost
 
 ## Data Privacy 🔒
 
