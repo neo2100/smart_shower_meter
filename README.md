@@ -203,7 +203,7 @@ flutter build linux
 
 <div style="display: flex; gap: 10px;">
    <img src="./docs/images/screen_analytics_water.jpg" alt="Timer Page" style="width: 20%; height: auto;">
-   <img src="./docs/images/screen_analytics_water.jpg" alt="Smart Timer Page" style="width: 20%; height: auto;">
+   <img src="./docs/images/screen_analytics_cost.jpg" alt="Smart Timer Page" style="width: 20%; height: auto;">
 </div>
 
 ## Data Privacy 🔒
