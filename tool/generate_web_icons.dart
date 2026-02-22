@@ -22,7 +22,12 @@ void main() {
   // Sizes to generate for web
   final sizes = <int>[192, 512];
   for (final size in sizes) {
-    final resized = copyResize(src, width: size, height: size, interpolation: Interpolation.average);
+    final resized = copyResize(
+      src,
+      width: size,
+      height: size,
+      interpolation: Interpolation.average,
+    );
     // Create white background and composite if source has alpha
     final bg = Image(size, size);
     fill(bg, getColor(255, 255, 255));
@@ -41,10 +46,20 @@ void main() {
   }
 
   // favicon (48x48)
-  final fav = copyResize(src, width: 48, height: 48, interpolation: Interpolation.average);
+  final fav = copyResize(
+    src,
+    width: 48,
+    height: 48,
+    interpolation: Interpolation.average,
+  );
   final fb = Image(48, 48);
   fill(fb, getColor(255, 255, 255));
-  drawImage(fb, fav, dstX: (fb.width - fav.width) ~/ 2, dstY: (fb.height - fav.height) ~/ 2);
+  drawImage(
+    fb,
+    fav,
+    dstX: (fb.width - fav.width) ~/ 2,
+    dstY: (fb.height - fav.height) ~/ 2,
+  );
   File('web/favicon.png').writeAsBytesSync(encodePng(fb));
   stdout.writeln('Wrote web/favicon.png');
 }
