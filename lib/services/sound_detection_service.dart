@@ -25,7 +25,7 @@ class SoundDetectionService {
   // Detection parameters
   static double _silenceThresholdDb = -50.0;
   static double _waterThresholdDb = -5.2;
-  static const int _requiredConsecutiveWaterDetections = 5;
+  static const int _requiredConsecutiveWaterDetections = 8;
   static const int _requiredConsecutiveSilenceDetections = 1;
   static const int _fftSize = 1024;
   static const int _sampleRate = 16000;
