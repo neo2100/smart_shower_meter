@@ -236,6 +236,7 @@ Other channels to connect:
 - [Twitter(X)](https://x.com/stories_by_hadi)
 - [Substack](https://hadistories.substack.com/)
 - [Mastodon](https://mastodon.social/@stories_by_hadi)
+- [Blog](https://shadmehr.eu/)
 
 ---
 
