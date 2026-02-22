@@ -1,33 +1,29 @@
 # Smart Shower Meter 🚿
 
-A beautiful and feature-rich Flutter application for tracking and analyzing your shower habits. Monitor how long you spend in the shower, view historical records, and analyze your shower patterns with detailed charts.
+A simple cross-platform application for tracking and analyzing your shower habits.
+Monitor how long you spend in the shower, view historical records, and analyze your shower patterns.
 
 ## Features ✨
 
 ### 📱 Timer Page
 - **Start, Pause, Stop Controls** - Full control over your shower timer
 - **Large Display** - Easy-to-read timer with HH:MM:SS format
-- **Status Indicator** - Visual feedback showing shower status (Running, Paused, Ready to Save)
-- **Auto-Save** - Showers are automatically saved with timestamps
-
-### 📋 History Page
-- **Complete Shower Records** - View all your shower sessions
-- **Detailed Information** - Date, time, and duration for each shower
-- **Reverse Chronological Order** - Most recent showers appear first
-- **Beautiful UI** - Card-based layout with icons and formatting
-
-### 📊 Analytics Page
-- **Shower Time Per Day** - Visual bar chart showing daily shower times
-- **Week Day Indicators** - See which days of the week you shower most
-- **Summary Statistics** - Total time, number of showers, and average duration
-- **Flexible Time Periods** - View data for 7, 14, 30, or 90 days
-- **Horizontal Scrolling** - Easily browse large date ranges
-- **Smart Scrolling** - Charts automatically scroll to show recent data first
 
 ### 💡 Smart Meter Page
 - **Automatic Detection** - Detects shower sounds to auto-start/stop the timer
 - **Noise Filtering** - Basic filtering to reduce false positives from background noise
-- **Background Service** - Runs as a lightweight service to monitor audio levels
+
+### 📋 History Page
+- **Complete Shower Records** - View all your shower sessions
+- **Detailed Information** - Date, time, and duration for each shower
+- **Edit and Delete** - Adapt configuration for historical records
+
+### 📊 Analytics Page
+- **Shower Time Per Day** - Visual bar chart showing daily shower times
+- **Summary Statistics** - Overview of time, water usage, or cost
+- **Flexible Time Periods** - View data for 7, 14, 30, or 90 days
+
+
 
 
 ## Project Structure 📁
@@ -80,9 +76,6 @@ lib/
    emulator -avd pixel_api_34
    # then when using emulator run the following based on the emulator name
    flutter run -d emulator-5554
-
-   # To run on mobile device
-   flutter run
    
    # For iOS
    flutter run -d ios
@@ -213,7 +206,7 @@ flutter build linux
 - No account or login required
 - Complete control over your shower data
 
-### Cross-Platform Support
+### Cross-Platform Storage
 - ✅ **Android** - Uses SharedPreferences for persistent storage
 - ✅ **iOS** - Uses SharedPreferences for persistent storage
 - ✅ **Web** - Uses browser localStorage via SharedPreferences
