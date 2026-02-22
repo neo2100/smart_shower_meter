@@ -169,16 +169,28 @@ flutter build linux
    - Tap "Start" to begin timing or switch to smart meter
    - The timer will display your shower duration
 
-2. **Control Your Shower (in the manual mode)**
-   - Tap "Pause" to temporarily stop the timer
-   - Tap "Start" again to resume
-   - Tap "Stop" to end and save the shower
+<div style="display: flex; gap: 10px;">
+   <img src="./docs/images/screen_timer.jpg" alt="Timer Page" style="width: 20%; height: auto;">
+   <img src="./docs/images/screen_smart_timer.jpg" alt="Smart Timer Page" style="width: 20%; height: auto;">
+</div>
+
+2. **Configure Your Water Flow and Cost Factor**
+   - Tap the configure button top right
+   - Adjust the water flow and cost factor accordingly
+
+<div style="display: flex; gap: 10px;">
+   <img src="./docs/images/screen_config.jpg" alt="Timer Page" style="width: 20%; height: auto;">
+</div>
 
 3. **View Your History**
    - Switch to the History page (second tab)
    - See all your past shower sessions with dates and times
    - Most recent showers appear at the top
    - You can delete or edit the water flow and cost factor per record
+
+<div style="display: flex; gap: 10px;">
+   <img src="./docs/images/screen_history.jpg" alt="Timer Page" style="width: 20%; height: auto;">
+</div>
 
 4. **Analyze Your Patterns**
    - Go to the Analytics page (third tab)
@@ -187,6 +199,12 @@ flutter build linux
      - Total shower time
      - Total water usage
      - Total shower cost
+
+
+<div style="display: flex; gap: 10px;">
+   <img src="./docs/images/screen_analytics_water.jpg" alt="Timer Page" style="width: 20%; height: auto;">
+   <img src="./docs/images/screen_analytics_water.jpg" alt="Smart Timer Page" style="width: 20%; height: auto;">
+</div>
 
 ## Data Privacy 🔒
 
@@ -213,7 +231,7 @@ Contributions are welcome! Feel free to:
 
 For issues, questions, or suggestions, please open an issue on [GitHub](https://github.com/neo2100/smart_shower_meter/issues).
 
-Other contact channels:
+Other channels to connect:
 - [LinkedIn](https://www.linkedin.com/in/mohammad-hadi-shadmehr/)
 - [Twitter(X)](https://x.com/stories_by_hadi)
 - [Substack](https://hadistories.substack.com/)
