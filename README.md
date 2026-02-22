@@ -24,24 +24,11 @@ A beautiful and feature-rich Flutter application for tracking and analyzing your
 - **Horizontal Scrolling** - Easily browse large date ranges
 - **Smart Scrolling** - Charts automatically scroll to show recent data first
 
-## Technical Features 🛠️
+### 💡 Smart Meter Page
+- **Automatic Detection** - Detects shower sounds to auto-start/stop the timer
+- **Noise Filtering** - Basic filtering to reduce false positives from background noise
+- **Background Service** - Runs as a lightweight service to monitor audio levels
 
-### Cross-Platform Support
-- ✅ **Android** - Uses SharedPreferences for persistent storage
-- ✅ **iOS** - Uses SharedPreferences for persistent storage
-- ✅ **Web** - Uses browser localStorage via SharedPreferences
-- ✅ **Windows/macOS/Linux** - Uses file-based storage via path_provider
-
-### Architecture
-- **Material Design 3** - Modern and clean UI with Material You theming
-- **Singleton Pattern** - Efficient database service management
-- **Persistent Storage** - Data survives app restarts across all platforms
-- **Responsive Design** - Works seamlessly on phones, tablets, and desktops
-
-### Dependencies
-- `shared_preferences: ^2.2.2` - For mobile and web storage
-- `path_provider: ^2.1.2` - For desktop file paths
-- `hive: ^2.2.3` & `hive_flutter: ^1.1.0` - Alternative high-performance storage
 
 ## Project Structure 📁
 
@@ -49,13 +36,18 @@ A beautiful and feature-rich Flutter application for tracking and analyzing your
 lib/
 ├── main.dart                    # App entry point & home page
 ├── models/
-│   └── shower_record.dart       # ShowerRecord data model
+│   ├── shower_record.dart       # ShowerRecord data model
+│   └── smart_meter.dart         # Smart meter data model
 ├── pages/
 │   ├── timer_page.dart          # Shower timer interface
 │   ├── history_page.dart        # Historical records list
-│   └── analytics_page.dart      # Charts & statistics
+│   ├── analytics_page.dart      # Charts & statistics
+│   └── smart_meter_page.dart    # Smart meter & live flow UI
 └── services/
-    └── database_service.dart    # Cross-platform data persistence
+   ├── database_service.dart    # Cross-platform data persistence
+   └── sound_detection_service.dart # Detects shower sound and triggers timer
+└── utils/
+   └── formatters.dart          # Shared formatting helpers
 ```
 
 ## Getting Started 🚀
@@ -114,16 +106,28 @@ lib/
    flutter analyze
    ```
 
+
+### Test On Personal Mobile (Android)
+
+- Enable developer mode in your mobile app
+   - Go to Settings -> About phone
+   - Click on `Build number` several times (5-6) to enable the developer mode
+- Go to Developer options and enable `USB debugging`
+- Connect your phone via USB
+- Two options to install the app:
+   1. If you have Android SDK and want to generate the sdk and install it:
+
+      ```bash
+      flutter build apk --release
+      adb install build/app/outputs/flutter-apk/app-release.apk
+      ```
+   1. If you want to install the latest version in this branch:
+
+      ```bash
+      adb install latest_release/apk/app-release.apk
+      ```
+
 ## Building for Production 📦
-
-### On Personal Mobile (Android)
-
-Connect the mobile in developer mode by USB then run these two commands:
-
-```bash
-flutter build apk --release
-adb install build/app/outputs/flutter-apk/app-release.apk
-```
 
 ### Android
 ```bash
@@ -161,7 +165,7 @@ flutter build linux
 
 1. **Start a Shower**
    - Navigate to the Timer page (first tab)
-   - Tap "Start" to begin timing
+   - Tap "Start" to begin timing or switch to smart meter
    - The timer will display your shower duration
 
 2. **Control Your Shower**
@@ -190,20 +194,11 @@ flutter build linux
 - No account or login required
 - Complete control over your shower data
 
-## Future Enhancements 🔮
-
-Potential features for future versions:
-- [x] Water usage estimation (based on shower flow rate)
-- [x] Add smart meter to use mic and automatically start and pause the timer
-- [x] Be able to delete history records
-- [x] Better UX: after stop go to history(analytic), one button for pause and start, simplified smart meter UI 
-- [x] Improve water meter algorithm
-- [ ] Auto adjust thresholds based on first test
-- [ ] Better UX for flow config to add a timer and first ask what is the container capacity
-- [ ] Test iOS
-- [ ] Multi-language support
-- [ ] Export and import feature (no need to access network)
-- [ ] Publish to google play
+### Cross-Platform Support
+- ✅ **Android** - Uses SharedPreferences for persistent storage
+- ✅ **iOS** - Uses SharedPreferences for persistent storage
+- ✅ **Web** - Uses browser localStorage via SharedPreferences
+- ✅ **Windows/macOS/Linux** - Uses file-based storage via path_provider
 
 ## Contributing 🤝
 
@@ -212,13 +207,16 @@ Contributions are welcome! Feel free to:
 - Suggest new features
 - Submit pull requests
 
-## License 📄
-
-This project is open source and available for personal and commercial use.
 
 ## Support 💬
 
 For issues, questions, or suggestions, please open an issue on [GitHub](https://github.com/neo2100/smart_shower_meter/issues).
+
+Other contact channels:
+- [LinkedIn](https://www.linkedin.com/in/mohammad-hadi-shadmehr/)
+- [Twitter(X)](https://x.com/stories_by_hadi)
+- [Substack](https://hadistories.substack.com/)
+- [Mastodon](https://mastodon.social/@stories_by_hadi)
 
 ---
 
