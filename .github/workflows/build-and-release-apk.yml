@@ -2,7 +2,7 @@ name: Build and Release APK
 
 on:
   push:
-    branches: [ "20-setup-workflow-to-release-apk-in-release-tags-after-merge-in-main" ]
+    branches: [ "main" ]
 
 permissions:
   contents: write

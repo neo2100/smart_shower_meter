@@ -108,9 +108,7 @@ lib/
 
 ### Test On Personal Mobile (Android)
 
-- Download the [latest release](https://github.com/neo2100/smart_shower_meter/releases/tag/latest) and install it
-
-#### If you want to test a modified version
+If you want to test a modified version
 
 - Enable developer mode in your mobile app
    - Go to Settings -> About phone
@@ -159,7 +157,11 @@ flutter build macos
 flutter build linux
 ```
 
-## How to Use 📖
+## Try it Yourself ❤️
+
+- Download the [latest release](https://github.com/neo2100/smart_shower_meter/releases/tag/latest) and install it
+
+### How to Use 📖
 
 1. **Start a Shower**
    - Navigate to the Timer page (first tab)
