@@ -9,7 +9,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  test:
+    name: Run Flutter Tests
     runs-on: ubuntu-latest
 
     steps:
