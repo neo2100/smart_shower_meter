@@ -1,0 +1,78 @@
+name: Build and Release APK
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.x'
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Extract version from pubspec.yaml
+        id: version
+        run: |
+          VERSION=$(grep "^version:" pubspec.yaml | sed 's/version: //' | cut -d'+' -f1)
+          BUILD_NUMBER=$(grep "^version:" pubspec.yaml | sed 's/version: //' | cut -d'+' -f2)
+          COMMIT_SHORT=$(git rev-parse --short HEAD)
+          RELEASE_VERSION="${VERSION}+${BUILD_NUMBER}-${COMMIT_SHORT}"
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "build_number=${BUILD_NUMBER}" >> $GITHUB_OUTPUT
+          echo "commit_short=${COMMIT_SHORT}" >> $GITHUB_OUTPUT
+          echo "release_version=${RELEASE_VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Rename APK
+        run: |
+          mkdir -p releases
+          cp build/app/outputs/apk/release/app-release.apk releases/smart-shower-meter-${{ steps.version.outputs.release_version }}.apk
+
+      - name: Create/Update Latest Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: latest
+          name: "Latest Build"
+          body: |
+            Latest build of Smart Shower Meter
+            
+            **Version:** ${{ steps.version.outputs.version }}
+            **Build:** ${{ steps.version.outputs.build_number }}
+            **Commit:** ${{ steps.version.outputs.commit_short }}
+            **Build Date:** ${{ github.event.head_commit.timestamp }}
+            
+            This is a pre-release that always points to the latest available build.
+          prerelease: true
+          allowUpdates: true
+          removeArtifacts: true
+          artifacts: "releases/smart-shower-meter-${{ steps.version.outputs.release_version }}.apk"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Version Tag Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "v${{ steps.version.outputs.release_version }}"
+          name: "Release v${{ steps.version.outputs.release_version }}"
+          body: |
+            Smart Shower Meter APK Release
+            
+            **Version:** ${{ steps.version.outputs.version }}
+            **Build:** ${{ steps.version.outputs.build_number }}
+            **Commit:** ${{ steps.version.outputs.commit_short }}
+            **Build Date:** ${{ github.event.head_commit.timestamp }}
+          prerelease: false
+          artifacts: "releases/smart-shower-meter-${{ steps.version.outputs.release_version }}.apk"
+          token: ${{ secrets.GITHUB_TOKEN }}

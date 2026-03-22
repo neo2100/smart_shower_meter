@@ -108,6 +108,10 @@ lib/
 
 ### Test On Personal Mobile (Android)
 
+- Download the [latest release](https://github.com/neo2100/smart_shower_meter/releases/tag/latest) and install it
+
+#### If you want to test a modified version
+
 - Enable developer mode in your mobile app
    - Go to Settings -> About phone
    - Click on `Build number` several times (5-6) to enable the developer mode
@@ -119,11 +123,6 @@ lib/
       ```bash
       flutter build apk --release
       adb install build/app/outputs/flutter-apk/app-release.apk
-      ```
-   1. If you want to install the latest version in this branch:
-
-      ```bash
-      adb install latest_release/apk/app-release.apk
       ```
 
 ## Building for Production 📦
