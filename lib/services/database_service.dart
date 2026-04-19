@@ -197,4 +197,46 @@ class DatabaseService {
       }
     }
   }
+
+  // Export all records to JSON string
+  Future<String> exportToJson() async {
+    await _ensureInitialized();
+    final jsonData = _cachedRecords.map((record) => record.toJson()).toList();
+    return jsonEncode(jsonData);
+  }
+
+  // Import records from JSON string
+  // mergeStrategy: 'overwrite' to replace all records, 'append' to add to existing records
+  Future<int> importFromJson(
+    String jsonString, {
+    String mergeStrategy = 'append',
+  }) async {
+    await _ensureInitialized();
+    try {
+      final jsonData = jsonDecode(jsonString) as List<dynamic>;
+      final importedRecords = jsonData
+          .map((item) => ShowerRecord.fromJson(item as Map<String, dynamic>))
+          .toList();
+
+      if (mergeStrategy == 'overwrite') {
+        _cachedRecords = importedRecords;
+      } else if (mergeStrategy == 'append') {
+        // Append imported records, avoiding duplicates by ID
+        final existingIds = _cachedRecords.map((r) => r.id).toSet();
+        for (final record in importedRecords) {
+          if (!existingIds.contains(record.id)) {
+            _cachedRecords.add(record);
+          }
+        }
+      }
+
+      await _saveRecords();
+      return importedRecords.length;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error importing records: $e');
+      }
+      rethrow;
+    }
+  }
 }

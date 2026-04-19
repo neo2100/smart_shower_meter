@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:convert';
+import 'package:file_picker/file_picker.dart';
 import '../models/shower_record.dart';
 import '../services/database_service.dart';
+import '../utils/platform_storage.dart';
 
 class HistoryPage extends StatefulWidget {
   final List<ShowerRecord> records;
@@ -205,6 +209,225 @@ class _HistoryPageState extends State<HistoryPage> {
     }
   }
 
+  Future<void> _exportRecords() async {
+    try {
+      final jsonData = await _databaseService.exportToJson();
+      final fileName = await saveJsonFile(jsonData);
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Records exported successfully to $fileName'),
+            backgroundColor: Colors.green,
+            duration: const Duration(seconds: 3),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error exporting records: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _importRecords() async {
+    try {
+      // Pick a file
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['json'],
+        allowMultiple: false,
+      );
+
+      if (result == null || result.files.isEmpty) {
+        return;
+      }
+
+      String jsonContent;
+
+      if (kIsWeb) {
+        // For web: Read from bytes
+        final bytes = result.files.single.bytes;
+        if (bytes == null) {
+          throw Exception('Failed to read file');
+        }
+        jsonContent = utf8.decode(bytes);
+      } else {
+        // For native: Read from file path
+        final filePath = result.files.single.path;
+        if (filePath == null) {
+          throw Exception('Invalid file path');
+        }
+        jsonContent = await readFileFromPath(filePath);
+      }
+
+      // Try to parse it to validate format
+      try {
+        jsonDecode(jsonContent);
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Invalid JSON file format: $e'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+        return;
+      }
+
+      // Show import options dialog
+      if (mounted) {
+        _showImportOptionsDialog(jsonContent);
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error importing records: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _showImportOptionsDialog(String jsonContent) async {
+    final options = <String>[
+      'Append to current records',
+      'Replace all records',
+    ];
+    String? selectedOption;
+
+    final result = await showDialog<String>(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          title: const Text('Import Options'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'How would you like to import these records?',
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              RadioGroup<String>(
+                groupValue: selectedOption,
+                onChanged: (value) {
+                  setState(() {
+                    selectedOption = value;
+                  });
+                },
+                child: Column(
+                  children: options
+                      .map(
+                        (option) => RadioListTile<String>(
+                          title: Text(option),
+                          value: option,
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: selectedOption == null
+                  ? null
+                  : () => Navigator.of(context).pop(selectedOption),
+              child: const Text('Import'),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    if (result != null) {
+      try {
+        final mergeStrategy = result == 'Append to current records'
+            ? 'append'
+            : 'overwrite';
+        final importedCount = await _databaseService.importFromJson(
+          jsonContent,
+          mergeStrategy: mergeStrategy,
+        );
+
+        // Reload records
+        final updatedRecords = await _databaseService.getAllRecords();
+        setState(() {
+          widget.records.clear();
+          widget.records.addAll(updatedRecords);
+        });
+
+        if (mounted) {
+          final message = result == 'Append to current records'
+              ? 'Appended $importedCount records successfully'
+              : 'Replaced all records with $importedCount records';
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(message),
+              backgroundColor: Colors.green,
+              duration: const Duration(seconds: 3),
+            ),
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error importing records: $e'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    }
+  }
+
+  void _showExportImportMenu() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Container(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.upload),
+              title: const Text('Export Records'),
+              subtitle: const Text('Save all records to JSON file'),
+              onTap: () {
+                Navigator.pop(context);
+                _exportRecords();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.download),
+              title: const Text('Import Records'),
+              subtitle: const Text('Load records from JSON file'),
+              onTap: () {
+                Navigator.pop(context);
+                _importRecords();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final sortedRecords = List<ShowerRecord>.from(widget.records)
@@ -214,6 +437,13 @@ class _HistoryPageState extends State<HistoryPage> {
       appBar: AppBar(
         title: const Text('Shower History'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.more_vert),
+            onPressed: _showExportImportMenu,
+            tooltip: 'Import/Export',
+          ),
+        ],
       ),
       body: sortedRecords.isEmpty
           ? Center(
