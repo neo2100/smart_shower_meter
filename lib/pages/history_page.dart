@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
-import 'dart:io' if (dart.library.html) 'dart:async';
 import 'package:file_picker/file_picker.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as path;
 import '../models/shower_record.dart';
 import '../services/database_service.dart';
+import '../utils/platform_storage.dart';
 
 class HistoryPage extends StatefulWidget {
   final List<ShowerRecord> records;
@@ -213,15 +211,17 @@ class _HistoryPageState extends State<HistoryPage> {
 
   Future<void> _exportRecords() async {
     try {
-      // Get the JSON data
       final jsonData = await _databaseService.exportToJson();
+      final fileName = await saveJsonFile(jsonData);
 
-      if (kIsWeb) {
-        // For web: Create a download link using JavaScript
-        _downloadJsonFileOnWeb(jsonData);
-      } else {
-        // For native platforms: Save to file system
-        _downloadJsonFileOnNative(jsonData);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Records exported successfully to $fileName'),
+            backgroundColor: Colors.green,
+            duration: const Duration(seconds: 3),
+          ),
+        );
       }
     } catch (e) {
       if (mounted) {
@@ -232,87 +232,6 @@ class _HistoryPageState extends State<HistoryPage> {
           ),
         );
       }
-    }
-  }
-
-  void _downloadJsonFileOnWeb(String jsonData) {
-    try {
-      final fileName =
-          'shower_records_${DateTime.now().millisecondsSinceEpoch}.json';
-      _webDownload(jsonData, fileName);
-
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Records exported successfully'),
-            backgroundColor: Colors.green,
-            duration: Duration(seconds: 3),
-          ),
-        );
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error downloading file: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    }
-  }
-
-  void _webDownload(String jsonData, String fileName) {
-    if (kIsWeb) {
-      try {
-        final encodedJson = Uri.encodeComponent(jsonData);
-        final dataUrl = 'data:application/json;charset=utf-8,$encodedJson';
-
-        // ignore: avoid_dynamic_calls
-        (window as dynamic).eval('''
-          (function() {
-            const link = document.createElement("a");
-            link.href = "$dataUrl";
-            link.download = "$fileName";
-            link.style.display = "none";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-          })();
-        ''');
-      } catch (e) {
-        if (kDebugMode) {
-          print('Web download error: $e');
-        }
-      }
-    }
-  }
-
-  Future<void> _downloadJsonFileOnNative(String jsonData) async {
-    late Directory directory;
-    if (Platform.isAndroid || Platform.isIOS) {
-      directory = await getApplicationDocumentsDirectory();
-    } else {
-      directory = await getApplicationSupportDirectory();
-    }
-
-    // Create filename with timestamp
-    final timestamp = DateTime.now().millisecondsSinceEpoch;
-    final fileName = 'shower_records_$timestamp.json';
-    final filePath = path.join(directory.path, fileName);
-
-    // Write to file
-    final file = File(filePath);
-    await file.writeAsString(jsonData);
-
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Records exported successfully to $fileName'),
-          backgroundColor: Colors.green,
-          duration: const Duration(seconds: 3),
-        ),
-      );
     }
   }
 
@@ -344,8 +263,7 @@ class _HistoryPageState extends State<HistoryPage> {
         if (filePath == null) {
           throw Exception('Invalid file path');
         }
-        final file = File(filePath);
-        jsonContent = await file.readAsString();
+        jsonContent = await readFileFromPath(filePath);
       }
 
       // Try to parse it to validate format
@@ -399,16 +317,22 @@ class _HistoryPageState extends State<HistoryPage> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
-              ...options.map(
-                (option) => RadioListTile<String>(
-                  title: Text(option),
-                  value: option,
-                  groupValue: selectedOption,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedOption = value;
-                    });
-                  },
+              RadioGroup<String>(
+                groupValue: selectedOption,
+                onChanged: (value) {
+                  setState(() {
+                    selectedOption = value;
+                  });
+                },
+                child: Column(
+                  children: options
+                      .map(
+                        (option) => RadioListTile<String>(
+                          title: Text(option),
+                          value: option,
+                        ),
+                      )
+                      .toList(),
                 ),
               ),
             ],
