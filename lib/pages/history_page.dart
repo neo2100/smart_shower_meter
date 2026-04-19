@@ -405,7 +405,7 @@ class _HistoryPageState extends State<HistoryPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              leading: const Icon(Icons.download),
+              leading: const Icon(Icons.upload),
               title: const Text('Export Records'),
               subtitle: const Text('Save all records to JSON file'),
               onTap: () {
@@ -414,7 +414,7 @@ class _HistoryPageState extends State<HistoryPage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.upload),
+              leading: const Icon(Icons.download),
               title: const Text('Import Records'),
               subtitle: const Text('Load records from JSON file'),
               onTap: () {
