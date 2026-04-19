@@ -207,15 +207,15 @@ class DatabaseService {
 
   // Import records from JSON string
   // mergeStrategy: 'overwrite' to replace all records, 'append' to add to existing records
-  Future<int> importFromJson(String jsonString,
-      {String mergeStrategy = 'append'}) async {
+  Future<int> importFromJson(
+    String jsonString, {
+    String mergeStrategy = 'append',
+  }) async {
     await _ensureInitialized();
     try {
       final jsonData = jsonDecode(jsonString) as List<dynamic>;
       final importedRecords = jsonData
-          .map(
-            (item) => ShowerRecord.fromJson(item as Map<String, dynamic>),
-          )
+          .map((item) => ShowerRecord.fromJson(item as Map<String, dynamic>))
           .toList();
 
       if (mergeStrategy == 'overwrite') {
