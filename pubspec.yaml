@@ -47,6 +47,8 @@ dependencies:
   record: ^6.2.0
   # Keep screen on
   wakelock_plus: ^1.2.4
+  # File operations
+  file_picker: ^8.0.0
 
 dev_dependencies:
   flutter_test:
