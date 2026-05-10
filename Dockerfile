@@ -35,8 +35,8 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copy built Flutter web output
 COPY --from=build /app/build/web /usr/share/nginx/html
 
-# Optional custom nginx config
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy custom nginx configuration for SPA fallback
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose HTTP port
 EXPOSE 80
