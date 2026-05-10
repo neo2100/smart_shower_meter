@@ -106,27 +106,64 @@
     const installButton = document.getElementById('pwa-install-button');
     const installClose = document.getElementById('pwa-install-close');
     let deferredPrompt = null;
+    const dismissedKey = 'pwa-install-dismissed';
+
+    function isStandalone() {
+      return window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true ||
+        document.referrer.startsWith('android-app://');
+    }
+
+    function hideInstallBanner() {
+      installBanner.style.display = 'none';
+    }
+
+    function showInstallBanner() {
+      if (isStandalone() || window.localStorage.getItem(dismissedKey)) {
+        hideInstallBanner();
+        return;
+      }
+      installBanner.style.display = 'grid';
+    }
 
     window.addEventListener('beforeinstallprompt', (event) => {
+      if (isStandalone()) {
+        deferredPrompt = null;
+        return;
+      }
       event.preventDefault();
       deferredPrompt = event;
-      installBanner.style.display = 'grid';
+      showInstallBanner();
     });
 
     installButton.addEventListener('click', async () => {
-      if (!deferredPrompt) return;
+      if (!deferredPrompt) {
+        hideInstallBanner();
+        return;
+      }
       deferredPrompt.prompt();
       const choiceResult = await deferredPrompt.userChoice;
       deferredPrompt = null;
-      installBanner.style.display = 'none';
+      hideInstallBanner();
+      window.localStorage.setItem(dismissedKey, '1');
+      console.log('PWA install prompt result:', choiceResult.outcome);
     });
 
     installClose.addEventListener('click', () => {
-      installBanner.style.display = 'none';
+      window.localStorage.setItem(dismissedKey, '1');
+      hideInstallBanner();
     });
 
     window.addEventListener('appinstalled', () => {
-      installBanner.style.display = 'none';
+      hideInstallBanner();
+      window.localStorage.removeItem(dismissedKey);
+      deferredPrompt = null;
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (isStandalone()) {
+        hideInstallBanner();
+      }
     });
   </script>
 </body>
