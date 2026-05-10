@@ -20,8 +20,8 @@ RUN flutter pub get
 # Copy the rest of the app
 COPY . .
 
-# Build release web app
-RUN flutter build web --release
+# Build web app with PWA support (offline-first caching)
+RUN flutter build web --pwa-strategy=offline-first
 
 # =========================
 # Stage 2: Serve with Nginx

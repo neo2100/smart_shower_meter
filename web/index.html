@@ -93,8 +93,8 @@
   <div id="pwa-install-banner">
     <div>
       <strong>Install Smart Shower Meter</strong>
-      <p>Install this app to your home screen for a faster, app-like experience. If install isn’t visible, use your
-        browser menu and choose "Add to Home screen."</p>
+      <p id="pwa-install-text">Install this app to your home screen for a faster, app-like experience. If install isn’t
+        visible, use your browser menu and choose "Add to Home screen."</p>
     </div>
     <div style="display:flex; gap:8px; align-items:center; justify-content:end;">
       <button id="pwa-install-button" type="button">Install</button>
@@ -103,6 +103,7 @@
   </div>
   <script>
     const installBanner = document.getElementById('pwa-install-banner');
+    const installText = document.getElementById('pwa-install-text');
     const installButton = document.getElementById('pwa-install-button');
     const installClose = document.getElementById('pwa-install-close');
     let deferredPrompt = null;
@@ -118,11 +119,22 @@
       installBanner.style.display = 'none';
     }
 
+    function updateInstallBanner() {
+      if (deferredPrompt) {
+        installButton.textContent = 'Install';
+        installText.textContent = 'Install this app to your home screen for a faster, app-like experience.';
+      } else {
+        installButton.textContent = 'How to install';
+        installText.textContent = 'Use your browser menu and choose "Add to Home screen." On iOS Safari, tap Share → Add to Home Screen.';
+      }
+    }
+
     function showInstallBanner() {
       if (isStandalone() || window.localStorage.getItem(dismissedKey)) {
         hideInstallBanner();
         return;
       }
+      updateInstallBanner();
       installBanner.style.display = 'grid';
     }
 
@@ -133,20 +145,33 @@
       }
       event.preventDefault();
       deferredPrompt = event;
+      updateInstallBanner();
       showInstallBanner();
+      console.log('beforeinstallprompt event received');
     });
 
     installButton.addEventListener('click', async () => {
-      if (!deferredPrompt) {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const choiceResult = await deferredPrompt.userChoice;
+        console.log('PWA install prompt result:', choiceResult.outcome);
+        deferredPrompt = null;
+        if (choiceResult.outcome === 'accepted') {
+          window.localStorage.removeItem(dismissedKey);
+        } else {
+          window.localStorage.setItem(dismissedKey, '1');
+        }
         hideInstallBanner();
         return;
       }
-      deferredPrompt.prompt();
-      const choiceResult = await deferredPrompt.userChoice;
-      deferredPrompt = null;
-      hideInstallBanner();
-      window.localStorage.setItem(dismissedKey, '1');
-      console.log('PWA install prompt result:', choiceResult.outcome);
+
+      if (installButton.textContent === 'Close') {
+        hideInstallBanner();
+        return;
+      }
+
+      installText.textContent = 'Install manually from your browser menu. On iOS Safari, tap Share → Add to Home Screen.';
+      installButton.textContent = 'Close';
     });
 
     installClose.addEventListener('click', () => {
@@ -155,15 +180,22 @@
     });
 
     window.addEventListener('appinstalled', () => {
-      hideInstallBanner();
+      console.log('App installed event received');
       window.localStorage.removeItem(dismissedKey);
       deferredPrompt = null;
+      hideInstallBanner();
     });
 
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('flutter_service_worker.js')
+          .then(() => console.log('Service worker registered'))
+          .catch((err) => console.warn('Service worker registration failed', err));
+      });
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
-      if (isStandalone()) {
-        hideInstallBanner();
-      }
+      showInstallBanner();
     });
   </script>
 </body>
