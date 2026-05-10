@@ -6,11 +6,4 @@ services:
       context: .
       dockerfile: Dockerfile
 
-    expose:
-      - "80"
-
     restart: unless-stopped
-
-    labels:
-      - traefik.enable=true
-      - traefik.http.services.smart_shower_meter.loadbalancer.server.port=80
