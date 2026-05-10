@@ -1,11 +1,12 @@
 {
-    "name": "smart_shower_meter",
-    "short_name": "smart_shower_meter",
-    "start_url": ".",
+    "lang": "en-US",
+    "name": "Smart Shower Meter",
+    "short_name": "ShowerMeter",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Track shower time and save your Smart Shower Meter to your home screen for a faster app-like experience.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

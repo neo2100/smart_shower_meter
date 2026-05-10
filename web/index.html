@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -23,16 +24,111 @@
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="smart_shower_meter">
+  <meta name="apple-mobile-web-app-title" content="Smart Shower Meter">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <meta name="theme-color" content="#0175C2">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png" />
 
-  <title>smart_shower_meter</title>
+  <title>Smart Shower Meter</title>
   <link rel="manifest" href="manifest.json">
+  <style>
+    #pwa-install-banner {
+      display: none;
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      z-index: 9999;
+      background: rgba(255, 255, 255, 0.98);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 16px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16);
+      padding: 16px;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    #pwa-install-banner strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+      color: #0f172a;
+    }
+
+    #pwa-install-banner p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #334155;
+      line-height: 1.4;
+    }
+
+    #pwa-install-banner button {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    #pwa-install-button {
+      background: #0175c2;
+      color: white;
+    }
+
+    #pwa-install-close {
+      background: transparent;
+      color: #475569;
+    }
+  </style>
 </head>
+
 <body>
   <script src="flutter_bootstrap.js" async></script>
+  <div id="pwa-install-banner">
+    <div>
+      <strong>Install Smart Shower Meter</strong>
+      <p>Install this app to your home screen for a faster, app-like experience. If install isn’t visible, use your
+        browser menu and choose "Add to Home screen."</p>
+    </div>
+    <div style="display:flex; gap:8px; align-items:center; justify-content:end;">
+      <button id="pwa-install-button" type="button">Install</button>
+      <button id="pwa-install-close" type="button">Dismiss</button>
+    </div>
+  </div>
+  <script>
+    const installBanner = document.getElementById('pwa-install-banner');
+    const installButton = document.getElementById('pwa-install-button');
+    const installClose = document.getElementById('pwa-install-close');
+    let deferredPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      deferredPrompt = event;
+      installBanner.style.display = 'grid';
+    });
+
+    installButton.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const choiceResult = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      installBanner.style.display = 'none';
+    });
+
+    installClose.addEventListener('click', () => {
+      installBanner.style.display = 'none';
+    });
+
+    window.addEventListener('appinstalled', () => {
+      installBanner.style.display = 'none';
+    });
+  </script>
 </body>
+
 </html>

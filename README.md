@@ -142,6 +142,15 @@ flutter build ios
 flutter build web
 ```
 
+#### Web PWA
+The web version now supports a PWA install prompt and clearer home screen install guidance.
+- On Android Chrome: look for the install banner or use the browser menu → Add to Home screen.
+- On Safari / iOS: tap Share → Add to Home Screen.
+- For production builds, use:
+```bash
+flutter build web --pwa-strategy=offline-first
+```
+
 ### Windows
 ```bash
 flutter build windows
@@ -159,7 +168,11 @@ flutter build linux
 
 ## Try it Yourself ❤️
 
-- Download the [latest release](https://github.com/neo2100/smart_shower_meter/releases/tag/latest) and install it
+- Quickly access it using [the PWA web version](https://smart-shower-meter.linguly.io/)
+
+or
+
+- Download the [latest apk release](https://github.com/neo2100/smart_shower_meter/releases/tag/latest) and install it on your Android phone
 
 ### How to Use 📖
 
