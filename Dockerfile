@@ -1,32 +1,48 @@
-# Use the official Flutter image as the base image
-FROM flutter/flutter:stable AS build
+# =========================
+# Stage 1: Build Flutter Web
+# =========================
 
-# Set the working directory
+FROM ghcr.io/cirruslabs/flutter:stable AS build
+
+# Prevent analytics + speed up CI
+ENV FLUTTER_WEB_AUTO_DETECT=false
+ENV CI=true
+
+# Set working directory
 WORKDIR /app
 
-# Copy the pubspec files
-COPY pubspec.* ./
+# Copy dependency files first for Docker layer caching
+COPY pubspec.yaml pubspec.lock ./
 
-# Get dependencies
+# Install dependencies
 RUN flutter pub get
 
-# Copy the rest of the code
+# Copy the rest of the app
 COPY . .
 
-# Build the web app
+# Build release web app
 RUN flutter build web --release
 
-# Use Nginx to serve the built app
-FROM nginx:alpine
+# =========================
+# Stage 2: Serve with Nginx
+# =========================
 
-# Copy the built web app to Nginx's html directory
+FROM nginx:stable-alpine
+
+# Remove default nginx static assets
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copy built Flutter web output
 COPY --from=build /app/build/web /usr/share/nginx/html
 
-# Copy custom Nginx configuration if needed (optional)
-# COPY nginx.conf /etc/nginx/nginx.conf
+# Optional custom nginx config
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose port 80
+# Expose HTTP port
 EXPOSE 80
 
-# Start Nginx
+# Healthcheck (good for Kubernetes / Docker Compose)
+HEALTHCHECK CMD wget --no-verbose --tries=1 --spider http://localhost || exit 1
+
+# Start nginx
 CMD ["nginx", "-g", "daemon off;"]
