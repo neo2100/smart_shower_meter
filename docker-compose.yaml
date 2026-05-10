@@ -14,7 +14,3 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.services.smart_shower_meter.loadbalancer.server.port=80
-
-networks:
-  coolify:
-    external: true

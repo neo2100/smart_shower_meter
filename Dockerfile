@@ -38,6 +38,9 @@ COPY --from=build /app/build/web /usr/share/nginx/html
 # Copy custom nginx configuration for SPA fallback
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
+# Install healthcheck tool
+RUN apk add --no-cache wget
+
 # Expose HTTP port
 EXPOSE 80
 
