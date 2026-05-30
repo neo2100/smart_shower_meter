@@ -22,9 +22,9 @@ class SoundDetectionService {
   StreamSubscription<Uint8List>? _recordingSubscription;
   Timer? _analysisTimer;
 
-  // Detection parameters
-  static double _silenceThresholdDb = -50.0;
-  static double _waterThresholdDb = -5.2;
+  // Detection parameters - platform-specific defaults
+  static double _silenceThresholdDb = kIsWeb ? -80.0 : -50.0;
+  static double _waterThresholdDb = kIsWeb ? -56.0 : -5.2;
   static const int _requiredConsecutiveWaterDetections = 8;
   static const int _requiredConsecutiveSilenceDetections = 1;
   static const int _fftSize = 1024;

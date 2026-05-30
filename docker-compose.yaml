@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  smart_shower_meter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    restart: unless-stopped

@@ -42,6 +42,11 @@ class _SmartMeterPageState extends State<SmartMeterPage> {
     super.initState();
     _soundDetectionService = SoundDetectionService();
     _stopwatch = Stopwatch();
+    // Set platform-specific thresholds
+    if (kIsWeb) {
+      _silenceThreshold = -80.0;
+      _waterThreshold = -56.0;
+    }
     _initializeSmartMeter();
   }
 
