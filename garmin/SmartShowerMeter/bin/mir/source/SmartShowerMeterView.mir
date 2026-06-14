@@ -1,0 +1,330 @@
+[ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc"; @line = 1; @symbol_usingdef<0> = [Toybox,1,6,12]; @symbol_usingdef<1> = [WatchUi,1,13,20]; ]
+using Toybox.WatchUi;
+[ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc"; @line = 2; @symbol_usingdef<0> = [Toybox,2,6,12]; @symbol_usingdef<1> = [Graphics,2,13,21]; ]
+using Toybox.Graphics;
+[ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc"; @line = 3; @symbol_usingdef<0> = [Toybox,3,6,12]; @symbol_usingdef<1> = [Lang,3,13,17]; ]
+using Toybox.Lang;
+[ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc"; @line = 5; @symbol_classdef = [SmartShowerMeterView,5,6,26]; @symbol_extends<0> = [WatchUi,5,35,42]; @symbol_extends<1> = [View,5,43,47]; ]
+class SmartShowerMeterView extends WatchUi.View {
+    [ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc"; @line = 5; ]
+    <init> {
+    }
+    [ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc"; @line = 5; ]
+    static
+    <init> {
+    }
+    [ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc"; @line = 7; @symbol_functiondef = [initialize,7,13,23]; ]
+    function initialize() as Void {
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_7_26_9_4_start:
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 8 8 ]
+        symbol [ View %tmp.2 8 8 12 ];
+        %tmp.2 = getv ? :View;
+        symbol [ initialize %tmp.3 8 13 23 ];
+        %tmp.3 = getv function %tmp.2 :initialize;
+        invoke %tmp.2 %tmp.3();
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_7_26_9_4_stop:
+    }
+    [ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc"; @line = 11; @symbol_functiondef = [onLayout,11,13,21]; @symbol_param<0> = [dc,11,22,24]; ]
+    function onLayout(dc) {
+    }
+    [ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc"; @line = 14; @symbol_functiondef = [onUpdate,14,13,21]; @symbol_param<0> = [dc,14,22,24]; ]
+    function onUpdate(dc) {
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_14_26_81_4_start:
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 15 8 ]
+        try @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_8_80_8_beginTry @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_8_80_8_endTry @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_8_80_8_catch @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_8_80_8_finally;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_8_80_8_beginTry:
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_12_78_8_start:
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 18 12 ]
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_18_12_26_12_if_stmt:
+        symbol [ AppState %tmp.2 18 16 24 ];
+        %tmp.2 = getv ? :AppState;
+        symbol [ showSaving %tmp.3 18 25 35 ];
+        %tmp.3 = getv %tmp.2 :showSaving;
+        bf %tmp.3 @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_18_12_26_12_if_end;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_18_12_26_12_if_true:
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_18_37_26_12_start:
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 19 16 ]
+        symbol [ AppState %tmp.4 19 16 24 ];
+        %tmp.4 = getv self :AppState;
+        %tmp.5 = false;
+        symbol [ showSaving ? 19 25 35 ];
+        putv %tmp.4 :showSaving %tmp.5;
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 20 16 ]
+        symbol [ WatchUi %tmp.6 20 16 23 ];
+        %tmp.6 = getm $.Toybox.WatchUi;
+        symbol [ pushView %tmp.7 20 24 32 ];
+        %tmp.7 = getv function %tmp.6 :pushView;
+        symbol [ SavingView %tmp.11 21 24 34 ];
+        %tmp.11 = getv ? :SavingView;
+        %tmp.8 = newc %tmp.11 ();
+        symbol [ SavingDelegate %tmp.15 22 24 38 ];
+        %tmp.15 = getv ? :SavingDelegate;
+        %tmp.12 = newc %tmp.15 ();
+        symbol [ WatchUi %tmp.16 23 20 27 ];
+        %tmp.16 = getm $.Toybox.WatchUi;
+        symbol [ SLIDE_UP %tmp.17 23 28 36 ];
+        %tmp.17 = getv %tmp.16 :SLIDE_UP;
+        invoke %tmp.6 %tmp.7(%tmp.8, %tmp.12, %tmp.17);
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 25 16 ]
+        jsr @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_8_80_8_finally;
+        ret ?;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_18_37_26_12_stop:
+        goto @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_18_12_26_12_if_end;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_18_12_26_12_if_end:
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 28 12 ]
+        %tmp.18 = lgetv %dc;
+        symbol [ dc %tmp.18 28 12 14 ];
+        symbol [ clear %tmp.19 28 15 20 ];
+        %tmp.19 = getv function %tmp.18 :clear;
+        invoke %tmp.18 %tmp.19();
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 30 12 ]
+        %tmp.20 = lgetv %dc;
+        symbol [ dc %tmp.20 30 12 14 ];
+        symbol [ setColor %tmp.21 30 15 23 ];
+        %tmp.21 = getv function %tmp.20 :setColor;
+        symbol [ Graphics %tmp.22 31 16 24 ];
+        %tmp.22 = getm $.Toybox.Graphics;
+        symbol [ COLOR_WHITE %tmp.23 31 25 36 ];
+        %tmp.23 = getv %tmp.22 :COLOR_WHITE;
+        symbol [ Graphics %tmp.24 32 16 24 ];
+        %tmp.24 = getm $.Toybox.Graphics;
+        symbol [ COLOR_BLACK %tmp.25 32 25 36 ];
+        %tmp.25 = getv %tmp.24 :COLOR_BLACK;
+        invoke %tmp.20 %tmp.21(%tmp.23, %tmp.25);
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 35 12 ]
+        [ "C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_12_78_8_start" "C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_12_78_8_stop" ]
+        %width.1 = local;
+        symbol [ width %width.1 35 16 21 ];
+        %tmp.26 = lgetv %dc;
+        symbol [ dc %tmp.26 35 24 26 ];
+        symbol [ getWidth %tmp.27 35 27 35 ];
+        %tmp.27 = getv function %tmp.26 :getWidth;
+        %tmp.28 = invoke %tmp.26 %tmp.27();
+        lputv %width.1 %tmp.28;
+        symbol [ width %width.1 35 16 21 ];
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 36 12 ]
+        [ "C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_12_78_8_start" "C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_12_78_8_stop" ]
+        %height.2 = local;
+        symbol [ height %height.2 36 16 22 ];
+        %tmp.29 = lgetv %dc;
+        symbol [ dc %tmp.29 36 25 27 ];
+        symbol [ getHeight %tmp.30 36 28 37 ];
+        %tmp.30 = getv function %tmp.29 :getHeight;
+        %tmp.31 = invoke %tmp.29 %tmp.30();
+        lputv %height.2 %tmp.31;
+        symbol [ height %height.2 36 16 22 ];
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 38 12 ]
+        [ "C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_12_78_8_start" "C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_12_78_8_stop" ]
+        %elapsed.3 = local;
+        symbol [ elapsed %elapsed.3 38 16 23 ];
+        symbol [ AppState %tmp.33 39 16 24 ];
+        %tmp.33 = getv ? :AppState;
+        symbol [ stopwatch %tmp.34 39 25 34 ];
+        %tmp.34 = getv %tmp.33 :stopwatch;
+        symbol [ getElapsedSeconds %tmp.35 39 35 52 ];
+        %tmp.35 = getv function %tmp.34 :getElapsedSeconds;
+        %tmp.36 = invoke %tmp.34 %tmp.35();
+        lputv %elapsed.3 %tmp.36;
+        symbol [ elapsed %elapsed.3 38 16 23 ];
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 41 12 ]
+        [ "C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_12_78_8_start" "C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_12_78_8_stop" ]
+        %minutes.4 = local;
+        symbol [ minutes %minutes.4 41 16 23 ];
+        %tmp.37 = lgetv %elapsed.3;
+        symbol [ elapsed %tmp.37 41 26 33 ];
+        %tmp.38 = 60;
+        %tmp.39 = div %tmp.37 %tmp.38;
+        lputv %minutes.4 %tmp.39;
+        symbol [ minutes %minutes.4 41 16 23 ];
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 42 12 ]
+        [ "C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_12_78_8_start" "C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_12_78_8_stop" ]
+        %seconds.5 = local;
+        symbol [ seconds %seconds.5 42 16 23 ];
+        %tmp.40 = lgetv %elapsed.3;
+        symbol [ elapsed %tmp.40 42 26 33 ];
+        %tmp.41 = 60;
+        %tmp.42 = mod %tmp.40 %tmp.41;
+        lputv %seconds.5 %tmp.42;
+        symbol [ seconds %seconds.5 42 16 23 ];
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 44 12 ]
+        [ "C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_12_78_8_start" "C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_12_78_8_stop" ]
+        %timeText.6 = local;
+        symbol [ timeText %timeText.6 44 16 24 ];
+        symbol [ Lang %tmp.43 45 16 20 ];
+        %tmp.43 = getm $.Toybox.Lang;
+        symbol [ format %tmp.44 45 21 27 ];
+        %tmp.44 = getv function %tmp.43 :format;
+        %tmp.45 = "$1$:$2$";
+        %tmp.46 = newa 2;
+        %tmp.47 = self;
+        symbol [ formatTwoDigits %tmp.48 48 24 39 ];
+        %tmp.48 = getv function %tmp.47 :formatTwoDigits;
+        %tmp.49 = lgetv %minutes.4;
+        symbol [ minutes %tmp.49 48 40 47 ];
+        %tmp.50 = invoke %tmp.47 %tmp.48(%tmp.49);
+        %tmp.51 = dup %tmp.46;
+        %tmp.52 = aputv %tmp.51 0 %tmp.50;
+        %tmp.53 = self;
+        symbol [ formatTwoDigits %tmp.54 49 24 39 ];
+        %tmp.54 = getv function %tmp.53 :formatTwoDigits;
+        %tmp.55 = lgetv %seconds.5;
+        symbol [ seconds %tmp.55 49 40 47 ];
+        %tmp.56 = invoke %tmp.53 %tmp.54(%tmp.55);
+        %tmp.57 = dup %tmp.52;
+        %tmp.58 = aputv %tmp.57 1 %tmp.56;
+        %tmp.59 = invoke %tmp.43 %tmp.44(%tmp.45, %tmp.58);
+        lputv %timeText.6 %tmp.59;
+        symbol [ timeText %timeText.6 44 16 24 ];
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 53 12 ]
+        [ "C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_12_78_8_start" "C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_12_78_8_stop" ]
+        %statusText.7 = local;
+        symbol [ statusText %statusText.7 53 16 26 ];
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_54_16_56_22_begin:
+        symbol [ AppState %tmp.61 54 16 24 ];
+        %tmp.61 = getv ? :AppState;
+        symbol [ stopwatch %tmp.62 54 25 34 ];
+        %tmp.62 = getv %tmp.61 :stopwatch;
+        symbol [ isRunning %tmp.63 54 35 44 ];
+        %tmp.63 = getv function %tmp.62 :isRunning;
+        %tmp.64 = invoke %tmp.62 %tmp.63();
+        bf %tmp.64 @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_54_16_56_22_else_false;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_54_16_56_22_true:
+        %tmp.65 = "Showering...";
+        push %tmp.65;
+        goto @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_54_16_56_22_end;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_54_16_56_22_else_false:
+        %tmp.66 = "Click on Start";
+        push %tmp.66;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_54_16_56_22_end:
+        %tmp.67 = phi [%tmp.64 @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_54_16_56_22_begin] [%tmp.65 @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_54_16_56_22_true] [%tmp.66 @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_54_16_56_22_else_false] [%tmp.67 @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_54_16_56_22_end];
+        lputv %statusText.7 %tmp.67;
+        symbol [ statusText %statusText.7 53 16 26 ];
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 59 12 ]
+        %tmp.68 = lgetv %dc;
+        symbol [ dc %tmp.68 59 12 14 ];
+        symbol [ drawText %tmp.69 59 15 23 ];
+        %tmp.69 = getv function %tmp.68 :drawText;
+        %tmp.70 = lgetv %width.1;
+        symbol [ width %tmp.70 60 16 21 ];
+        %tmp.71 = 2;
+        %tmp.72 = div %tmp.70 %tmp.71;
+        %tmp.73 = lgetv %height.2;
+        symbol [ height %tmp.73 61 16 22 ];
+        %tmp.74 = 0.25;
+        %tmp.75 = mul %tmp.73 %tmp.74;
+        symbol [ Graphics %tmp.76 62 16 24 ];
+        %tmp.76 = getm $.Toybox.Graphics;
+        symbol [ FONT_NUMBER_HOT %tmp.77 62 25 40 ];
+        %tmp.77 = getv %tmp.76 :FONT_NUMBER_HOT;
+        %tmp.78 = lgetv %timeText.6;
+        symbol [ timeText %tmp.78 63 16 24 ];
+        symbol [ Graphics %tmp.79 64 16 24 ];
+        %tmp.79 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_CENTER %tmp.80 64 25 44 ];
+        %tmp.80 = getv %tmp.79 :TEXT_JUSTIFY_CENTER;
+        invoke %tmp.68 %tmp.69(%tmp.72, %tmp.75, %tmp.77, %tmp.78, %tmp.80);
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 68 12 ]
+        %tmp.81 = lgetv %dc;
+        symbol [ dc %tmp.81 68 12 14 ];
+        symbol [ drawText %tmp.82 68 15 23 ];
+        %tmp.82 = getv function %tmp.81 :drawText;
+        %tmp.83 = lgetv %width.1;
+        symbol [ width %tmp.83 69 16 21 ];
+        %tmp.84 = 2;
+        %tmp.85 = div %tmp.83 %tmp.84;
+        %tmp.86 = lgetv %height.2;
+        symbol [ height %tmp.86 70 16 22 ];
+        %tmp.87 = 0.65;
+        %tmp.88 = mul %tmp.86 %tmp.87;
+        symbol [ Graphics %tmp.89 71 16 24 ];
+        %tmp.89 = getm $.Toybox.Graphics;
+        symbol [ FONT_SMALL %tmp.90 71 25 35 ];
+        %tmp.90 = getv %tmp.89 :FONT_SMALL;
+        %tmp.91 = lgetv %statusText.7;
+        symbol [ statusText %tmp.91 72 16 26 ];
+        symbol [ Graphics %tmp.92 73 16 24 ];
+        %tmp.92 = getm $.Toybox.Graphics;
+        symbol [ TEXT_JUSTIFY_CENTER %tmp.93 73 25 44 ];
+        %tmp.93 = getv %tmp.92 :TEXT_JUSTIFY_CENTER;
+        invoke %tmp.81 %tmp.82(%tmp.85, %tmp.88, %tmp.90, %tmp.91, %tmp.93);
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 76 12 ]
+        symbol [ WatchUi %tmp.94 76 12 19 ];
+        %tmp.94 = getm $.Toybox.WatchUi;
+        symbol [ requestUpdate %tmp.95 76 20 33 ];
+        %tmp.95 = getv function %tmp.94 :requestUpdate;
+        invoke %tmp.94 %tmp.95();
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_12_78_8_stop:
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_8_80_8_endTry:
+        jsr @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_8_80_8_finally;
+        goto @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_8_80_8_end;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_8_80_8_catch:
+        %tmp.96 = exception;
+        push %tmp.96;
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 78 10 ]
+        [ "C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_8_80_8_catch" "C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_78_10_80_8_end" ]
+        %e.8 = local;
+        symbol [ e %e.8 78 17 18 ];
+        %tmp.97 = dup %tmp.96;
+        lputv %e.8 %tmp.97;
+        symbol [ e %e.8 78 17 18 ];
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_78_20_80_8_start:
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 79 12 ]
+        symbol [ System %tmp.99 79 12 18 ];
+        %tmp.99 = getv ? :System;
+        symbol [ println %tmp.100 79 19 26 ];
+        %tmp.100 = getv function %tmp.99 :println;
+        %tmp.101 = "SmartShowerMeterView.onUpdate: Exception: ";
+        %tmp.102 = lgetv %e.8;
+        symbol [ e %tmp.102 79 74 75 ];
+        symbol [ toString %tmp.103 79 76 84 ];
+        %tmp.103 = getv function %tmp.102 :toString;
+        %tmp.104 = invoke %tmp.102 %tmp.103();
+        %tmp.105 = add %tmp.101 %tmp.104;
+        invoke %tmp.99 %tmp.100(%tmp.105);
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_78_20_80_8_stop:
+        jsr @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_8_80_8_finally;
+        pop;
+        goto @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_8_80_8_end;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_78_10_80_8_end:
+        try @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_8_80_8_catch @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_78_10_80_8_end @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_78_10_80_8_end @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_8_80_8_finally;
+        jsr @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_8_80_8_finally;
+        throw %tmp.96;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_8_80_8_finally:
+        jsrret;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_15_8_80_8_end:
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_14_26_81_4_stop:
+    }
+    [ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc"; @line = 83; @symbol_functiondef = [formatTwoDigits,83,13,28]; @symbol_param<0> = [value,83,29,34]; ]
+    function formatTwoDigits(value) {
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_83_36_90_4_start:
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 85 8 ]
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_85_8_87_8_if_stmt:
+        %tmp.1 = lgetv %value;
+        symbol [ value %tmp.1 85 12 17 ];
+        %tmp.2 = 10;
+        %tmp.3 = lt %tmp.1 %tmp.2;
+        bf %tmp.3 @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_85_8_87_8_if_end;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_85_8_87_8_if_true:
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_85_24_87_8_start:
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 86 12 ]
+        %tmp.4 = "0";
+        %tmp.5 = lgetv %value;
+        symbol [ value %tmp.5 86 25 30 ];
+        %tmp.6 = add %tmp.4 %tmp.5;
+        ret %tmp.6;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_85_24_87_8_stop:
+        goto @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_85_8_87_8_if_end;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_85_8_87_8_if_end:
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc" 89 8 ]
+        %tmp.7 = lgetv %value;
+        symbol [ value %tmp.7 89 15 20 ];
+        symbol [ toString %tmp.8 89 21 29 ];
+        %tmp.8 = getv function %tmp.7 :toString;
+        %tmp.9 = invoke %tmp.7 %tmp.8();
+        ret %tmp.9;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_SmartShowerMeterView_mc_83_36_90_4_stop:
+    }
+}
+[ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\SmartShowerMeterView.mc"; @line = 1; ]
+<init> {
+}

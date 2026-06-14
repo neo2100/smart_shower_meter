@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<debugInfo>
+    <manifest filename="C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\manifest.xml"/>
+    <pcToLineNum>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="1" lineNum="5" parent="globals/SavingView" pc="268435457" symbol="&lt;init&gt;"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterApp.mc" id="2" lineNum="4" parent="globals/SmartShowerMeterApp" pc="268435469" symbol="&lt;init&gt;"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="3" lineNum="5" parent="globals/SmartShowerMeterView" pc="268435481" symbol="&lt;init&gt;"/>
+        <entry filename="c:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\build\\gen\\006-B4315-00\\source\\Rez.mcgen" id="4" lineNum="7" parent="globals/Rez" pc="268435493" symbol="&lt;init&gt;"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterDelegate.mc" id="5" lineNum="3" parent="globals/SmartShowerMeterDelegate" pc="268435513" symbol="&lt;init&gt;"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\MainMenuDelegate.mc" id="6" lineNum="4" parent="globals/MainMenuDelegate" pc="268435525" symbol="&lt;init&gt;"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="7" lineNum="56" parent="globals/SavingDelegate" pc="268435537" symbol="&lt;init&gt;"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="9" lineNum="9" parent="globals/SavingView" pc="268435549" symbol="initialize"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="9" lineNum="10" parent="globals/SavingView" pc="268435551" symbol="initialize"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="9" lineNum="11" parent="globals/SavingView" pc="268435563" symbol="initialize"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="10" lineNum="17" parent="globals/SavingView" pc="268435581" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="10" lineNum="19" parent="globals/SavingView" pc="268435584" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="10" lineNum="21" parent="globals/SavingView" pc="268435602" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="10" lineNum="23" parent="globals/SavingView" pc="268435610" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="10" lineNum="28" parent="globals/SavingView" pc="268435626" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="10" lineNum="29" parent="globals/SavingView" pc="268435635" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="10" lineNum="31" parent="globals/SavingView" pc="268435644" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="10" lineNum="32" parent="globals/SavingView" pc="268435661" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="10" lineNum="33" parent="globals/SavingView" pc="268435668" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="10" lineNum="34" parent="globals/SavingView" pc="268435679" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="10" lineNum="37" parent="globals/SavingView" pc="268435699" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="10" lineNum="46" parent="globals/SavingView" pc="268435731" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="10" lineNum="47" parent="globals/SavingView" pc="268435740" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="10" lineNum="48" parent="globals/SavingView" pc="268435755" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="10" lineNum="49" parent="globals/SavingView" pc="268435766" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="10" lineNum="52" parent="globals/SavingView" pc="268435767" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterApp.mc" id="11" lineNum="14" parent="globals/SmartShowerMeterApp" pc="268435779" symbol="getInitialView"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterApp.mc" id="11" lineNum="16" parent="globals/SmartShowerMeterApp" pc="268435781" symbol="getInitialView"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterApp.mc" id="12" lineNum="6" parent="globals/SmartShowerMeterApp" pc="268435828" symbol="initialize"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterApp.mc" id="12" lineNum="8" parent="globals/SmartShowerMeterApp" pc="268435830" symbol="initialize"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterApp.mc" id="12" lineNum="10" parent="globals/SmartShowerMeterApp" pc="268435846" symbol="initialize"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="14" lineNum="7" parent="globals/SmartShowerMeterView" pc="268435876" symbol="initialize"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="14" lineNum="8" parent="globals/SmartShowerMeterView" pc="268435878" symbol="initialize"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="15" lineNum="83" parent="globals/SmartShowerMeterView" pc="268435891" symbol="formatTwoDigits"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="15" lineNum="85" parent="globals/SmartShowerMeterView" pc="268435893" symbol="formatTwoDigits"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="15" lineNum="86" parent="globals/SmartShowerMeterView" pc="268435901" symbol="formatTwoDigits"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="15" lineNum="89" parent="globals/SmartShowerMeterView" pc="268435910" symbol="formatTwoDigits"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="14" parent="globals/SmartShowerMeterView" pc="268435918" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="18" parent="globals/SmartShowerMeterView" pc="268435921" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="19" parent="globals/SmartShowerMeterView" pc="268435934" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="20" parent="globals/SmartShowerMeterView" pc="268435946" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="25" parent="globals/SmartShowerMeterView" pc="268435997" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="28" parent="globals/SmartShowerMeterView" pc="268435998" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="30" parent="globals/SmartShowerMeterView" pc="268436006" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="35" parent="globals/SmartShowerMeterView" pc="268436022" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="36" parent="globals/SmartShowerMeterView" pc="268436031" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="38" parent="globals/SmartShowerMeterView" pc="268436040" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="41" parent="globals/SmartShowerMeterView" pc="268436058" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="42" parent="globals/SmartShowerMeterView" pc="268436065" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="44" parent="globals/SmartShowerMeterView" pc="268436072" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="53" parent="globals/SmartShowerMeterView" pc="268436121" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="59" parent="globals/SmartShowerMeterView" pc="268436155" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="68" parent="globals/SmartShowerMeterView" pc="268436184" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="76" parent="globals/SmartShowerMeterView" pc="268436213" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="78" parent="globals/SmartShowerMeterView" pc="268436225" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterView.mc" id="16" lineNum="79" parent="globals/SmartShowerMeterView" pc="268436229" symbol="onUpdate"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterDelegate.mc" id="17" lineNum="22" parent="globals/SmartShowerMeterDelegate" pc="268436259" symbol="onMenu"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterDelegate.mc" id="17" lineNum="23" parent="globals/SmartShowerMeterDelegate" pc="268436262" symbol="onMenu"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterDelegate.mc" id="17" lineNum="25" parent="globals/SmartShowerMeterDelegate" pc="268436286" symbol="onMenu"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterDelegate.mc" id="17" lineNum="30" parent="globals/SmartShowerMeterDelegate" pc="268436320" symbol="onMenu"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterDelegate.mc" id="17" lineNum="35" parent="globals/SmartShowerMeterDelegate" pc="268436354" symbol="onMenu"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterDelegate.mc" id="17" lineNum="40" parent="globals/SmartShowerMeterDelegate" pc="268436388" symbol="onMenu"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterDelegate.mc" id="17" lineNum="45" parent="globals/SmartShowerMeterDelegate" pc="268436423" symbol="onMenu"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterDelegate.mc" id="18" lineNum="6" parent="globals/SmartShowerMeterDelegate" pc="268436425" symbol="initialize"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterDelegate.mc" id="18" lineNum="8" parent="globals/SmartShowerMeterDelegate" pc="268436427" symbol="initialize"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterDelegate.mc" id="19" lineNum="11" parent="globals/SmartShowerMeterDelegate" pc="268436440" symbol="onSelect"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterDelegate.mc" id="19" lineNum="12" parent="globals/SmartShowerMeterDelegate" pc="268436442" symbol="onSelect"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterDelegate.mc" id="19" lineNum="13" parent="globals/SmartShowerMeterDelegate" pc="268436459" symbol="onSelect"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterDelegate.mc" id="19" lineNum="15" parent="globals/SmartShowerMeterDelegate" pc="268436470" symbol="onSelect"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterDelegate.mc" id="19" lineNum="16" parent="globals/SmartShowerMeterDelegate" pc="268436490" symbol="onSelect"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SmartShowerMeterDelegate.mc" id="19" lineNum="19" parent="globals/SmartShowerMeterDelegate" pc="268436497" symbol="onSelect"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SyncManager.mc" id="20" lineNum="8" parent="globals/SyncManager" pc="268436499" symbol="sendShowerRecord"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SyncManager.mc" id="20" lineNum="10" parent="globals/SyncManager" pc="268436501" symbol="sendShowerRecord"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\StopwatchManager.mc" id="22" lineNum="36" parent="globals/StopwatchManager" pc="268436523" symbol="getElapsedMillis"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\StopwatchManager.mc" id="22" lineNum="38" parent="globals/StopwatchManager" pc="268436525" symbol="getElapsedMillis"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\StopwatchManager.mc" id="22" lineNum="40" parent="globals/StopwatchManager" pc="268436533" symbol="getElapsedMillis"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\StopwatchManager.mc" id="22" lineNum="44" parent="globals/StopwatchManager" pc="268436556" symbol="getElapsedMillis"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\StopwatchManager.mc" id="23" lineNum="52" parent="globals/StopwatchManager" pc="268436562" symbol="isRunning"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\StopwatchManager.mc" id="23" lineNum="53" parent="globals/StopwatchManager" pc="268436564" symbol="isRunning"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\StopwatchManager.mc" id="24" lineNum="29" parent="globals/StopwatchManager" pc="268436570" symbol="reset"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\StopwatchManager.mc" id="24" lineNum="31" parent="globals/StopwatchManager" pc="268436572" symbol="reset"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\StopwatchManager.mc" id="24" lineNum="32" parent="globals/StopwatchManager" pc="268436580" symbol="reset"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\StopwatchManager.mc" id="24" lineNum="33" parent="globals/StopwatchManager" pc="268436588" symbol="reset"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\StopwatchManager.mc" id="26" lineNum="12" parent="globals/StopwatchManager" pc="268436597" symbol="startPause"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\StopwatchManager.mc" id="26" lineNum="14" parent="globals/StopwatchManager" pc="268436599" symbol="startPause"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\StopwatchManager.mc" id="26" lineNum="16" parent="globals/StopwatchManager" pc="268436607" symbol="startPause"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\StopwatchManager.mc" id="26" lineNum="19" parent="globals/StopwatchManager" pc="268436636" symbol="startPause"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\StopwatchManager.mc" id="26" lineNum="23" parent="globals/StopwatchManager" pc="268436645" symbol="startPause"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\StopwatchManager.mc" id="26" lineNum="25" parent="globals/StopwatchManager" pc="268436662" symbol="startPause"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\StopwatchManager.mc" id="27" lineNum="47" parent="globals/StopwatchManager" pc="268436671" symbol="getElapsedSeconds"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\StopwatchManager.mc" id="27" lineNum="49" parent="globals/StopwatchManager" pc="268436673" symbol="getElapsedSeconds"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\MainMenuDelegate.mc" id="28" lineNum="12" parent="globals/MainMenuDelegate" pc="268436690" symbol="onMenuItem"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\MainMenuDelegate.mc" id="28" lineNum="13" parent="globals/MainMenuDelegate" pc="268436693" symbol="onMenuItem"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\MainMenuDelegate.mc" id="28" lineNum="15" parent="globals/MainMenuDelegate" pc="268436704" symbol="onMenuItem"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\MainMenuDelegate.mc" id="28" lineNum="16" parent="globals/MainMenuDelegate" pc="268436724" symbol="onMenuItem"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\MainMenuDelegate.mc" id="28" lineNum="17" parent="globals/MainMenuDelegate" pc="268436728" symbol="onMenuItem"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\MainMenuDelegate.mc" id="28" lineNum="21" parent="globals/MainMenuDelegate" pc="268436759" symbol="onMenuItem"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\MainMenuDelegate.mc" id="28" lineNum="23" parent="globals/MainMenuDelegate" pc="268436770" symbol="onMenuItem"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\MainMenuDelegate.mc" id="28" lineNum="24" parent="globals/MainMenuDelegate" pc="268436782" symbol="onMenuItem"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\MainMenuDelegate.mc" id="28" lineNum="28" parent="globals/MainMenuDelegate" pc="268436799" symbol="onMenuItem"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\MainMenuDelegate.mc" id="28" lineNum="29" parent="globals/MainMenuDelegate" pc="268436810" symbol="onMenuItem"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\MainMenuDelegate.mc" id="28" lineNum="30" parent="globals/MainMenuDelegate" pc="268436827" symbol="onMenuItem"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\MainMenuDelegate.mc" id="29" lineNum="7" parent="globals/MainMenuDelegate" pc="268436839" symbol="initialize"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\MainMenuDelegate.mc" id="29" lineNum="9" parent="globals/MainMenuDelegate" pc="268436841" symbol="initialize"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="30" lineNum="57" parent="globals/SavingDelegate" pc="268436854" symbol="initialize"/>
+        <entry filename="C:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\source\\SavingView.mc" id="30" lineNum="58" parent="globals/SavingDelegate" pc="268436856" symbol="initialize"/>
+        <entry filename="c:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\build\\gen\\006-B4315-00\\source\\Rez.mcgen" id="32" lineNum="13" parent="globals/Rez/Menus/MainMenu" pc="268436869" symbol="&lt;init&gt;"/>
+        <entry filename="c:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\build\\gen\\006-B4315-00\\source\\Rez.mcgen" id="33" lineNum="14" parent="globals/Rez/Menus/MainMenu" pc="268436881" symbol="initialize"/>
+        <entry filename="c:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\build\\gen\\006-B4315-00\\source\\Rez.mcgen" id="33" lineNum="15" parent="globals/Rez/Menus/MainMenu" pc="268436883" symbol="initialize"/>
+        <entry filename="c:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\build\\gen\\006-B4315-00\\source\\Rez.mcgen" id="33" lineNum="16" parent="globals/Rez/Menus/MainMenu" pc="268436895" symbol="initialize"/>
+        <entry filename="c:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\build\\gen\\006-B4315-00\\source\\Rez.mcgen" id="33" lineNum="17" parent="globals/Rez/Menus/MainMenu" pc="268436940" symbol="initialize"/>
+        <entry filename="c:\\Users\\moham\\Worksapce\\smart_shower_meter\\garmin\\SmartShowerMeter\\build\\gen\\006-B4315-00\\source\\Rez.mcgen" id="33" lineNum="18" parent="globals/Rez/Menus/MainMenu" pc="268436985" symbol="initialize"/>
+    </pcToLineNum>
+    <symbolTable>
+        <entry id="8388639" module="true" symbol="Graphics"/>
+        <entry field="true" id="26" symbol="showSaving"/>
+        <entry id="24" method="true" symbol="isRunning"/>
+        <entry id="8388632" method="true" symbol="&lt;init&gt;"/>
+        <entry id="5" module="true" symbol="globals/Rez/Menus"/>
+        <entry id="8" object="true" symbol="MainMenuDelegate"/>
+        <entry field="true" id="32" symbol="menu_label_resume"/>
+        <entry id="8391787" symbol="resume"/>
+        <entry field="true" id="8388611" module="true" symbol="Toybox"/>
+        <entry id="13" object="true" symbol="SmartShowerMeterView"/>
+        <entry id="8392382" method="true" symbol="reset"/>
+        <entry field="true" id="30" symbol="AppName"/>
+        <entry id="6" module="true" symbol="globals/Rez/Strings"/>
+        <entry id="8389080" method="true" symbol="onMenu"/>
+        <entry id="8388648" module="true" symbol="WatchUi"/>
+        <entry id="3" module="true" symbol="globals/Rez"/>
+        <entry field="true" id="33" symbol="menu_label_save"/>
+        <entry id="8389124" method="true" symbol="onUpdate"/>
+        <entry id="9" object="true" symbol="SavingDelegate"/>
+        <entry id="8388771" module="true" object="true" symbol="Drawables"/>
+        <entry field="true" id="31" symbol="menu_label_reset"/>
+        <entry id="18" module="true" symbol="Menus"/>
+        <entry id="8389122" method="true" symbol="onLayout"/>
+        <entry id="8388882" method="true" symbol="save"/>
+        <entry id="4" module="true" symbol="globals/Rez/Drawables"/>
+        <entry id="25" method="true" symbol="startPause"/>
+        <entry id="17" method="true" symbol="formatTwoDigits"/>
+        <entry id="29" object="true" symbol="MainMenu"/>
+        <entry id="8388644" module="true" symbol="System"/>
+        <entry field="true" id="20" symbol="_elapsedMillis"/>
+        <entry id="8389619" method="true" symbol="onSelect"/>
+        <entry field="true" id="16" symbol="_startMillis"/>
+        <entry id="8388769" module="true" object="true" symbol="Rez"/>
+        <entry field="true" id="27" symbol="stopwatch"/>
+        <entry id="8388640" module="true" symbol="Lang"/>
+        <entry field="true" id="28" symbol="LauncherIcon"/>
+        <entry id="8388610" symbol="statics"/>
+        <entry id="14" object="true" symbol="StopwatchManager"/>
+        <entry id="22" method="true" symbol="getElapsedMillis"/>
+        <entry id="2" module="true" symbol="globals/AppState/&lt;statics&gt;"/>
+        <entry id="8389350" module="true" symbol="globals"/>
+        <entry id="8388770" module="true" object="true" symbol="Strings"/>
+        <entry id="11" object="true" symbol="SmartShowerMeterApp"/>
+        <entry id="8388702" method="true" symbol="initialize"/>
+        <entry id="19" method="true" symbol="sendShowerRecord"/>
+        <entry field="true" id="21" symbol="_running"/>
+        <entry id="15" object="true" symbol="SyncManager"/>
+        <entry id="8389280" method="true" symbol="getInitialView"/>
+        <entry id="8389109" method="true" symbol="onMenuItem"/>
+        <entry id="7" object="true" symbol="AppState"/>
+        <entry id="12" object="true" symbol="SmartShowerMeterDelegate"/>
+        <entry id="10" object="true" symbol="SavingView"/>
+        <entry id="23" method="true" symbol="getElapsedSeconds"/>
+        <entry id="8388635" module="true" symbol="Application"/>
+    </symbolTable>
+    <localVars>
+        <entry arg="true" endPc="268435778" name="dc" stackId="1" startPc="268435581"/>
+        <entry endPc="268435777" name="elapsed" stackId="2" startPc="268435584"/>
+        <entry endPc="268435777" name="width" stackId="3" startPc="268435584"/>
+        <entry endPc="268435777" name="height" stackId="4" startPc="268435584"/>
+        <entry endPc="268435777" name="dotCycle" stackId="5" startPc="268435584"/>
+        <entry endPc="268435777" name="dots" stackId="6" startPc="268435584"/>
+        <entry endPc="268435698" name="i" stackId="7" startPc="268435679"/>
+        <entry arg="true" endPc="268435917" name="value" stackId="1" startPc="268435891"/>
+        <entry arg="true" endPc="268436258" name="dc" stackId="1" startPc="268435918"/>
+        <entry endPc="268436223" name="width" stackId="2" startPc="268435921"/>
+        <entry endPc="268436223" name="height" stackId="3" startPc="268435921"/>
+        <entry endPc="268436223" name="elapsed" stackId="4" startPc="268435921"/>
+        <entry endPc="268436223" name="minutes" stackId="5" startPc="268435921"/>
+        <entry endPc="268436223" name="seconds" stackId="6" startPc="268435921"/>
+        <entry endPc="268436223" name="timeText" stackId="7" startPc="268435921"/>
+        <entry endPc="268436223" name="statusText" stackId="8" startPc="268435921"/>
+        <entry endPc="268436256" name="e" stackId="9" startPc="268436225"/>
+        <entry arg="true" endPc="268436522" name="seconds" stackId="1" startPc="268436499"/>
+        <entry arg="true" endPc="268436838" name="item" stackId="1" startPc="268436690"/>
+        <entry endPc="268436757" name="e" stackId="2" startPc="268436724"/>
+    </localVars>
+    <deviceInfo deviceVersion="0ed082a335bbf00c12e5da810e92d4f89288090c" partNumber="006-B4315-00"/>
+    <annotations>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="menu_label_save"/>
+        <annotationEntry annotation="initialized" class="Drawables" module="globals/Rez" symbol="LauncherIcon"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="menu_label_reset"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="menu_label_resume"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="AppName"/>
+    </annotations>
+    <dataEntryOffsetMappings>
+        <dataEntry label="globals" offset="67" parentId="" symbolId="globals" type="module"/>
+        <dataEntry label="globals/SavingView" offset="188" parentId="globals" symbolId="SavingView" type="class"/>
+        <dataEntry label="globals/SmartShowerMeterApp" offset="259" parentId="globals" symbolId="SmartShowerMeterApp" type="class"/>
+        <dataEntry label="globals/SmartShowerMeterView" offset="312" parentId="globals" symbolId="SmartShowerMeterView" type="class"/>
+        <dataEntry label="globals/Rez" offset="383" parentId="globals" symbolId="Rez" type="module"/>
+        <dataEntry label="globals/SmartShowerMeterDelegate" offset="436" parentId="globals" symbolId="SmartShowerMeterDelegate" type="class"/>
+        <dataEntry label="globals/SyncManager" offset="498" parentId="globals" symbolId="SyncManager" type="class"/>
+        <dataEntry label="globals/StopwatchManager" offset="551" parentId="globals" symbolId="StopwatchManager" type="class"/>
+        <dataEntry label="globals/MainMenuDelegate" offset="667" parentId="globals" symbolId="MainMenuDelegate" type="class"/>
+        <dataEntry label="globals/SavingDelegate" offset="720" parentId="globals" symbolId="SavingDelegate" type="class"/>
+        <dataEntry label="globals/AppState" offset="764" parentId="globals" symbolId="AppState" type="class"/>
+        <dataEntry label="globals/AppState/&lt;statics&gt;" offset="812" parentId="AppState" symbolId="&lt;statics&gt;" type="module"/>
+        <dataEntry label="globals/Rez/Drawables" offset="852" parentId="Rez" symbolId="Drawables" type="module"/>
+        <dataEntry label="globals/Rez/Menus" offset="887" parentId="Rez" symbolId="Menus" type="module"/>
+        <dataEntry label="globals/Rez/Strings" offset="922" parentId="Rez" symbolId="Strings" type="module"/>
+        <dataEntry label="globals/Rez/Menus/MainMenu" offset="984" parentId="Menus" symbolId="MainMenu" type="class"/>
+    </dataEntryOffsetMappings>
+    <functions>
+        <functionEntry accessMode="public" endPc="268435468" name="&lt;init&gt;" parent="SavingView" startPc="268435457">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268435480" name="&lt;init&gt;" parent="SmartShowerMeterApp" startPc="268435469">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268435492" name="&lt;init&gt;" parent="SmartShowerMeterView" startPc="268435481">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268435512" name="&lt;init&gt;" parent="Rez" startPc="268435493">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268435524" name="&lt;init&gt;" parent="SmartShowerMeterDelegate" startPc="268435513">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" name="&lt;init&gt;" parent="SyncManager">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" name="&lt;init&gt;" parent="StopwatchManager">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268435536" name="&lt;init&gt;" parent="MainMenuDelegate" startPc="268435525">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268435548" name="&lt;init&gt;" parent="SavingDelegate" startPc="268435537">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" name="&lt;init&gt;" parent="AppState">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" name="&lt;init&gt;" parent="globals/AppState">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" name="onLayout" parent="SavingView">
+            <param id="dc"/>
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268435580" name="initialize" parent="SavingView" startPc="268435549">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268435778" name="onUpdate" parent="SavingView" startPc="268435581">
+            <param id="dc"/>
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268435827" name="getInitialView" parent="SmartShowerMeterApp" startPc="268435779">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268435875" name="initialize" parent="SmartShowerMeterApp" startPc="268435828">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" name="onLayout" parent="SmartShowerMeterView">
+            <param id="dc"/>
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268435890" name="initialize" parent="SmartShowerMeterView" startPc="268435876">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268435917" name="formatTwoDigits" parent="SmartShowerMeterView" startPc="268435891">
+            <param id="value"/>
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268436258" name="onUpdate" parent="SmartShowerMeterView" startPc="268435918">
+            <param id="dc"/>
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" name="&lt;init&gt;" parent="Drawables">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" name="&lt;init&gt;" parent="Menus">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" name="&lt;init&gt;" parent="Strings">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268436424" name="onMenu" parent="SmartShowerMeterDelegate" startPc="268436259">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268436439" name="initialize" parent="SmartShowerMeterDelegate" startPc="268436425">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268436498" name="onSelect" parent="SmartShowerMeterDelegate" startPc="268436440">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268436522" name="sendShowerRecord" parent="SyncManager" startPc="268436499">
+            <param id="seconds"/>
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" name="initialize" parent="SyncManager">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268436561" name="getElapsedMillis" parent="StopwatchManager" startPc="268436523">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268436569" name="isRunning" parent="StopwatchManager" startPc="268436562">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268436596" name="reset" parent="StopwatchManager" startPc="268436570">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" name="initialize" parent="StopwatchManager">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268436670" name="startPause" parent="StopwatchManager" startPc="268436597">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268436689" name="getElapsedSeconds" parent="StopwatchManager" startPc="268436671">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268436838" name="onMenuItem" parent="MainMenuDelegate" startPc="268436690">
+            <param id="item"/>
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268436853" name="initialize" parent="MainMenuDelegate" startPc="268436839">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268436868" name="initialize" parent="SavingDelegate" startPc="268436854">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" name="initialize" parent="AppState">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268436880" name="&lt;init&gt;" parent="MainMenu" startPc="268436869">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268437030" name="initialize" parent="MainMenu" startPc="268436881">
+            <documentation/>
+        </functionEntry>
+    </functions>
+</debugInfo>

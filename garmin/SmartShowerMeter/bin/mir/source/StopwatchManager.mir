@@ -1,0 +1,146 @@
+[ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc"; @line = 1; @symbol_usingdef<0> = [Toybox,1,6,12]; @symbol_usingdef<1> = [System,1,13,19]; ]
+using Toybox.System;
+[ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc"; @line = 3; @symbol_classdef = [StopwatchManager,3,6,22]; ]
+class StopwatchManager {
+    [ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc"; @line = 3; ]
+    <init> {
+    }
+    [ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc"; @line = 3; ]
+    static
+    <init> {
+    }
+    [ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc"; @line = 5; @position = 8; @symbol_vardef = [_running,5,8,16]; ]
+    var _running = false;
+    [ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc"; @line = 6; @position = 8; @symbol_vardef = [_startMillis,6,8,20]; ]
+    var _startMillis = 0;
+    [ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc"; @line = 7; @position = 8; @symbol_vardef = [_elapsedMillis,7,8,22]; ]
+    var _elapsedMillis = 0;
+    [ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc"; @line = 9; @symbol_functiondef = [initialize,9,13,23]; ]
+    function initialize() as Void {
+    }
+    [ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc"; @line = 12; @symbol_functiondef = [startPause,12,13,23]; ]
+    function startPause() {
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_12_26_27_4_start:
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc" 14 8 ]
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_14_8_26_8_if_stmt:
+        symbol [ _running %tmp.2 14 12 20 ];
+        %tmp.2 = getv ? :_running;
+        bf %tmp.2 @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_14_8_26_8_if_else_false;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_14_8_26_8_if_true:
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_14_22_21_8_start:
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc" 16 12 ]
+        symbol [ _elapsedMillis %tmp.3 16 12 26 ];
+        %tmp.3 = getv self :_elapsedMillis;
+        symbol [ System %tmp.4 17 17 23 ];
+        %tmp.4 = getm $.Toybox.System;
+        symbol [ getTimer %tmp.5 17 24 32 ];
+        %tmp.5 = getv function %tmp.4 :getTimer;
+        %tmp.6 = invoke %tmp.4 %tmp.5();
+        symbol [ _startMillis %tmp.8 17 37 49 ];
+        %tmp.8 = getv ? :_startMillis;
+        %tmp.9 = sub %tmp.6 %tmp.8;
+        %tmp.10 = add %tmp.3 %tmp.9;
+        symbol [ _elapsedMillis ? 16 12 26 ];
+        putv self :_elapsedMillis dup %tmp.10;
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc" 19 12 ]
+        %tmp.11 = false;
+        symbol [ _running ? 19 12 20 ];
+        putv self :_running %tmp.11;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_14_22_21_8_stop:
+        goto @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_14_8_26_8_if_end;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_14_8_26_8_if_else_false:
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_21_15_26_8_start:
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc" 23 12 ]
+        symbol [ System %tmp.12 23 27 33 ];
+        %tmp.12 = getm $.Toybox.System;
+        symbol [ getTimer %tmp.13 23 34 42 ];
+        %tmp.13 = getv function %tmp.12 :getTimer;
+        %tmp.14 = invoke %tmp.12 %tmp.13();
+        symbol [ _startMillis ? 23 12 24 ];
+        putv self :_startMillis %tmp.14;
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc" 25 12 ]
+        %tmp.15 = true;
+        symbol [ _running ? 25 12 20 ];
+        putv self :_running %tmp.15;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_21_15_26_8_stop:
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_14_8_26_8_if_end:
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_12_26_27_4_stop:
+    }
+    [ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc"; @line = 29; @symbol_functiondef = [reset,29,13,18]; ]
+    function reset() {
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_29_21_34_4_start:
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc" 31 8 ]
+        %tmp.1 = false;
+        symbol [ _running ? 31 8 16 ];
+        putv self :_running %tmp.1;
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc" 32 8 ]
+        %tmp.2 = 0;
+        symbol [ _startMillis ? 32 8 20 ];
+        putv self :_startMillis %tmp.2;
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc" 33 8 ]
+        %tmp.3 = 0;
+        symbol [ _elapsedMillis ? 33 8 22 ];
+        putv self :_elapsedMillis %tmp.3;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_29_21_34_4_stop:
+    }
+    [ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc"; @line = 36; @symbol_functiondef = [getElapsedMillis,36,13,29]; ]
+    function getElapsedMillis() {
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_36_32_45_4_start:
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc" 38 8 ]
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_38_8_42_8_if_stmt:
+        symbol [ _running %tmp.2 38 12 20 ];
+        %tmp.2 = getv ? :_running;
+        bf %tmp.2 @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_38_8_42_8_if_end;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_38_8_42_8_if_true:
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_38_22_42_8_start:
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc" 40 12 ]
+        symbol [ _elapsedMillis %tmp.4 40 19 33 ];
+        %tmp.4 = getv ? :_elapsedMillis;
+        symbol [ System %tmp.5 41 17 23 ];
+        %tmp.5 = getm $.Toybox.System;
+        symbol [ getTimer %tmp.6 41 24 32 ];
+        %tmp.6 = getv function %tmp.5 :getTimer;
+        %tmp.7 = invoke %tmp.5 %tmp.6();
+        symbol [ _startMillis %tmp.9 41 37 49 ];
+        %tmp.9 = getv ? :_startMillis;
+        %tmp.10 = sub %tmp.7 %tmp.9;
+        %tmp.11 = add %tmp.4 %tmp.10;
+        ret %tmp.11;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_38_22_42_8_stop:
+        goto @C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_38_8_42_8_if_end;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_38_8_42_8_if_end:
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc" 44 8 ]
+        symbol [ _elapsedMillis %tmp.13 44 15 29 ];
+        %tmp.13 = getv ? :_elapsedMillis;
+        ret %tmp.13;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_36_32_45_4_stop:
+    }
+    [ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc"; @line = 47; @symbol_functiondef = [getElapsedSeconds,47,13,30]; ]
+    function getElapsedSeconds() {
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_47_33_50_4_start:
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc" 49 8 ]
+        %tmp.1 = self;
+        symbol [ getElapsedMillis %tmp.2 49 16 32 ];
+        %tmp.2 = getv function %tmp.1 :getElapsedMillis;
+        %tmp.3 = invoke %tmp.1 %tmp.2();
+        %tmp.4 = 1000;
+        %tmp.5 = div %tmp.3 %tmp.4;
+        symbol [ toNumber %tmp.6 49 43 51 ];
+        %tmp.6 = getv function %tmp.5 :toNumber;
+        %tmp.7 = invoke %tmp.5 %tmp.6();
+        ret %tmp.7;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_47_33_50_4_stop:
+    }
+    [ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc"; @line = 52; @symbol_functiondef = [isRunning,52,13,22]; ]
+    function isRunning() {
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_52_25_54_4_start:
+[ "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc" 53 8 ]
+        symbol [ _running %tmp.2 53 15 23 ];
+        %tmp.2 = getv ? :_running;
+        ret %tmp.2;
+C__Users_moham_Worksapce_smart_shower_meter_garmin_SmartShowerMeter_source_StopwatchManager_mc_52_25_54_4_stop:
+    }
+}
+[ @file = "C:\Users\moham\Worksapce\smart_shower_meter\garmin\SmartShowerMeter\source\StopwatchManager.mc"; @line = 1; ]
+<init> {
+}

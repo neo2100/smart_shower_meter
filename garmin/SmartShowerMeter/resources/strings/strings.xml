@@ -1,0 +1,9 @@
+<strings>
+
+    <string id="AppName">Smart Shower Meter</string>
+
+    <string id="menu_label_save">Save Shower</string>
+    <string id="menu_label_resume">Resume</string>
+    <string id="menu_label_reset">Reset</string>
+
+</strings>
