@@ -3,6 +3,8 @@
 A simple cross-platform application for tracking and analyzing your shower habits.
 Monitor how long you spend in the shower, view historical records, and analyze your shower patterns.
 
+This repository also includes a Garmin Connect IQ application for compatible Garmin watches. For device-specific build, simulator, and deployment instructions see the Garmin app README: [garmin/SmartShowerMeter/README.md](garmin/SmartShowerMeter/README.md).
+
 ## Features ✨
 
 ### 📱 Timer Page
