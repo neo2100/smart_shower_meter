@@ -11,41 +11,54 @@ class SavingView extends WatchUi.View {
         _startMillis = System.getTimer();
     }
 
-    function onLayout(dc) {
-    }
-
     function onUpdate(dc) {
 
         var elapsed = System.getTimer() - _startMillis;
 
         dc.clear();
 
-        dc.setColor(
-            Graphics.COLOR_WHITE,
-            Graphics.COLOR_BLACK
-        );
-
-        var width = dc.getWidth();
+        var width  = dc.getWidth();
         var height = dc.getHeight();
 
-        var dotCycle = ((elapsed / 500) % 4).toNumber();
-        var dots = "";
-        for (var i = 0; i < dotCycle; i++) {
-            dots += ".";
-        }
+        // Label
+        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
 
         dc.drawText(
             width / 2,
-            height / 2,
+            height / 2 - 20,
             Graphics.FONT_SMALL,
-            "Saving" + dots,
+            "Saving",
             Graphics.TEXT_JUSTIFY_CENTER
         );
 
-        // After ~2s return to main view
+        // Spinner
+        var cx = width / 2;
+        var cy = height / 2;
+
+        var radius = width * 0.45;
+
+        // Full ring (background)
+        dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
+
+        dc.drawCircle(cx, cy, radius);
+
+        // Rotating blue arc
+        dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
+
+        var angle = ((elapsed % 1000) * 360 / 1000).toNumber();
+
+        // 90° segment rotating around circle
+        dc.drawArc(
+            cx,
+            cy,
+            radius,
+            Graphics.ARC_CLOCKWISE,
+            angle,
+            angle + 90
+        );
+
         if (elapsed >= 2000) {
             WatchUi.popView(WatchUi.SLIDE_DOWN);
-            WatchUi.requestUpdate();
             return;
         }
 
