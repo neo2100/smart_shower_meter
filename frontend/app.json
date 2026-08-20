@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "Smart Shower Meter",
+    "slug": "frontend",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "frontend",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.emergent.fluttershowerui.w2uwh5",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "Detect shower sounds to auto-start your timer"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#CAD2C5"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.emergent.fluttershowerui.w2uwh5",
+      "permissions": ["android.permission.RECORD_AUDIO"]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-image.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#F7F7F5"
+        }
+      ],
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Detect shower sounds to auto-start your timer"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

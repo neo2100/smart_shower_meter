@@ -1,0 +1,168 @@
+{
+  "app_name": "Smart Shower Meter",
+  "personality": "1 iOS-Native Clean",
+  "personality_one_liner": "A clean, calm, and grounded utility focusing on precise tracking without the clinical or generic AI feel, using botanical ceramic tones.",
+  "color": {
+    "surface": "#F7F7F5",
+    "onSurface": "#1C1C1A",
+    "surfaceSecondary": "#FFFFFF",
+    "onSurfaceSecondary": "#1C1C1A",
+    "surfaceTertiary": "#EAEAE8",
+    "onSurfaceTertiary": "#4A4A46",
+    "surfaceInverse": "#1C1C1A",
+    "onSurfaceInverse": "#F7F7F5",
+    "brand": "#52796F",
+    "brandPrimary": "#52796F",
+    "onBrandPrimary": "#FFFFFF",
+    "brandSecondary": "#84A98C",
+    "onBrandSecondary": "#1C1C1A",
+    "brandTertiary": "#CAD2C5",
+    "onBrandTertiary": "#2F3E35",
+    "success": "#386641",
+    "onSuccess": "#FFFFFF",
+    "warning": "#BC4749",
+    "onWarning": "#FFFFFF",
+    "error": "#A8201A",
+    "onError": "#FFFFFF",
+    "info": "#4A4A46",
+    "onInfo": "#FFFFFF",
+    "border": "#EAEAE8",
+    "borderStrong": "#C2C2BE",
+    "divider": "#EAEAE8"
+  },
+  "typography": {
+    "displayFontFamily": "SpaceGrotesk",
+    "textFontFamily": "PlusJakartaSans",
+    "scale": {
+      "sm": 12,
+      "base": 14,
+      "lg": 16,
+      "xl": 20,
+      "2xl": 24
+    }
+  },
+  "spacing": {
+    "rule": "Generous padding. Cards never flush to edge (minimum md margin). Use Safe Area context.",
+    "xs": 4,
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 24,
+    "2xl": 32,
+    "3xl": 48
+  },
+  "radius_tokens": {
+    "sm": 6,
+    "md": 12,
+    "lg": 20,
+    "pill": 999
+  },
+  "shadow_tier": "1",
+  "navigation": "bottom_tabs",
+  "icon_set": "Phosphor",
+  "glassmorphism": {
+    "enabled": "true",
+    "do's": [
+      "Bottom tab bar when content scrolls behind it",
+      "Sticky headers over scrolling content",
+      "Bottom-sheet handles"
+    ],
+    "dont's": [
+      "Form inputs",
+      "List rows",
+      "Body content"
+    ]
+  },
+  "platform_libraries": {
+    "glass": {
+      "ios": "expo-glass-effect",
+      "android": "expo-blur",
+      "low_end_android_fallback": "solid surfaceSecondary"
+    },
+    "image": "expo-image",
+    "blur": "expo-blur",
+    "bottom_sheet": "@gorhom/bottom-sheet",
+    "animation": "react-native-reanimated",
+    "gesture": "react-native-gesture-handler"
+  },
+  "screens": [
+    {
+      "name": "Timer",
+      "purpose": "Manual tracking with large live HH:MM:SS countdown and cost/liter metrics.",
+      "states": {
+        "loading": "Centered spinner.",
+        "empty": "Initial zero-state with a prominent Start button.",
+        "error": "Failed to save session with Retry."
+      },
+      "layout": "Large SpaceGrotesk timer text placed centrally. Secondary metrics (Liters, Cost) grouped in subtle surfaceTertiary pills below the timer. Prominent Start/Pause/Stop CTA at the bottom thumb zone. Background can have a soft brandTertiary gradient or subtle circular layout to emphasize focus. Settings cog at the top right."
+    },
+    {
+      "name": "Smart Meter",
+      "purpose": "Auto-detects shower sounds via mic to start/stop the timer automatically.",
+      "states": {
+        "loading": "Requesting microphone access...",
+        "empty": "Waiting for water sound...",
+        "error": "Microphone permission denied layout with 'Open Settings' CTA."
+      },
+      "layout": "Central live scrolling audio waveform visualization (using actual metering data). Status text indicating 'Listening...' or 'Shower Detected'. Clean, unobstructed UI to reduce cognitive load. Stop Auto-detect button pinned at bottom."
+    },
+    {
+      "name": "History",
+      "purpose": "Log of past sessions grouped by date.",
+      "states": {
+        "loading": "Skeleton list rows.",
+        "empty": "Grayscale water drop image + 'No showers recorded yet'.",
+        "error": "Error loading history."
+      },
+      "layout": "Scrollable list of cards (surfaceSecondary) with md spacing. Each row uses Phosphor filled icons for visuals, showing Date/Time (title) and Duration/Liters (trailing). Swipe-to-delete pattern on rows."
+    },
+    {
+      "name": "Analytics",
+      "purpose": "Visual breakdown of shower time, water used, and costs.",
+      "states": {
+        "loading": "Skeleton charts.",
+        "empty": "Empty chart illustration.",
+        "error": "Failed to load data."
+      },
+      "layout": "Segmented control at the top (7 / 14 / 30 / 90 days). Bar charts for daily usage. 2-column grid of summary stat cards (Total Time, Total Water, Total Cost) using surfaceSecondary cards."
+    },
+    {
+      "name": "Settings (Sheet)",
+      "purpose": "Configure water flow rate and cost factor.",
+      "states": {
+        "loading": "Loading preferences.",
+        "empty": "N/A",
+        "error": "N/A"
+      },
+      "layout": "Bottom sheet or modal. Single-column form with labels above inputs. Large 'Save' button fixed at bottom inside KeyboardAvoidingView."
+    }
+  ],
+  "images": {
+    "history_empty_state": {
+      "url": "https://images.unsplash.com/photo-1584982442479-16e4ac81adff?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNTl8MHwxfHNlYXJjaHwxfHxjbGVhbiUyMHdhdGVyJTIwZHJvcGxldHMlMjByaXBwbGUlMjBtYWNyb3xlbnwwfHx8fDE3ODcyNDIyNTJ8MA&ixlib=rb-4.1.0&q=85",
+      "dark": "https://images.unsplash.com/photo-1584982442479-16e4ac81adff?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNTl8MHwxfHNlYXJjaHwxfHxjbGVhbiUyMHdhdGVyJTIwZHJvcGxldHMlMjByaXBwbGUlMjBtYWNyb3xlbnwwfHx8fDE3ODcyNDIyNTJ8MA&ixlib=rb-4.1.0&q=85",
+      "alt": "Grayscale macro shot of a clean water droplet creating ripples"
+    },
+    "analytics_hero_bg": {
+      "url": "https://images.unsplash.com/photo-1781795035627-fa93f2863bba?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHwyfHxtaW5pbWFsaXN0JTIwc3BhJTIwYmF0aHJvb20lMjBjYWxtfGVufDB8fHx8MTc4NzI0MjI1M3ww&ixlib=rb-4.1.0&q=85",
+      "dark": "https://images.unsplash.com/photo-1781795035627-fa93f2863bba?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHwyfHxtaW5pbWFsaXN0JTIwc3BhJTIwYmF0aHJvb20lMjBjYWxtfGVufDB8fHx8MTc4NzI0MjI1M3ww&ixlib=rb-4.1.0&q=85",
+      "alt": "Minimalist spa bathroom architecture"
+    }
+  },
+  "haptics": {
+    "timer_start": "impactMedium",
+    "timer_stop": "impactHeavy",
+    "tab_change": "selection",
+    "setting_save": "notificationSuccess",
+    "history_delete": "notificationWarning"
+  },
+  "instructions_to_main_agent": [
+    "Strictly follow the botanical/ceramic palette (Seafoam/Sage green). ABSOLUTELY NO BLUES (no navy, sky, royal, etc.) anywhere in the app, as per the strict negative prompts for generic AI visuals.",
+    "Use SpaceGrotesk (Medium, max weight 500) for numeric timer displays and PlusJakartaSans for body UI text. Ensure large numbers are centered and highly legible.",
+    "Implement fully local SQLite or AsyncStorage database for offline capabilities.",
+    "The Smart Meter waveform should read live metering data from expo-audio (or equivalent stable library) and display it as a scrolling visual, not a static/looping animation. Be honest with the mic data.",
+    "Apply Glassmorphism (expo-blur or expo-glass-effect) to the bottom tab bar and any sticky headers (like the Analytics segment control), falling back to solid surfaceSecondary on low-end Android.",
+    "For Analytics charts, avoid clutter. Use subtle bar graphs matching the brandPrimary color, keeping labels minimalistic.",
+    "If text is layered over the analytics_hero_bg or history_empty_state images, always use the gradient scrim pattern (transparent -> 70% surfaceInverse) behind the text to ensure WCAG AAA readability."
+  ]
+}
